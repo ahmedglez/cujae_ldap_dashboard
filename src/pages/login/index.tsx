@@ -76,8 +76,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const isValid = isLoading === false && error === null && username !== '' && password !== ''
+  const [error, setError] = useState<string | null>(null)
+  const isValid = isLoading === false && username !== '' && password !== ''
   const user = useProfileStore(state => state.user)
   const login = useProfileStore(state => state.login)
   const logout = useProfileStore(state => state.logout)
@@ -106,13 +106,20 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     setIsLoading(true)
+    setError(null) // Reset error state before attempting login
+
     if (isValid) {
-      const response = await withoutAuthAxiosInstance.post('/login', { username, password })
-      const responseData = response.data
-      const { data, success, message } = responseData
-      const { token, refreshToken, user } = data
-      login(user)
-      router.push('/')
+      try {
+        const response = await withoutAuthAxiosInstance.post('/login', { username, password })
+        const responseData = response.data
+        const { data, success, message } = responseData
+        const { token, refreshToken, user } = data
+        login(user)
+        router.push('/')
+      } catch (err) {
+        setError('Failed to log in. Please check your credentials.')
+        console.log(err)
+      }
     }
     setIsLoading(false)
   }
@@ -120,6 +127,7 @@ const LoginPage = () => {
   return (
     <Box className='content-center'>
       <Card sx={{ zIndex: 1 }}>
+        {error && <Box sx={{ my: 2, color: 'error.main', textAlign: 'center' }}>{error}</Box>}
         <CardContent sx={{ padding: theme => `${theme.spacing(12, 9, 7)} !important` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Box sx={{ width: 50, height: 50, borderRadius: '50%' }}>
@@ -140,7 +148,7 @@ const LoginPage = () => {
           </Box>
           <Box sx={{ mb: 6 }}>
             <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Bienvenido a {themeConfig.templateName}! 👋🏻
+              Bienvenido a {themeConfig.templateName}!
             </Typography>
             <Typography variant='body2'>Por favor ingresa tus credenciales para acceder </Typography>
           </Box>
