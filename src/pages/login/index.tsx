@@ -22,6 +22,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // ** Icons Imports
 import Google from 'mdi-material-ui/Google'
@@ -104,6 +105,7 @@ const LoginPage = () => {
   }
 
   const handleLogin = async () => {
+    setIsLoading(true)
     if (isValid) {
       const response = await withoutAuthAxiosInstance.post('/login', { username, password })
       const responseData = response.data
@@ -112,6 +114,7 @@ const LoginPage = () => {
       login(user)
       router.push('/')
     }
+    setIsLoading(false)
   }
 
   return (
@@ -188,7 +191,14 @@ const LoginPage = () => {
               onClick={handleLogin}
               disabled={!isValid}
             >
-              Login
+              {isLoading && (
+                <CircularProgress
+                  style={{
+                    color: 'blue'
+                  }}
+                />
+              )}
+              {!isLoading && 'Login'}
             </Button>
             {/*             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ marginRight: 2 }}>

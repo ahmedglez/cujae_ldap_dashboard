@@ -13,6 +13,9 @@ import CardStatisticsVerticalComponent from 'src/@core/components/card-statistic
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
+// ** Components Imports
+import WelcomeCard from '@/components/WelcomeCard'
+
 // ** Demo Components Imports
 import Table from 'src/views/dashboard/Table'
 import Trophy from 'src/views/dashboard/Trophy'
@@ -26,8 +29,8 @@ const Dashboard = () => {
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
-          <Trophy />
+        <Grid item xs={12}>
+          <WelcomeCard />
         </Grid>
         <Grid item xs={12} md={8}>
           <StatisticsCard />
