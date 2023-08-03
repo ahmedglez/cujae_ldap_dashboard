@@ -18,7 +18,7 @@ type ThemeConfig = {
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
   templateName: 'CUJAE LDAP Dashboard' /* App Name */,
-  mode: 'dark' /* light | dark */,
+  mode: 'light' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
 
   // ** Routing Configs
