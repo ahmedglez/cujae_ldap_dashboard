@@ -35,10 +35,6 @@ const WelcomeCard = () => {
   const router = useRouter()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-  useEffect(() => {
-    console.log('user', user)
-  }, [])
-
   console.log('user', user)
 
   const handleClick = () => {
