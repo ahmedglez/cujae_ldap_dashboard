@@ -21,6 +21,9 @@ import Button, { ButtonProps } from '@mui/material/Button'
 // ** Icons Imports
 import Close from 'mdi-material-ui/Close'
 
+// ** Stores
+import useProfileStore from '@/stores/profile.store'
+
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
   height: 120,
@@ -49,6 +52,9 @@ const TabAccount = () => {
   // ** State
   const [openAlert, setOpenAlert] = useState<boolean>(true)
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
+  const user = useProfileStore(state => state.user)
+
+  console.log('user', user)
 
   const onChange = (file: ChangeEvent) => {
     const reader = new FileReader()
@@ -67,7 +73,7 @@ const TabAccount = () => {
           <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <ImgStyled src={imgSrc} alt='Profile Pic' />
-              <Box>
+              {/*  <Box>
                 <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
                   Upload New Photo
                   <input
@@ -84,26 +90,37 @@ const TabAccount = () => {
                 <Typography variant='body2' sx={{ marginTop: 5 }}>
                   Allowed PNG or JPEG. Max size of 800K.
                 </Typography>
-              </Box>
+              </Box> */}
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Username' placeholder='johnDoe' defaultValue='johnDoe' />
+          <Grid item xs={12}>
+            <Typography
+              variant='h6'
+              sx={{
+                fontWeight: 600,
+                fontSize: '1.2rem'
+              }}
+            >
+              {`Datos de usuario`}
+            </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' placeholder='John Doe' defaultValue='John Doe' />
+            <TextField fullWidth label='Username' value={user.uid} disabled={true} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              type='email'
-              label='Email'
-              placeholder='johnDoe@example.com'
-              defaultValue='johnDoe@example.com'
-            />
+            <TextField fullWidth label='Tipo de usuario' value={user.userType} disabled={true} />
           </Grid>
           <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Name' value={user.cn} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Last Name' value={user.sn} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Correo' value={user.mail} disabled={true} />
+          </Grid>
+          {/* <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
               <InputLabel>Role</InputLabel>
               <Select label='Role' defaultValue='admin'>
@@ -114,8 +131,12 @@ const TabAccount = () => {
                 <MenuItem value='subscriber'>Subscriber</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Rol' value={user.right === 'Todos' ? 'Admin' : 'User'} disabled={true} />
+          </Grid>
+
+          {/* <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select label='Status' defaultValue='active'>
@@ -124,38 +145,77 @@ const TabAccount = () => {
                 <MenuItem value='pending'>Pending</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.' />
-          </Grid>
-
-          {openAlert ? (
-            <Grid item xs={12} sx={{ mb: 3 }}>
-              <Alert
-                severity='warning'
-                sx={{ '& a': { fontWeight: 400 } }}
-                action={
-                  <IconButton size='small' color='inherit' aria-label='close' onClick={() => setOpenAlert(false)}>
-                    <Close fontSize='inherit' />
-                  </IconButton>
-                }
-              >
-                <AlertTitle>Your email is not confirmed. Please check your inbox.</AlertTitle>
-                <Link href='/' onClick={(e: SyntheticEvent) => e.preventDefault()}>
-                  Resend Confirmation
-                </Link>
-              </Alert>
-            </Grid>
-          ) : null}
+          </Grid> */}
 
           <Grid item xs={12}>
+            <Typography
+              variant='h6'
+              sx={{
+                fontWeight: 600,
+                fontSize: '1.2rem'
+              }}
+            >
+              {`Datos escolares`}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Area' value={user.area} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Carrera' value={user.career} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Año escolar' value={user.studentYear} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Grupo' value={user.studentClassGroup} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label='UJC'
+              value={user.UJC.toString().charAt(0).toUpperCase() + user.UJC.toString().slice(1)}
+              disabled={true}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Estado' value={user.userStatus} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Condicion' value={user.userCondition} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Curso' value={user.userInformation} disabled={true} />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              variant='h6'
+              sx={{
+                fontWeight: 600,
+                fontSize: '1.2rem'
+              }}
+            >
+              {`Datos personales`}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='CI' value={user.CI} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Municipio' value={user.sedeMunicipio} disabled={true} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Telefono' value={user.telephoneNumber} disabled={true} />
+          </Grid>
+
+          {/* <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }}>
               Save Changes
             </Button>
             <Button type='reset' variant='outlined' color='secondary'>
               Reset
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       </form>
     </CardContent>

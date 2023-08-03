@@ -23,6 +23,9 @@ import TabSecurity from 'src/views/account-settings/TabSecurity'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 
+// ** Stores
+import useProfileStore from '@/stores/profile.store'
+
 const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     minWidth: 100
@@ -44,6 +47,9 @@ const TabName = styled('span')(({ theme }) => ({
 const AccountSettings = () => {
   // ** State
   const [value, setValue] = useState<string>('account')
+  const user = useProfileStore(state => state.user)
+
+  console.log('user', user)
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue)
