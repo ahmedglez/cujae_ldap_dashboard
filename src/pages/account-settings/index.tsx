@@ -47,7 +47,7 @@ const TabName = styled('span')(({ theme }) => ({
 const AccountSettings = () => {
   // ** State
   const [value, setValue] = useState<string>('account')
-  const user = useProfileStore(state => state.user)
+  const user = useProfileStore((state: { user: any }) => state.user)
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue)
