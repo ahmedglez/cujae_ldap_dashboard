@@ -45,8 +45,8 @@ const navigation = (): VerticalNavItemsType => {
       icon: AlertCircleOutline,
       path: '/error',
       openInNewTab: true
-    },
-    {
+    }
+    /* {
       sectionTitle: 'User Interface'
     },
     {
@@ -73,7 +73,7 @@ const navigation = (): VerticalNavItemsType => {
       icon: CubeOutline,
       title: 'Form Layouts',
       path: '/form-layouts'
-    }
+    } */
   ]
 }
 
