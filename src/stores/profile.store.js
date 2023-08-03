@@ -2,7 +2,8 @@ import { create } from 'zustand'
 
 const initialState = {
   user: null,
-  isLoggedIn: false // Add isLoggedIn property to initial state
+  isLoggedIn: false,
+  avatar: null
 }
 
 const useProfileStore = create(set => ({
@@ -12,13 +13,20 @@ const useProfileStore = create(set => ({
     set(state => ({
       ...state,
       user,
-      isLoggedIn: true // Set isLoggedIn to true when user is logged in
+      isLoggedIn: true
     })),
   logout: () =>
     set(state => ({
       ...state,
       user: null,
-      isLoggedIn: false // Set isLoggedIn to false when user is logged out
+      isLoggedIn: false
+    })),
+  setAvatar: (
+    avatar // Add the setAvatar function to the store
+  ) =>
+    set(state => ({
+      ...state,
+      avatar
     }))
 }))
 
@@ -33,11 +41,16 @@ if (typeof window !== 'undefined') {
       // Save only the parts of the state you want to persist
       const persistedState = {
         user: state.user,
-        isLoggedIn: state.isLoggedIn // Persist the isLoggedIn property
+        isLoggedIn: state.isLoggedIn,
+        avatar: state.avatar
       }
       localStorage.setItem('profileStoreState', JSON.stringify(persistedState))
     },
-    state => ({ user: state.user, isLoggedIn: state.isLoggedIn }) // Select which parts of the state to subscribe to
+    state => ({
+      user: state.user,
+      isLoggedIn: state.isLoggedIn,
+      avatar: state.avatar
+    })
   )
 }
 
