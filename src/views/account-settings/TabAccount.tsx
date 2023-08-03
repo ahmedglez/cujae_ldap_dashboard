@@ -54,8 +54,6 @@ const TabAccount = () => {
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
   const user = useProfileStore(state => state.user)
 
-  console.log('user', user)
-
   const onChange = (file: ChangeEvent) => {
     const reader = new FileReader()
     const { files } = file.target as HTMLInputElement
@@ -106,19 +104,37 @@ const TabAccount = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Username' value={user.uid} disabled={true} />
+            <TextField
+              fullWidth
+              label='Username'
+              value={user?.uid}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Tipo de usuario' value={user.userType} disabled={true} />
+            <TextField
+              fullWidth
+              label='Tipo de usuario'
+              value={user?.userType}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' value={user.cn} disabled={true} />
+            <TextField fullWidth label='Name' value={user?.cn} disabled={true} InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Last Name' value={user.sn} disabled={true} />
+            <TextField
+              fullWidth
+              label='Last Name'
+              value={user?.sn}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Correo' value={user.mail} disabled={true} />
+            <TextField fullWidth label='Correo' value={user?.mail} disabled={true} InputLabelProps={{ shrink: true }} />
           </Grid>
           {/* <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
@@ -133,7 +149,13 @@ const TabAccount = () => {
             </FormControl>
           </Grid> */}
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Rol' value={user.right === 'Todos' ? 'Admin' : 'User'} disabled={true} />
+            <TextField
+              fullWidth
+              label='Rol'
+              value={user?.right === 'Todos' ? 'Admin' : 'User'}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
 
           {/* <Grid item xs={12} sm={6}>
@@ -159,33 +181,69 @@ const TabAccount = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Area' value={user.area} disabled={true} />
+            <TextField fullWidth label='Area' value={user?.area} disabled={true} InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Carrera' value={user.career} disabled={true} />
+            <TextField
+              fullWidth
+              label='Carrera'
+              value={user?.career}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Año escolar' value={user.studentYear} disabled={true} />
+            <TextField
+              fullWidth
+              label='Año escolar'
+              value={user?.studentYear}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Grupo' value={user.studentClassGroup} disabled={true} />
+            <TextField
+              fullWidth
+              label='Grupo'
+              value={user?.studentClassGroup}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label='UJC'
-              value={user.UJC.toString().charAt(0).toUpperCase() + user.UJC.toString().slice(1)}
+              value={user?.UJC.toString().charAt(0).toUpperCase() + user?.UJC.toString().slice(1)}
               disabled={true}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Estado' value={user.userStatus} disabled={true} />
+            <TextField
+              fullWidth
+              label='Estado'
+              value={user?.userStatus}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Condicion' value={user.userCondition} disabled={true} />
+            <TextField
+              fullWidth
+              label='Condicion'
+              value={user?.userCondition}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Curso' value={user.userInformation} disabled={true} />
+            <TextField
+              fullWidth
+              label='Curso'
+              value={user?.userInformation}
+              disabled={true}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
 
           {/* <Grid item xs={12}>

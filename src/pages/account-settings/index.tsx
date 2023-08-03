@@ -49,8 +49,6 @@ const AccountSettings = () => {
   const [value, setValue] = useState<string>('account')
   const user = useProfileStore(state => state.user)
 
-  console.log('user', user)
-
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
