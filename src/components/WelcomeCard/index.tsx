@@ -7,6 +7,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import useProfileStore from '@/stores/profile.store'
 import { useRouter } from 'next/router'
 import { useMediaQuery } from '@mui/material'
+import React, { useEffect } from 'react'
 
 // Styled component for the triangle shaped background image
 const TriangleImg = styled('img')({
@@ -34,13 +35,19 @@ const WelcomeCard = () => {
   const router = useRouter()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
+  useEffect(() => {
+    console.log('user', user)
+  }, [])
+
+  console.log('user', user)
+
   const handleClick = () => {
     router.push('account-settings/')
   }
   return (
     <Card sx={{ position: 'relative' }}>
       <CardContent>
-        <Typography variant='h6'>{`Bienvenido ${user.cn}!`}</Typography>
+        <Typography variant='h6'>{`Bienvenido ${user?.cn}!`}</Typography>
         <Typography variant='body2' sx={{ letterSpacing: '0.25px' }}>
           {`Visita tu perfil para ver tus datos y cambiar tu contraseña.`}
         </Typography>

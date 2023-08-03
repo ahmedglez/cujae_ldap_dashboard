@@ -187,26 +187,6 @@ const TabAccount = () => {
           <Grid item xs={12} sm={6}>
             <TextField fullWidth label='Curso' value={user.userInformation} disabled={true} />
           </Grid>
-          <Grid item xs={12}>
-            <Typography
-              variant='h6'
-              sx={{
-                fontWeight: 600,
-                fontSize: '1.2rem'
-              }}
-            >
-              {`Datos personales`}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='CI' value={user.CI} disabled={true} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Municipio' value={user.sedeMunicipio} disabled={true} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Telefono' value={user.telephoneNumber} disabled={true} />
-          </Grid>
 
           {/* <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }}>
