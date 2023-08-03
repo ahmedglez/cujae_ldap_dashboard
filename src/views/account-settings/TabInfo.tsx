@@ -134,14 +134,14 @@ const TabInfo = () => {
               disabled={true}
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }}>
               Save Changes
             </Button>
             <Button type='reset' variant='outlined' color='secondary' onClick={() => setDate(null)}>
               Reset
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       </form>
     </CardContent>
