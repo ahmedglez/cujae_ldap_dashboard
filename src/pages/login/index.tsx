@@ -43,9 +43,12 @@ import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 
 // ** Logo
 import logo from '/src/assets/images/favicon.png'
+
+// ** Stores
+import useProfileStore from '@/stores/profile.store'
+
 // ** Others
 import { withoutAuthAxiosInstance } from 'src/constants/axiosInstance'
-import useProfileStore from '@/stores/profile.store'
 
 interface State {
   password: string
