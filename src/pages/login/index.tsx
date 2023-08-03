@@ -72,8 +72,8 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 
 const LoginPage = () => {
   // ** State
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('ahmedivan.gonzalez')
+  const [password, setPassword] = useState('00092068426')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -158,6 +158,7 @@ const LoginPage = () => {
               fullWidth
               id='username'
               label='Username'
+              value={username}
               sx={{ marginBottom: 4 }}
               onChange={handleChangeUsername}
             />
