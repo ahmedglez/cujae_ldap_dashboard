@@ -25,7 +25,11 @@ import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 
+// ** Hooks
+import useAvatarSelector from '@/hooks/useAvatarSelector'
+
 const Dashboard = () => {
+  useAvatarSelector()
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
