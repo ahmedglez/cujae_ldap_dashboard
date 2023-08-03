@@ -39,13 +39,13 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountPlusOutline,
       path: '/register',
       openInNewTab: true
-    },
-    {
+    }
+    /*  {
       title: 'Error',
       icon: AlertCircleOutline,
       path: '/error',
       openInNewTab: true
-    }
+    } */
     /* {
       sectionTitle: 'User Interface'
     },
