@@ -14,7 +14,7 @@ import CardStatisticsVerticalComponent from 'src/@core/components/card-statistic
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 // ** Components Imports
-import WelcomeCard from '@/components/WelcomeCard'
+import WelcomeCard from '@/containers/Dashboard/components/WelcomeCard'
 
 // ** Demo Components Imports
 import Table from 'src/views/dashboard/Table'
@@ -36,10 +36,10 @@ const Dashboard = () => {
         <Grid item xs={12}>
           <WelcomeCard />
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} >
           <StatisticsCard />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} >
           <WeeklyOverview />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
