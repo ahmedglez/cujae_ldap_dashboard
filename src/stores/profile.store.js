@@ -3,17 +3,19 @@ import { create } from 'zustand'
 const initialState = {
   user: null,
   isLoggedIn: false,
-  avatar: null
+  avatar: null,
+  isAdmin: false
 }
 
 const useProfileStore = create(set => ({
   ...initialState,
 
-  login: user =>
+  login: (user, isAdmin = false) =>
     set(state => ({
       ...state,
       user,
-      isLoggedIn: true
+      isLoggedIn: true,
+      isAdmin: isAdmin
     })),
   logout: () =>
     set(state => ({

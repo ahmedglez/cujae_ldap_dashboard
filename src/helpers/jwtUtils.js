@@ -11,6 +11,14 @@ export const getToken = () => {
   getItem(TOKEN_KEY)
 }
 
-export const decodeJWT = () => {
+export const decodeJWT = token => {
   const decodedToken = jwt_decode(jwtToken)
+  return decodedToken
+}
+
+export const checkRoles = roles => {
+  const jwtToken = localStorage.getItem(TOKEN_KEY)
+  const decodedToken = jwt_decode(jwtToken)
+  const userRoles = decodedToken.roles
+  return userRoles.includes(roles)
 }
