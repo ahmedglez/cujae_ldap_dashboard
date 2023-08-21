@@ -22,3 +22,10 @@ export const checkRoles = roles => {
   const userRoles = decodedToken.roles
   return userRoles.includes(roles)
 }
+
+export const getLastTimeLogged = roles => {
+  const jwtToken = localStorage.getItem(TOKEN_KEY)
+  const decodedToken = jwt_decode(jwtToken)
+  console.log('decodedToken', decodedToken)
+  return decodedToken.last_time_logged
+}

@@ -45,7 +45,7 @@ import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 import logo from '/src/assets/images/favicon.png'
 
 // ** Utils
-import { saveToken, checkRoles } from '@/helpers/jwtUtils'
+import { saveToken, checkRoles, getLastTimeLogged } from '@/helpers/jwtUtils'
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
@@ -122,7 +122,8 @@ const LoginPage = () => {
         const { token, refreshToken, user } = data
         saveToken(token)
         const isAdmin = checkRoles('admin')
-        login(user, isAdmin)
+        const last_time_logged = getLastTimeLogged()
+        login(user, isAdmin, last_time_logged)
         router.push('/')
       } catch (err) {
         setError('Failed to log in. Please check your credentials.')

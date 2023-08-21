@@ -4,18 +4,20 @@ const initialState = {
   user: null,
   isLoggedIn: false,
   avatar: null,
-  isAdmin: false
+  isAdmin: false,
+  last_time_logged: null
 }
 
 const useProfileStore = create(set => ({
   ...initialState,
 
-  login: (user, isAdmin = false) =>
+  login: (user, isAdmin = false, last_time_logged = null) =>
     set(state => ({
       ...state,
       user,
       isLoggedIn: true,
-      isAdmin: isAdmin
+      isAdmin: isAdmin,
+      last_time_logged: last_time_logged
     })),
   logout: () =>
     set(state => ({
