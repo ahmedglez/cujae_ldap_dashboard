@@ -3,7 +3,6 @@ require('dotenv').config()
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL
 
-console.log('baseURL', baseURL)
 
 export const withoutAuthAxiosInstance = axios.create({
   baseURL: baseURL,
