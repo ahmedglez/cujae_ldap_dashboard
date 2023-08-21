@@ -44,6 +44,9 @@ import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 // ** Logo
 import logo from '/src/assets/images/favicon.png'
 
+// ** Utils
+import { saveToken } from '@/helpers/jwtUtils'
+
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
 
@@ -117,6 +120,7 @@ const LoginPage = () => {
         const responseData = response.data
         const { data, success, message } = responseData
         const { token, refreshToken, user } = data
+        saveToken(token)
         login(user)
         router.push('/')
       } catch (err) {
