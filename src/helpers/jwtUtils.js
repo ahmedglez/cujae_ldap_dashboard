@@ -11,7 +11,8 @@ export const getToken = () => {
   getItem(TOKEN_KEY)
 }
 
-export const decodeJWT = token => {
+export const decodeJWT = () => {
+  const jwtToken = localStorage.getItem(TOKEN_KEY)
   const decodedToken = jwt_decode(jwtToken)
   return decodedToken
 }

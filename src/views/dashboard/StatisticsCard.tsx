@@ -17,9 +17,17 @@ import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import CellphoneLink from 'mdi-material-ui/CellphoneLink'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
-
+import SchoolIcon from 'mdi-material-ui/School'
+import Settings from 'mdi-material-ui/light/Settings'
+import { CustomFormatListBulletedIcon } from '@/icons/index'
 // ** Types
 import { ThemeColor } from 'src/@core/layouts/types'
+
+// ** Stores
+import useProfileStore from '@/stores/profile.store'
+
+// ** Utils
+import { decodeJWT } from '@/helpers/jwtUtils'
 
 interface DataType {
   stats: string
@@ -28,35 +36,8 @@ interface DataType {
   icon: ReactElement
 }
 
-const salesData: DataType[] = [
-  {
-    stats: '245k',
-    title: 'Sales',
-    color: 'primary',
-    icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '12.5k',
-    title: 'Customers',
-    color: 'success',
-    icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '1.54k',
-    color: 'warning',
-    title: 'Products',
-    icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
-  },
-  {
-    stats: '$88k',
-    color: 'info',
-    title: 'Revenue',
-    icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
-  }
-]
-
-const renderStats = () => {
-  return salesData.map((item: DataType, index: number) => (
+const renderStats = (statsData: DataType) => {
+  return statsData.map((item: DataType, index: number) => (
     <Grid item xs={12} sm={3} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
         <Avatar
@@ -81,11 +62,52 @@ const renderStats = () => {
   ))
 }
 
-const StatisticsCard = () => {
+const StatisticsCard = (isAdmin: any = false) => {
+  const { user, last_time_logged } = useProfileStore()
+  const decodedJWT = decodeJWT()
+
+  console.log('decodeJWT', decodeJWT)
+
+  console.log('user', user)
+
+  const userData: DataType[] = [
+    {
+      stats: user.userType,
+      title: 'Tipo de usuario',
+      color: 'success',
+      icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
+    },
+    {
+      stats: user.userType === 'Estudiante' ? user.userInformation : user.workArea,
+      title: user.userType === 'Estudiante' ? 'Tipo de Curso' : 'Área de Trabajo',
+      color: 'primary',
+      icon:
+        user.userType === 'Estudiante' ? (
+          <SchoolIcon sx={{ fontSize: '1.75rem' }} />
+        ) : (
+          <TrendingUp sx={{ fontSize: '1.75rem' }} />
+        )
+    },
+    {
+      stats: decodedJWT.roles.includes('admin') ? 'Administrador' : 'Usuario',
+      color: 'warning',
+      title: 'Rol',
+      icon: <Settings sx={{ fontSize: '1.75rem' }} />
+    },
+    {
+      stats: user.userType === 'Estudiante' ? user.studentClassGroup : user.orgRole,
+      color: 'info',
+      title: user.userType === 'Estudiante' ? 'Grupo' : 'Categoría Educacional',
+      icon: <CustomFormatListBulletedIcon sx={{ fontSize: '1.75rem' }} />
+    }
+  ]
+
+  const statsData = userData
+
   return (
     <Card>
       <CardHeader
-        title='Statistics Card'
+        title={isAdmin ? 'Estadísticas de usuarios' : 'Mis estadísticas'}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
             <DotsVertical />
@@ -94,9 +116,9 @@ const StatisticsCard = () => {
         subheader={
           <Typography variant='body2'>
             <Box component='span' sx={{ fontWeight: 600, color: 'text.primary' }}>
-              Total 48.5% growth
+              Última vez activo: {new Date(last_time_logged).toLocaleString().split(',')[0]} a las{' '}
+              {new Date(last_time_logged).toLocaleString().split(',')[1]}
             </Box>{' '}
-            😎 this month
           </Typography>
         }
         titleTypographyProps={{
@@ -109,7 +131,7 @@ const StatisticsCard = () => {
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
         <Grid container spacing={[5, 0]}>
-          {renderStats()}
+          {renderStats([...statsData])}
         </Grid>
       </CardContent>
     </Card>
