@@ -24,7 +24,7 @@ import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
-
+import CardSigenu from '@/views/dashboard/CardSigenu'
 // ** Hooks
 import useAvatarSelector from '@/hooks/useAvatarSelector'
 
@@ -39,7 +39,10 @@ const Dashboard = () => {
         <Grid item xs={12}>
           <StatisticsCard />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={4}>
+          <CardSigenu />
+        </Grid>
+        <Grid item xs={12} md={8}>
           <WeeklyOverview />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
