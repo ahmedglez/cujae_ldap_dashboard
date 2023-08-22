@@ -1,7 +1,5 @@
-// ** React Imports
+import React from 'react'
 import { ReactElement } from 'react'
-
-// ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
@@ -10,8 +8,6 @@ import CardHeader from '@mui/material/CardHeader'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Icons Imports
 import TrendingUp from 'mdi-material-ui/TrendingUp'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
@@ -20,13 +16,8 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 import SchoolIcon from 'mdi-material-ui/School'
 import Settings from 'mdi-material-ui/light/Settings'
 import { CustomFormatListBulletedIcon } from '@/icons/index'
-// ** Types
 import { ThemeColor } from 'src/@core/layouts/types'
-
-// ** Stores
 import useProfileStore from '@/stores/profile.store'
-
-// ** Utils
 import { decodeJWT } from '@/helpers/jwtUtils'
 
 interface DataType {
@@ -36,7 +27,51 @@ interface DataType {
   icon: ReactElement
 }
 
-const renderStats = (statsData: DataType) => {
+const createStatsData = (
+  isAdmin: boolean,
+  userType: string,
+  userInformation: string,
+  workArea: string,
+  studentClassGroup: string,
+  orgRole: string
+) => {
+  const decodedJWT = decodeJWT()
+  const userData: DataType[] = [
+    {
+      stats: userType,
+      title: 'Tipo de usuario',
+      color: 'success',
+      icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
+    },
+    {
+      stats: userType === 'Estudiante' ? userInformation : workArea,
+      title: userType === 'Estudiante' ? 'Tipo de Curso' : 'Área de Trabajo',
+      color: 'primary',
+      icon:
+        userType === 'Estudiante' ? (
+          <SchoolIcon sx={{ fontSize: '1.75rem' }} />
+        ) : (
+          <TrendingUp sx={{ fontSize: '1.75rem' }} />
+        )
+    },
+    {
+      stats: decodedJWT.roles.includes('admin') ? 'Administrador' : 'Usuario',
+      color: 'warning',
+      title: 'Rol',
+      icon: <Settings sx={{ fontSize: '1.75rem' }} />
+    },
+    {
+      stats: userType === 'Estudiante' ? studentClassGroup : orgRole,
+      color: 'info',
+      title: userType === 'Estudiante' ? 'Grupo' : 'Categoría Educacional',
+      icon: <CustomFormatListBulletedIcon sx={{ fontSize: '1.75rem' }} />
+    }
+  ]
+
+  return userData
+}
+
+const renderStats = (statsData: DataType[]) => {
   return statsData.map((item: DataType, index: number) => (
     <Grid item xs={12} sm={3} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -62,47 +97,17 @@ const renderStats = (statsData: DataType) => {
   ))
 }
 
-const StatisticsCard = (isAdmin: any = false) => {
+const StatisticsCard = (isAdmin: boolean = false) => {
   const { user, last_time_logged } = useProfileStore()
-  const decodedJWT = decodeJWT()
 
-  console.log('decodeJWT', decodeJWT)
-
-  console.log('user', user)
-
-  const userData: DataType[] = [
-    {
-      stats: user.userType,
-      title: 'Tipo de usuario',
-      color: 'success',
-      icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
-    },
-    {
-      stats: user.userType === 'Estudiante' ? user.userInformation : user.workArea,
-      title: user.userType === 'Estudiante' ? 'Tipo de Curso' : 'Área de Trabajo',
-      color: 'primary',
-      icon:
-        user.userType === 'Estudiante' ? (
-          <SchoolIcon sx={{ fontSize: '1.75rem' }} />
-        ) : (
-          <TrendingUp sx={{ fontSize: '1.75rem' }} />
-        )
-    },
-    {
-      stats: decodedJWT.roles.includes('admin') ? 'Administrador' : 'Usuario',
-      color: 'warning',
-      title: 'Rol',
-      icon: <Settings sx={{ fontSize: '1.75rem' }} />
-    },
-    {
-      stats: user.userType === 'Estudiante' ? user.studentClassGroup : user.orgRole,
-      color: 'info',
-      title: user.userType === 'Estudiante' ? 'Grupo' : 'Categoría Educacional',
-      icon: <CustomFormatListBulletedIcon sx={{ fontSize: '1.75rem' }} />
-    }
-  ]
-
-  const statsData = userData
+  const statsData = createStatsData(
+    isAdmin,
+    user.userType,
+    user.userInformation,
+    user.workArea,
+    user.studentClassGroup,
+    user.orgRole
+  )
 
   return (
     <Card>
@@ -131,7 +136,7 @@ const StatisticsCard = (isAdmin: any = false) => {
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
         <Grid container spacing={[5, 0]}>
-          {renderStats([...statsData])}
+          {renderStats(statsData)}
         </Grid>
       </CardContent>
     </Card>

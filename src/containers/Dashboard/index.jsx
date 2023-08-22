@@ -36,10 +36,10 @@ const Dashboard = () => {
         <Grid item xs={12}>
           <WelcomeCard />
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <StatisticsCard />
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <WeeklyOverview />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
