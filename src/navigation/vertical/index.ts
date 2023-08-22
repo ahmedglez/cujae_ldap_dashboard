@@ -27,44 +27,44 @@ const navigation = (): VerticalNavItemsType => {
       icon: Login,
       path: '/login',
       openInNewTab: true
-    },
-    {
+    }
+    /* {
       title: 'Register',
       icon: AccountPlusOutline,
       path: '/register',
       openInNewTab: true
-    }
+    } */
     /*  {
       title: 'Error',
       icon: AlertCircleOutline,
       path: '/error',
       openInNewTab: true
     } */
-    /* {
+    /*  {
       sectionTitle: 'User Interface'
-    },
-    {
+    }, */
+    /* {
       title: 'Typography',
-      icon: FormatLetterCase,
+      icon: null,
       path: '/typography'
-    },
-    {
+    }, */
+    /*   {
       title: 'Icons',
       path: '/icons',
-      icon: GoogleCirclesExtended
-    },
-    {
+      icon: null
+    }, */
+    /*  {
       title: 'Cards',
-      icon: CreditCardOutline,
+      icon: null,
       path: '/cards'
-    },
-    {
+    }, */
+    /* {
       title: 'Tables',
-      icon: Table,
+      icon: null,
       path: '/tables'
-    },
-    {
-      icon: CubeOutline,
+    }, */
+    /*  {
+      icon: null,
       title: 'Form Layouts',
       path: '/form-layouts'
     } */
