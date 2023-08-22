@@ -24,7 +24,59 @@ const TrophyImg = styled('img')({
   height: 98,
   position: 'absolute',
   filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
-  fiter: 'blur(4px)'
+  fiter: 'blur(4px)',
+  cursor: 'pointer',
+  transition: 'all 0.3s ease-in-out',
+
+  /* add a shake it hover animation */
+  '&:hover': {
+    transition: 'all 0.3s ease-in-out',
+    animation: 'hello 3s infinite both',
+    /* rotate */
+
+    backfaceVisibility: 'hidden',
+    perspective: 1000
+  },
+
+  /* keyframes for the shake it animation */
+  '@keyframes hello': {
+    '0%': {
+      transform: 'rotate(0deg)'
+    },
+    '5%': {
+      transform: 'rotate(10deg)'
+    },
+    '10%': {
+      transform: 'rotate(-10deg)'
+    },
+    '15%': {
+      transform: 'rotate(10deg)'
+    },
+    '20%': {
+      transform: 'rotate(-10deg)'
+    },
+    '25%': {
+      transform: 'rotate(10deg)'
+    },
+    '30%': {
+      transform: 'rotate(-10deg)'
+    },
+    '35%': {
+      transform: 'rotate(10deg)'
+    },
+    '40%': {
+      transform: 'rotate(-10deg)'
+    },
+    '45%': {
+      transform: 'rotate(10deg)'
+    },
+    '50%': {
+      transform: 'rotate(0deg)'
+    },
+    '100%': {
+      transform: 'rotate(0deg)'
+    }
+  }
 })
 
 const WelcomeCard = () => {
