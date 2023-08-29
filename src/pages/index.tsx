@@ -1,5 +1,5 @@
 import ProtectedRoute from '@/components/ProtectedRoute'
-import Dashboard from '@/containers/Dashboard'
+import Dashboard from '@/views/dashboard'
 
 const IndexPage = () => {
   return (

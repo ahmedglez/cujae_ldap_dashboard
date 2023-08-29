@@ -2,10 +2,10 @@
 import Grid from '@mui/material/Grid'
 
 // ** Icons Imports
-import Poll from 'mdi-material-ui/Poll'
+import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
-import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
+import Poll from 'mdi-material-ui/Poll'
 
 // ** Custom Components Imports
 import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
@@ -14,18 +14,17 @@ import CardStatisticsVerticalComponent from 'src/@core/components/card-statistic
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 // ** Components Imports
-import WelcomeCard from '@/containers/Dashboard/components/WelcomeCard'
+import WelcomeCard from '@/views/dashboard/WelcomeCard'
 import ContactMuralCard from '@/views/dashboard/ContactMuralCard'
 
 // ** Demo Components Imports
-import Table from 'src/views/dashboard/Table'
-import Trophy from 'src/views/dashboard/Trophy'
-import TotalEarning from 'src/views/dashboard/TotalEarning'
-import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
+import CustomCard from '@/views/dashboard/CustomCard'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
-import CustomCard from '@/views/dashboard/CustomCard'
+import StatisticsCard from 'src/views/dashboard/StatisticsCard'
+import Table from 'src/views/dashboard/Table'
+import TotalEarning from 'src/views/dashboard/TotalEarning'
+import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 
 // ** Hooks
 import useAvatarSelector from '@/hooks/useAvatarSelector'
