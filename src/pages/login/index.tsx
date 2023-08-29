@@ -1,36 +1,31 @@
 // ** React Imports
-import { ChangeEvent, MouseEvent, ReactNode, useState } from 'react'
+import { ChangeEvent, MouseEvent, ReactNode, useEffect, useState } from 'react'
 
 // ** Next Imports
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import CardContent from '@mui/material/CardContent'
-import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
 import MuiCard, { CardProps } from '@mui/material/Card'
-import InputAdornment from '@mui/material/InputAdornment'
-import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+import CardContent from '@mui/material/CardContent'
+import Checkbox from '@mui/material/Checkbox'
 import CircularProgress from '@mui/material/CircularProgress'
+import FormControl from '@mui/material/FormControl'
+import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { styled, useTheme } from '@mui/material/styles'
 
 // ** Icons Imports
-import Google from 'mdi-material-ui/Google'
-import Github from 'mdi-material-ui/Github'
-import Twitter from 'mdi-material-ui/Twitter'
-import Facebook from 'mdi-material-ui/Facebook'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import EyeOutline from 'mdi-material-ui/EyeOutline'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -45,10 +40,13 @@ import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 import logo from '/src/assets/images/favicon.png'
 
 // ** Utils
-import { saveToken, checkRoles, getLastTimeLogged } from '@/helpers/jwtUtils'
+import { checkRoles, getLastTimeLogged, saveToken } from '@/helpers/jwtUtils'
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
+
+// ** Custom Hooks
+import useRememberCredentials from '@/hooks/useRememberCredentials'
 
 // ** Others
 import { withoutAuthAxiosInstance } from 'src/constants/axiosInstance'
@@ -78,8 +76,8 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 
 const LoginPage = () => {
   // ** State
-  const [username, setUsername] = useState('ahmedivan.gonzalez')
-  const [password, setPassword] = useState('00092068426')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -88,9 +86,16 @@ const LoginPage = () => {
   const login = useProfileStore(state => state.login)
   const logout = useProfileStore(state => state.logout)
 
-  // ** Hook
+  // ** Hooks
   const theme = useTheme()
   const router = useRouter()
+  const { rememberMe, rememberedUsername, rememberedPassword, handleRememberMe, saveRememberedCredentials } =
+    useRememberCredentials()
+
+  useEffect(() => {
+    if (rememberedUsername) setUsername(rememberedUsername)
+    if (rememberedPassword) setPassword(rememberedPassword)
+  }, [rememberedUsername, rememberedPassword])
 
   const handleChangeUsername = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
@@ -124,6 +129,7 @@ const LoginPage = () => {
         const isAdmin = checkRoles('admin')
         const last_time_logged = getLastTimeLogged()
         login(user, isAdmin, last_time_logged)
+        saveRememberedCredentials(username, password)
         router.push('/')
       } catch (err) {
         setError('Failed to log in. Please check your credentials.')
@@ -196,9 +202,12 @@ const LoginPage = () => {
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
+              <FormControlLabel
+                control={<Checkbox checked={rememberMe} onChange={handleRememberMe} />}
+                label='Recuérdame'
+              />
               <Link passHref href='/'>
-                <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
+                <LinkStyled onClick={e => e.preventDefault()}>Olvidaste la contraseña?</LinkStyled>
               </Link>
             </Box>
             <Button
@@ -216,43 +225,8 @@ const LoginPage = () => {
                   }}
                 />
               )}
-              {!isLoading && 'Login'}
+              {!isLoading && 'Iniciar sesión'}
             </Button>
-            {/*             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Typography variant='body2' sx={{ marginRight: 2 }}>
-                New on our platform?
-              </Typography>
-              <Typography variant='body2'>
-                <Link passHref href='/register'>
-                  <LinkStyled>Create an account</LinkStyled>
-                </Link>
-              </Typography>
-            </Box>
-            <Divider sx={{ my: 5 }}>or</Divider>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Facebook sx={{ color: '#497ce2' }} />
-                </IconButton>
-              </Link>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Twitter sx={{ color: '#1da1f2' }} />
-                </IconButton>
-              </Link>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Github
-                    sx={{ color: theme => (theme.palette.mode === 'light' ? '#272727' : theme.palette.grey[300]) }}
-                  />
-                </IconButton>
-              </Link>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Google sx={{ color: '#db4437' }} />
-                </IconButton>
-              </Link>
-            </Box> */}
           </form>
         </CardContent>
       </Card>
