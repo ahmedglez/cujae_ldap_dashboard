@@ -4,13 +4,12 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import logo from 'public/images/favicon.png'
 import Image from 'next/image'
 
 // ** Icons Imports
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 
-const CardSigenu = () => {
+const CustomCard = ({ title, description, image, link, cta }) => {
   return (
     <Card>
       <CardContent
@@ -25,30 +24,26 @@ const CardSigenu = () => {
         <Avatar
           sx={{ width: 80, height: 80, marginBottom: 2.25, color: 'common.white', backgroundColor: 'primary.main' }}
         >
-          <Image src={logo} alt='logo' layout='fill' />
+          <Image src={image} alt='logo' layout='fill' />
         </Avatar>
         <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
-          SIGENU
+          {title}
         </Typography>
         <Typography variant='body2' sx={{ marginBottom: 6 }}>
-          Accede a SIGENU para visualizar información académica y calificaciones de estudiantes de forma rápida y
-          sencilla.
+          {description}
         </Typography>
         <Button
           variant='contained'
           sx={{ padding: theme => theme.spacing(1.75, 5.5) }}
           onClick={() => {
-            window.open(
-              'https://sigenu.cujae.edu.cu/josso/signon/login.do?josso_back_to=https://sigenu.cujae.edu.cu/sigenu-dss/josso_security_check&josso_partnerapp_id=sigenudss-partner',
-              '_blank'
-            )
+            window.open(link, '_blank')
           }}
         >
-          Acceder a SIGENU
+          {cta}
         </Button>
       </CardContent>
     </Card>
   )
 }
 
-export default CardSigenu
+export default CustomCard
