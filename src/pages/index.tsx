@@ -1,4 +1,4 @@
-import ProtectedRoute from '@/components/ProtectedRoute'
+import ProtectedRoute from '@/components/hocs/ProtectedRoute'
 import Dashboard from '@/views/dashboard'
 
 const IndexPage = () => {
