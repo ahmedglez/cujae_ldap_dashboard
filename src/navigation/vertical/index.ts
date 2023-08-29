@@ -1,8 +1,8 @@
 // ** Icon imports
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
-import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
+import AccountGroup from 'mdi-material-ui/AccountGroup'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -20,6 +20,11 @@ const navigation = (): VerticalNavItemsType => {
       path: '/account-settings'
     },
     {
+      title: 'Administrar usuarios',
+      icon: AccountGroup,
+      path: '/admin/users'
+    },
+    {
       sectionTitle: 'Pages'
     },
     {
@@ -28,6 +33,7 @@ const navigation = (): VerticalNavItemsType => {
       path: '/login',
       openInNewTab: true
     }
+
     /* {
       title: 'Register',
       icon: AccountPlusOutline,
