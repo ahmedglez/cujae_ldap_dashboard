@@ -135,7 +135,7 @@ const columns = [
   'Estado'
 ]
 
-const UsersTable = () => {
+const EmployeesTable = () => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -160,4 +160,4 @@ const UsersTable = () => {
   )
 }
 
-export default UsersTable
+export default EmployeesTable

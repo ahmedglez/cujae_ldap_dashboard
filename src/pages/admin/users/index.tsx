@@ -1,8 +1,10 @@
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import AdminRoute from '@/components/hocs/AdminRoute'
 import useFetchUsers from '@/hooks/useFetchUsers'
 import useProfileStore from '@/stores/profile.store'
-import React, { useState } from 'react'
-import UsersTable from '@/views/admin/users/UsersTable'
+import StudentsTable from '@/views/admin/users/StudentsTable'
+import EmployeesTable from '@/views/admin/users/EmployeesTable'
 
 interface User {
   // Define your user object's properties here
@@ -20,12 +22,17 @@ const UsersPage: React.FC = () => {
   const baseDN = useProfileStore(state => state.baseDN)
   const { loading, error, users } = useFetchUsers(`/users/baseDN`, baseDN, page, limit)
 
-  console.log('users', users)
-  console.log('error', error)
+  const router = useRouter()
+  const userType = router.query.userType // Assuming the route parameter is "userType"
   return (
     <div>
       <h1>Listado de usuarios</h1>
-      {!loading && users.length > 0 && <UsersTable />}
+      {!loading && users.length > 0 && (
+        <>
+          {userType === 'students' && <StudentsTable users={users} />}
+          {userType === 'employees' && <EmployeesTable users={users} />}
+        </>
+      )}
     </div>
   )
 }

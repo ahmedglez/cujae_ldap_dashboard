@@ -3,6 +3,7 @@ import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
 import AccountGroup from 'mdi-material-ui/AccountGroup'
+import School from 'mdi-material-ui/School'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -20,9 +21,17 @@ const navigation = (): VerticalNavItemsType => {
       path: '/account-settings'
     },
     {
-      title: 'Administrar usuarios',
+      sectionTitle: 'Administrar usuarios'
+    },
+    {
+      title: 'Estudiantes',
+      icon: School,
+      path: '/admin/users?userType=students'
+    },
+    {
+      title: 'Empleados',
       icon: AccountGroup,
-      path: '/admin/users'
+      path: '/admin/users?userType=employees'
     },
     {
       sectionTitle: 'Pages'
