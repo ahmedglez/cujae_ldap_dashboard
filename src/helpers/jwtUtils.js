@@ -3,7 +3,7 @@ import jwt_decode from 'jwt-decode'
 const TOKEN_KEY = 'jwtToken'
 
 export const saveToken = token => {
-  localStorage.saveItem(TOKEN_KEY, token)
+  localStorage.setItem(TOKEN_KEY, token)
 }
 
 export const getToken = () => {
