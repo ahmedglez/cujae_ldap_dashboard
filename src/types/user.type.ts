@@ -1,4 +1,4 @@
-type UserType = {
+interface UserType {
   uid: string
   cn: string
   sn: string
@@ -13,6 +13,8 @@ type UserType = {
   homeAddress: string
   skinColor: string
   dn: string
+  right: string
+  dayRegister: string
   userStatus: string
 }
 

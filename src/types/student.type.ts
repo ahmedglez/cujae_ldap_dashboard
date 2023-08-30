@@ -1,5 +1,5 @@
 import UserType from './user.type'
 
-type StudentType = UserType & {}
+interface StudentType extends UserType {}
 
 export default StudentType

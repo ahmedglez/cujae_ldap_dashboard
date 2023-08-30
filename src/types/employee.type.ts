@@ -1,5 +1,5 @@
 import UserType from './user.type'
 
-type EmployeeType = UserType & {}
+interface EmployeeType extends UserType {}
 
 export default EmployeeType
