@@ -87,8 +87,6 @@ const WelcomeCard = () => {
   const router = useRouter()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-  console.log('user', user)
-
   const handleClick = () => {
     router.push('account-settings/')
   }

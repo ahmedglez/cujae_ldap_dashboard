@@ -23,7 +23,6 @@ export const withAuthAxiosInstance = axios.create({
 withAuthAxiosInstance.interceptors.request.use(
   config => {
     const jwtToken = getToken()
-    console.log(`Bearer ${jwtToken}`)
     if (jwtToken) {
       config.headers['Authorization'] = `Bearer ${jwtToken}`
     }
