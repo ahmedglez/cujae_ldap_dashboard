@@ -37,7 +37,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 
 // ** Logo
-import logo from '@/assets/images/favicon.png'
+import logo from 'public/images/favicon.png'
 
 // ** Utils
 import { checkRoles, decodeJWT, getLastTimeLogged, saveToken } from '@/helpers/jwtUtils'
@@ -78,6 +78,7 @@ interface DecodedToken {
   uid: string
   groups: string[]
   base: string
+  localBase: string
   // Add other properties here if necessary
 }
 
@@ -136,7 +137,15 @@ const LoginPage = () => {
         const isAdmin = checkRoles('admin')
         const last_time_logged = getLastTimeLogged()
         const decodedToken = decodeJWT() as DecodedToken
-        login(user, isAdmin, last_time_logged, decodedToken.uid, decodedToken.groups, decodedToken.base)
+        login(
+          user,
+          isAdmin,
+          last_time_logged,
+          decodedToken.uid,
+          decodedToken.groups,
+          decodedToken.base,
+          decodedToken.localBase
+        )
         saveRememberedCredentials(username, password)
         router.push('/')
       } catch (err) {

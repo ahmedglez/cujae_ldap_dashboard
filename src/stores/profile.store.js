@@ -8,13 +8,14 @@ const initialState = {
   last_time_logged: null,
   uid: null,
   groups: [],
-  base: null
+  base: null,
+  baseDN: null
 }
 
 const useProfileStore = create(set => ({
   ...initialState,
 
-  login: (user, isAdmin = false, last_time_logged = null, uid = null, groups = [], base = null) =>
+  login: (user, isAdmin = false, last_time_logged = null, uid = null, groups = [], base = null, baseDN = null) =>
     set(state => ({
       ...state,
       user,
@@ -23,7 +24,8 @@ const useProfileStore = create(set => ({
       last_time_logged: last_time_logged,
       uid: uid,
       groups: groups,
-      base: base
+      base: base,
+      baseDN: baseDN
     })),
   logout: () =>
     set(state => ({
@@ -52,14 +54,24 @@ if (typeof window !== 'undefined') {
       const persistedState = {
         user: state.user,
         isLoggedIn: state.isLoggedIn,
-        avatar: state.avatar
+        avatar: state.avatar,
+        isAdmin: state.isAdmin,
+        uid: state.uid,
+        groups: state.groups,
+        base: state.base,
+        baseDN: state.baseDN
       }
       localStorage.setItem('profileStoreState', JSON.stringify(persistedState))
     },
     state => ({
       user: state.user,
       isLoggedIn: state.isLoggedIn,
-      avatar: state.avatar
+      avatar: state.avatar,
+      isAdmin: state.isAdmin,
+      uid: state.uid,
+      groups: state.groups,
+      base: state.base,
+      baseDN: state.baseDN
     })
   )
 }
