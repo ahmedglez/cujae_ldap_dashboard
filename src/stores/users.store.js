@@ -1,15 +1,12 @@
 // userStore.js
-import create from 'zustand'
+import { create } from 'zustand'
 
 const useUserStore = create(set => ({
   users: [], // To store all users
   activeUsers: [], // To store active users
   searchInput: '', // For the search input
   pagination: null,
-  filters: {
-    isActive: true,
-    userType: null
-  },
+  filters: [],
 
   // Update the users state
   setUsers: users => set({ users }),
