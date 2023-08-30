@@ -1,7 +1,7 @@
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
 import { useEffect, useState } from 'react'
 
-const useFetchUsers = (baseDN, page, limit) => {
+const useFetchUsers = (ednpoint, baseDN, page, limit) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [users, setUsers] = useState([])
@@ -10,7 +10,7 @@ const useFetchUsers = (baseDN, page, limit) => {
     const fetchData = async () => {
       try {
         setLoading(true)
-        const response = await withAuthAxiosInstance.post(`/users/baseDN?page=${page}&limit=${limit}`, {
+        const response = await withAuthAxiosInstance.post(`${ednpoint}?page=${page}&limit=${limit}`, {
           baseDN
         })
         setUsers(response.data.data)
