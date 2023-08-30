@@ -13,6 +13,7 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import TableContainer from '@mui/material/TableContainer'
+import StudentType from '@/types/student.type'
 
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
@@ -135,7 +136,10 @@ const columns = [
   'Estado'
 ]
 
-const StudentsTable = () => {
+interface StudentsTableProps {
+  students: StudentType[] // Using the StudentArray type defined earlier
+}
+const StudentsTable: React.FC<StudentsTableProps> = ({ students }) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -151,8 +155,9 @@ const StudentsTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <Row key={row.name} row={row} />
+          {students.map(student => (
+            /*   <Row key={row.name} row={row} /> */
+            <p>{student.uid}</p>
           ))}
         </TableBody>
       </Table>

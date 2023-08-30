@@ -17,6 +17,7 @@ import TableContainer from '@mui/material/TableContainer'
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
+import EmployeeType from '@/types/employee.type'
 
 const useStyles = () => ({
   tableCell: {
@@ -135,7 +136,10 @@ const columns = [
   'Estado'
 ]
 
-const EmployeesTable = () => {
+interface EmployeesTableProps {
+  employees: EmployeeType[]
+}
+const EmployeesTable: React.FC<EmployeesTableProps> = ({ employees }) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -151,8 +155,9 @@ const EmployeesTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <Row key={row.name} row={row} />
+          {employees.map(employee => (
+            /*  <Row key={row.name} row={row} /> */
+            <p>{employee.uid}</p>
           ))}
         </TableBody>
       </Table>
