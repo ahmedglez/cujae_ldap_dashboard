@@ -4,6 +4,7 @@ import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
 import AccountGroup from 'mdi-material-ui/AccountGroup'
 import School from 'mdi-material-ui/School'
+import { user_types_query } from '@/constants/userTypes'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -26,12 +27,12 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Estudiantes',
       icon: School,
-      path: '/admin/users?userType=students'
+      path: `/admin/users?userType=${user_types_query[0]}`
     },
     {
       title: 'Empleados',
       icon: AccountGroup,
-      path: '/admin/users?userType=employees'
+      path: `/admin/users?userType=${user_types_query[1]}`
     },
     {
       sectionTitle: 'Pages'
