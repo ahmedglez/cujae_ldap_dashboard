@@ -1,13 +1,9 @@
 import useUserStore from '@/stores/users.store'
 import TablePagination from '@mui/material/TablePagination'
-import { useState } from 'react'
 
 const PaginationTable = () => {
-  const [currentPage, setCurrentPage] = useState(0)
   const { pagination, setPagination, users } = useUserStore(state => state)
   const { page, rowsPerPage } = pagination
-
-  console.log('pagination', pagination)
 
   const handleChangePage = (event, newPage) => {
     setPagination({

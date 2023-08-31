@@ -54,29 +54,42 @@ const StudentRow: React.FC<StudentRowProps> = ({ student, index }) => {
         <TableCell colSpan={6} sx={{ py: '0 !important' }}>
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box sx={{ m: 2 }}>
-              <Typography variant='h6' gutterBottom component='div'>
-                History
-              </Typography>
               <Table size='small' aria-label='purchases'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align='right'>Amount</TableCell>
-                    <TableCell align='right'>Total price ($)</TableCell>
+                    <TableCell sx={classes.tableCell}>Carrera</TableCell>
+                    <TableCell sx={classes.tableCell}>Año</TableCell>
+                    <TableCell sx={classes.tableCell}>Grupo</TableCell>
+                    <TableCell sx={classes.tableCell}>Tipo de Curso</TableCell>
+                    <TableCell sx={classes.tableCell}>Condición</TableCell>
+                    <TableCell sx={classes.tableCell}>Estado</TableCell>
+                    <TableCell sx={classes.tableCell}>UJC</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/*  {student.history.map(historyRow => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component='th' scope='row'>
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align='right'>{historyRow.amount}</TableCell>
-                      <TableCell align='right'>{Math.round(historyRow.amount * student.price * 100) / 100}</TableCell>
-                    </TableRow>
-                  ))} */}
+                  <TableRow>
+                    <TableCell sx={classes.tableCell} component='th' scope='row'>
+                      {student.career}
+                    </TableCell>
+                    <TableCell sx={classes.tableCell} component='th' scope='row'>
+                      {student.studentYear}
+                    </TableCell>
+                    <TableCell sx={classes.tableCell} component='th' scope='row'>
+                      {student.studentClassGroup}
+                    </TableCell>
+                    <TableCell sx={classes.tableCell} component='th' scope='row'>
+                      {student.userInformation}
+                    </TableCell>
+                    <TableCell sx={classes.tableCell} component='th' scope='row'>
+                      {student.userCondition}
+                    </TableCell>
+                    <TableCell sx={classes.tableCell} component='th' scope='row'>
+                      {student.userStatus}
+                    </TableCell>
+                    <TableCell sx={classes.tableCell} component='th' scope='row'>
+                      {student.UJC.toUpperCase()}
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Box>
