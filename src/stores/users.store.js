@@ -3,16 +3,15 @@ import { create } from 'zustand'
 
 const useUserStore = create(set => ({
   users: [], // To store all users
-  activeUsers: [], // To store active users
   searchInput: '', // For the search input
-  pagination: null,
+  pagination: {
+    page: 1,
+    limit: 20
+  },
   filters: [],
 
   // Update the users state
-  setUsers: users => set({ users }),
-
-  // Update the active users state
-  setActiveUsers: activeUsers => set({ activeUsers }),
+  setUsers: users => set({ users: users }),
 
   // Update the search input state
   setSearchInput: searchInput => set({ searchInput }),
@@ -21,23 +20,7 @@ const useUserStore = create(set => ({
   setPagination: pagination => set({ pagination }),
 
   // Update filter optionsx
-  setFilters: newFilters => set(state => ({ filters: { ...state.filters, ...newFilters } })),
-
-  getFilteredUsers: () => {
-    const { users, filters } = useUserStore.getState()
-    const filteredUsers = users.filter(user => {
-      // Apply filters based on filter options
-      if (filters.isActive && !user.isActive) {
-        return false
-      }
-      if (filters.userType && user.userType !== filters.userType) {
-        return false
-      }
-      // Add more filter conditions as needed
-      return true
-    })
-    return filteredUsers
-  }
+  setFilters: newFilters => set(state => ({ filters: { ...state.filters, ...newFilters } }))
 }))
 
 export default useUserStore

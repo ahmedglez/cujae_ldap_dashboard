@@ -10,26 +10,28 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import UserType from '@/types/user.type'
 import useUserStore from '@/stores/users.store'
+import usePaginateUsers from '@/hooks/usePaginateUsers'
 
 type UsersPageProps = {
   userType: string
 }
 
+const LIMIT = 5000
 const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
   const router = useRouter()
-  const [page, setPage] = useState<number>(0)
-  const [limit, setLimit] = useState<number>(50)
   const baseDN = useProfileStore(state => state.baseDN)
+  const { setUsers } = useUserStore(state => state)
 
   const {
     loading,
     error,
     users: responseUsers
-  } = useFetchUsers(`/users/baseDN?userType=${userType}&page=${page}&limit=${limit}`, baseDN)
+  } = useFetchUsers(`/users/baseDN?userType=${userType}&page=${1}&limit=${LIMIT}`, baseDN)
 
-  const { users, setUsers } = useUserStore(state => state)
-  const students = users?.filter((user: UserType) => user.userType === userTypes[0]) as StudentType[]
-  const employees = users?.filter((user: UserType) => user.userType === userTypes[1]) as EmployeeType[]
+  const paginatedUsers = usePaginateUsers()
+
+  const students = paginatedUsers?.filter((user: UserType) => user.userType === userTypes[0]) as StudentType[]
+  const employees = paginatedUsers?.filter((user: UserType) => user.userType === userTypes[1]) as EmployeeType[]
 
   useEffect(() => {
     if (!loading && responseUsers.length > 0) {
@@ -41,7 +43,7 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
   return (
     <div>
       <h1>Listado de usuarios</h1>
-      {!loading && users && (
+      {!loading && paginatedUsers && (
         <>
           {userType === user_types_query[0] && <StudentsTable students={students} />}
           {userType === user_types_query[1] && <EmployeesTable employees={employees} />}
