@@ -19,43 +19,21 @@ import StudentType from '@/types/student.type'
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 
-const useStyles = () => ({
-  tableCell: {
-    whiteSpace: 'nowrap', // Evita el salto de línea
-    overflow: 'hidden', // Oculta el exceso de texto
-    textOverflow: 'ellipsis' // Agrega puntos suspensivos si el texto es demasiado largo
-  }
-})
+// ** Data
+import columns from './data/columns'
+import attributeMapping from './data/attributeMapping'
 
-const createData = (name: string, calories: number, fat: number, carbs: number, protein: number, price: number) => {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1
-      }
-    ]
-  }
+// ** Styles
+import useStyles from './styles'
+
+interface StudentRowProps {
+  student: StudentType
+  index: number
 }
 
-const Row = (props: { row: ReturnType<typeof createData> }) => {
-  // ** Props
-  const { row } = props
-
-  // ** State
-  const [open, setOpen] = useState<boolean>(false)
+const StudentRow: React.FC<StudentRowProps> = ({ student, index }) => {
+  const [open, setOpen] = useState(false)
+  const classes = useStyles()
 
   return (
     <Fragment>
@@ -65,13 +43,12 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
             {open ? <ChevronUp /> : <ChevronDown />}
           </IconButton>
         </TableCell>
-        <TableCell component='th' scope='row'>
-          {row.name}
-        </TableCell>
-        <TableCell align='right'>{row.calories}</TableCell>
-        <TableCell align='right'>{row.fat}</TableCell>
-        <TableCell align='right'>{row.carbs}</TableCell>
-        <TableCell align='right'>{row.protein}</TableCell>
+
+        {attributeMapping.map(attribute => (
+          <TableCell sx={classes.tableCell} key={attribute} size='small' align='center'>
+            {student[attribute as keyof StudentType]}
+          </TableCell>
+        ))}
       </TableRow>
       <TableRow>
         <TableCell colSpan={6} sx={{ py: '0 !important' }}>
@@ -90,16 +67,16 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map(historyRow => (
+                  {/*  {student.history.map(historyRow => (
                     <TableRow key={historyRow.date}>
                       <TableCell component='th' scope='row'>
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.customerId}</TableCell>
                       <TableCell align='right'>{historyRow.amount}</TableCell>
-                      <TableCell align='right'>{Math.round(historyRow.amount * row.price * 100) / 100}</TableCell>
+                      <TableCell align='right'>{Math.round(historyRow.amount * student.price * 100) / 100}</TableCell>
                     </TableRow>
-                  ))}
+                  ))} */}
                 </TableBody>
               </Table>
             </Box>
@@ -109,32 +86,6 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
     </Fragment>
   )
 }
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5)
-]
-
-const columns = [
-  'Nombre de Usuario',
-  'Nombre',
-  'Apellidos',
-  'Tipo de Usuario',
-  'CI',
-  'Sexo',
-  'Correo Electrónico',
-  'Area',
-  'País',
-  'Teléfono',
-  'Municipio',
-  'Dirección',
-  'Color de Piel',
-  'DN',
-  'Estado'
-]
 
 interface StudentsTableProps {
   students: StudentType[] // Using the StudentArray type defined earlier
@@ -155,9 +106,8 @@ const StudentsTable: React.FC<StudentsTableProps> = ({ students }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {students.map(student => (
-            /*   <Row key={row.name} row={row} /> */
-            <p>{student.uid}</p>
+          {students.map((student, index) => (
+            <StudentRow key={student.uid} student={student} index={index} />
           ))}
         </TableBody>
       </Table>

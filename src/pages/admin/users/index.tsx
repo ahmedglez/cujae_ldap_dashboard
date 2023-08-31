@@ -9,17 +9,21 @@ import StudentsTable from '@/views/admin/users/StudentsTable'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-const UsersPage = ({ userType }) => {
+type UsersPageProps = {
+  userType: string
+}
+
+const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
   const router = useRouter()
   const [page, setPage] = useState<number>(0)
-  const [limit, setLimit] = useState<number>(10)
+  const [limit, setLimit] = useState<number>(20)
   const baseDN = useProfileStore(state => state.baseDN)
 
   const {
     loading,
     error,
     users: responseUsers
-  } = useFetchUsers(`/users/baseDN?userType=${userType}&page=${page}&limit=${limit}`, baseDN, page, limit)
+  } = useFetchUsers(`/users/baseDN?userType=${userType}&page=${page}&limit=${limit}`, baseDN)
   const [students, setStudents] = useState<StudentType[]>([])
   const [employees, setEmployees] = useState<EmployeeType[]>([])
 
@@ -46,7 +50,7 @@ const UsersPage = ({ userType }) => {
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   const { userType } = context.query // Extract userType from query parameter
   return {
     props: {
