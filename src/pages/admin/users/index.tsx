@@ -9,6 +9,7 @@ import StudentsTable from '@/views/admin/users/StudentsTable'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import UserType from '@/types/user.type'
+import useUserStore from '@/stores/users.store'
 
 type UsersPageProps = {
   userType: string
@@ -26,9 +27,9 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
     users: responseUsers
   } = useFetchUsers(`/users/baseDN?userType=${userType}&page=${page}&limit=${limit}`, baseDN)
 
-  const [users, setUsers] = useState<UserType[]>([])
-  const students = users?.filter(user => user.userType === userTypes[0]) as StudentType[]
-  const employees = users?.filter(user => user.userType === userTypes[1]) as EmployeeType[]
+  const { users, setUsers } = useUserStore(state => state)
+  const students = users?.filter((user: UserType) => user.userType === userTypes[0]) as StudentType[]
+  const employees = users?.filter((user: UserType) => user.userType === userTypes[1]) as EmployeeType[]
 
   useEffect(() => {
     if (!loading && responseUsers.length > 0) {
