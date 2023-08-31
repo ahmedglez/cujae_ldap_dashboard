@@ -6,7 +6,7 @@ const useUserStore = create(set => ({
   searchInput: '', // For the search input
   pagination: {
     page: 1,
-    limit: 20
+    rowsPerPage: 25
   },
   filters: [],
 

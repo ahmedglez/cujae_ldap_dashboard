@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 import UserType from '@/types/user.type'
 import useUserStore from '@/stores/users.store'
 import usePaginateUsers from '@/hooks/usePaginateUsers'
+import PaginationTable from '@/components/PaginationTable'
 
 type UsersPageProps = {
   userType: string
@@ -49,6 +50,7 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
           {userType === user_types_query[1] && <EmployeesTable employees={employees} />}
         </>
       )}
+      {!loading && UsersPage.length > 0 && <PaginationTable />}
     </div>
   )
 }

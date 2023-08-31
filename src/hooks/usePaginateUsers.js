@@ -8,17 +8,19 @@ const usePaginateUsers = () => {
   useEffect(() => {
     // Get the initial rendered users
     const initialRenderedUsers = users.slice(
-      (pagination.page - 1) * pagination.limit,
-      pagination.page * pagination.limit
+      (pagination.page - 1) * pagination.rowsPerPage,
+      pagination.page * pagination.rowsPerPage
     )
-
     // Set the initial rendered users
     setPaginatedUsers(initialRenderedUsers)
-  }, [users, pagination])
+  }, [users])
 
   // Update the rendered users whenever the pagination changes
   useEffect(() => {
-    const newRenderedUsers = users.slice((pagination.page - 1) * pagination.limit, pagination.page * pagination.limit)
+    const newRenderedUsers = users.slice(
+      (pagination.page - 1) * pagination.rowsPerPage,
+      pagination.page * pagination.rowsPerPage
+    )
 
     // Set the new rendered users
     setPaginatedUsers(newRenderedUsers)
