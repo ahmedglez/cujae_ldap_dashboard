@@ -30,7 +30,7 @@ const navigation = (): VerticalNavItemsType => {
       path: `/admin/users?userType=${user_types_query[0]}`
     },
     {
-      title: 'Empleados',
+      title: 'Trabajadores',
       icon: AccountGroup,
       path: `/admin/users?userType=${user_types_query[1]}`
     },
