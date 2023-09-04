@@ -30,6 +30,12 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
   } = useFetchUsers(`/users/baseDN?userType=${userType}&page=${1}&limit=${LIMIT}`, baseDN)
 
   const paginatedUsers = usePaginateUsers()
+  const getLabel = () => {
+    if (userType === user_types_query[0]) return `Estudiantes`
+    else if (userType === user_types_query[1]) return `Trabajadores`
+    else if (userType === user_types_query[2]) return `Trabajadores Docentes`
+    else return 'Usuarios'
+  }
 
   const students = paginatedUsers?.filter((user: UserType) => user.userType === userTypes[0]) as StudentType[]
   const employees = paginatedUsers?.filter((user: UserType) => user.userType === userTypes[1]) as EmployeeType[]
@@ -41,12 +47,14 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
     }
   }, [responseUsers, userType, loading])
 
+  console.log('employees', employees)
+
   return (
     <div>
-      <h1>Listado de usuarios</h1>
+      <h1>{`Listado de ${getLabel()}`}</h1>
       <>
         {userType === user_types_query[0] && <StudentsTable students={students} loading={loading} />}
-        {/* {userType === user_types_query[1] && <EmployeesTable employees={employees} />} */}
+        {userType === user_types_query[1] && <EmployeesTable employees={employees} loading={loading} />}
       </>
       {!loading && UsersPage.length > 0 && <PaginationTable />}
     </div>
