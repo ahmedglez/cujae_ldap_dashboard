@@ -44,12 +44,10 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
   return (
     <div>
       <h1>Listado de usuarios</h1>
-      {!loading && paginatedUsers && (
-        <>
-          {userType === user_types_query[0] && <StudentsTable students={students} />}
-          {userType === user_types_query[1] && <EmployeesTable employees={employees} />}
-        </>
-      )}
+      <>
+        {userType === user_types_query[0] && <StudentsTable students={students} loading={loading} />}
+        {/* {userType === user_types_query[1] && <EmployeesTable employees={employees} />} */}
+      </>
       {!loading && UsersPage.length > 0 && <PaginationTable />}
     </div>
   )

@@ -1,30 +1,24 @@
-// ** React Imports
-import { useState, Fragment } from 'react'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import Collapse from '@mui/material/Collapse'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import TableContainer from '@mui/material/TableContainer'
+import React, { useState, Fragment } from 'react'
+import {
+  Box,
+  Paper,
+  Table,
+  Collapse,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  IconButton,
+  TableContainer,
+  Typography
+} from '@mui/material'
+import ChevronUpIcon from 'mdi-material-ui/ChevronUp'
+import ChevronDownIcon from 'mdi-material-ui/ChevronDown'
 import StudentType from '@/types/student.type'
-
-// ** Icons Imports
-import ChevronUp from 'mdi-material-ui/ChevronUp'
-import ChevronDown from 'mdi-material-ui/ChevronDown'
-
-// ** Data
 import columns from './data/columns'
 import attributeMapping from './data/attributeMapping'
-
-// ** Styles
 import useStyles from './styles'
+import Skeleton from '@mui/material/Skeleton'
 
 interface StudentRowProps {
   student: StudentType
@@ -40,10 +34,9 @@ const StudentRow: React.FC<StudentRowProps> = ({ student, index }) => {
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
-            {open ? <ChevronUp /> : <ChevronDown />}
+            {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </IconButton>
         </TableCell>
-
         {attributeMapping.map(attribute => (
           <TableCell sx={classes.tableCell} key={attribute} size='small' align='center'>
             {student[attribute as keyof StudentType]}
@@ -101,9 +94,11 @@ const StudentRow: React.FC<StudentRowProps> = ({ student, index }) => {
 }
 
 interface StudentsTableProps {
-  students: StudentType[] // Using the StudentArray type defined earlier
+  students: StudentType[]
+  loading: boolean
 }
-const StudentsTable: React.FC<StudentsTableProps> = ({ students }) => {
+
+const StudentsTable: React.FC<StudentsTableProps> = ({ students, loading }) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -119,9 +114,30 @@ const StudentsTable: React.FC<StudentsTableProps> = ({ students }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {students.map((student, index) => (
-            <StudentRow key={student.uid} student={student} index={index} />
-          ))}
+          {!loading &&
+            students.length > 0 &&
+            students.map((student, index) => <StudentRow key={student.uid} student={student} index={index} />)}
+          {(loading || students.length === 0) && (
+            <>
+              {Array(10)
+                .fill(null)
+                .map((_, rowIndex) => (
+                  <TableRow key={rowIndex}>
+                    <TableCell colSpan={1}>
+                      {' '}
+                      <Skeleton animation='wave' />
+                    </TableCell>
+                    {columns.map((column, columnIndex) => (
+                      <TableCell key={columnIndex} colSpan={1}>
+                        {' '}
+                        {/* Adjust colSpan */}
+                        <Skeleton animation='wave' />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+            </>
+          )}
         </TableBody>
       </Table>
     </TableContainer>
