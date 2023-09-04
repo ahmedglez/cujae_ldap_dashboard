@@ -35,6 +35,11 @@ const navigation = (): VerticalNavItemsType => {
       path: `/admin/users?userType=${user_types_query[1]}`
     },
     {
+      title: 'Trabajadores Docentes',
+      icon: AccountGroup,
+      path: `/admin/users?userType=${user_types_query[2]}`
+    },
+    {
       sectionTitle: 'Pages'
     },
     {
