@@ -61,26 +61,16 @@ const TabInfo = () => {
               />
             </DatePickerWrapper>
           </Grid> */}
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              type='number'
-              label='Telefono'
-              value={user?.telephoneNumber}
-              disabled={true}
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='CI' value={user?.CI} disabled={true} InputLabelProps={{ shrink: true }} />
+            <TextField fullWidth label='CI' value={user?.CI} aria-readonly InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label='Direccion'
               value={user?.homeAddress}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -89,25 +79,19 @@ const TabInfo = () => {
               fullWidth
               label='Municipio'
               value={user?.sedeMunicipio}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label='Pais'
-              value={user?.country}
-              disabled={true}
-              InputLabelProps={{ shrink: true }}
-            />
+            <TextField fullWidth label='Pais' value={user?.country} aria-readonly InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label='Telefono'
               value={user?.telephoneNumber}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -131,7 +115,7 @@ const TabInfo = () => {
               fullWidth
               label='Genero'
               value={user?.sex === 'M' ? 'Masculino' : user?.sex === 'F' ? 'Femenino' : null}
-              disabled={true}
+              aria-readonly
             />
           </Grid>
           {/* <Grid item xs={12}>
