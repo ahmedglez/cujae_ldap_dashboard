@@ -104,37 +104,25 @@ const TabAccount = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label='Username'
-              value={user?.uid}
-              disabled={true}
-              InputLabelProps={{ shrink: true }}
-            />
+            <TextField fullWidth label='Username' value={user?.uid} aria-readonly InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label='Tipo de usuario'
               value={user?.userType}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' value={user?.cn} disabled={true} InputLabelProps={{ shrink: true }} />
+            <TextField fullWidth label='Name' value={user?.cn} aria-readonly InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label='Last Name'
-              value={user?.sn}
-              disabled={true}
-              InputLabelProps={{ shrink: true }}
-            />
+            <TextField fullWidth label='Last Name' value={user?.sn} aria-readonly InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Correo' value={user?.mail} disabled={true} InputLabelProps={{ shrink: true }} />
+            <TextField fullWidth label='Correo' value={user?.mail} aria-readonly InputLabelProps={{ shrink: true }} />
           </Grid>
           {/* <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
@@ -153,7 +141,7 @@ const TabAccount = () => {
               fullWidth
               label='Rol'
               value={user?.right === 'Todos' ? 'Admin' : 'User'}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -181,14 +169,14 @@ const TabAccount = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Area' value={user?.area} disabled={true} InputLabelProps={{ shrink: true }} />
+            <TextField fullWidth label='Area' value={user?.area} aria-readonly InputLabelProps={{ shrink: true }} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label='Carrera'
               value={user?.career}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -197,7 +185,7 @@ const TabAccount = () => {
               fullWidth
               label='Año escolar'
               value={user?.studentYear}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -206,7 +194,7 @@ const TabAccount = () => {
               fullWidth
               label='Grupo'
               value={user?.studentClassGroup}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -215,7 +203,7 @@ const TabAccount = () => {
               fullWidth
               label='UJC'
               value={user?.UJC.toString().charAt(0).toUpperCase() + user?.UJC.toString().slice(1)}
-              disabled={true}
+              aria-readonly
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -223,7 +211,7 @@ const TabAccount = () => {
               fullWidth
               label='Estado'
               value={user?.userStatus}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -232,7 +220,7 @@ const TabAccount = () => {
               fullWidth
               label='Condicion'
               value={user?.userCondition}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
@@ -241,7 +229,7 @@ const TabAccount = () => {
               fullWidth
               label='Curso'
               value={user?.userInformation}
-              disabled={true}
+              aria-readonly
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
