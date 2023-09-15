@@ -12,6 +12,7 @@ import UserType from '@/types/user.type'
 import useUserStore from '@/stores/users.store'
 import usePaginateUsers from '@/hooks/usePaginateUsers'
 import PaginationTable from '@/components/PaginationTable'
+import UsersTable from '@/views/admin/users/UsersTable'
 
 type UsersPageProps = {
   userType: string
@@ -52,9 +53,11 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
     <div>
       <h1>{`Listado de ${getLabel()}`}</h1>
       <>
-        {userType === user_types_query[0] && <StudentsTable students={students} loading={loading} />}
-        {userType === user_types_query[1] && <EmployeesTable employees={employees} loading={loading} />}
-        {userType === user_types_query[2] && <EmployeesTable employees={docent_employess} loading={loading} />}
+        {userType === user_types_query[0] && <UsersTable users={students} loading={loading} userType={userType} />}
+        {userType === user_types_query[1] && <UsersTable users={employees} loading={loading} userType={userType} />}
+        {userType === user_types_query[2] && (
+          <UsersTable users={docent_employess} loading={loading} userType={userType} />
+        )}
       </>
       {!loading && UsersPage.length > 0 && <PaginationTable />}
     </div>
