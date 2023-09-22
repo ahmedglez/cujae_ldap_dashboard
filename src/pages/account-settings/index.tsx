@@ -26,6 +26,13 @@ import 'react-datepicker/dist/react-datepicker.css'
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
 
+// ** Theme
+import themeConfig from '@/configs/themeConfig'
+
+// ** Utils
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     minWidth: 100
@@ -55,6 +62,18 @@ const AccountSettings = () => {
 
   return (
     <Card>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={themeConfig.mode}
+      />
       <TabContext value={value}>
         <TabList
           onChange={handleChange}
