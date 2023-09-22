@@ -223,8 +223,8 @@ const LoginPage = () => {
                 control={<Checkbox checked={rememberMe} onChange={handleRememberMe} />}
                 label='Recuérdame'
               />
-              <Link passHref href='/'>
-                <LinkStyled onClick={e => e.preventDefault()}>Olvidaste la contraseña?</LinkStyled>
+              <Link passHref href='/forgot-password'>
+                <LinkStyled>Olvidaste la contraseña?</LinkStyled>
               </Link>
             </Box>
             <Button
