@@ -21,6 +21,10 @@ import KeyOutline from 'mdi-material-ui/KeyOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
 
+// ** Utils
+import { passwordSchema, getPasswordRequirements } from '@/schemas/passwordSchema.schema'
+import { showToastError, showToastInfo, showToastSuccess, showToastWarning } from '@/helpers/toastHelper'
+
 interface State {
   newPassword: string
   currentPassword: string
@@ -40,6 +44,34 @@ const TabSecurity = () => {
     showCurrentPassword: false,
     showConfirmNewPassword: false
   })
+
+  const handleSavePassword = () => {
+    // Destructure values from the state
+    const { currentPassword, newPassword, confirmNewPassword } = values
+    // Check if all fields are complete
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      showToastWarning('Please complete all fields.')
+      return
+    }
+    // Validate the newPassword against the password schema
+    if (!passwordSchema.validate(newPassword)) {
+      const requirements = getPasswordRequirements()
+      const validationErrors = passwordSchema.validate(newPassword, {
+        list: true
+      }) as string[]
+      const displayError = requirements.find(error => error.id === validationErrors[0])
+      showToastError(`New password does not meet security requirements. ${!!displayError ? displayError.error : ''}`)
+      return
+    }
+
+    // Check if the confirm password matches the new password
+    if (newPassword !== confirmNewPassword) {
+      showToastError('Confirm password does not match the new password.')
+      return
+    }
+    // If all checks pass, show a success message
+    showToastSuccess('Password changed successfully.')
+  }
 
   // Handle Current Password
   const handleCurrentPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -202,7 +234,7 @@ const TabSecurity = () => {
         </Box> */}
 
         <Box sx={{ mt: 11 }}>
-          <Button variant='contained' sx={{ marginRight: 3.5 }}>
+          <Button onClick={handleSavePassword} variant='contained' sx={{ marginRight: 3.5 }}>
             Save Changes
           </Button>
           <Button
