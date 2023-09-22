@@ -1,9 +1,8 @@
 // ** React Imports
-import { ChangeEvent, MouseEvent, ReactNode, useEffect, useState } from 'react'
+import { ChangeEvent, ReactNode, useState } from 'react'
 
 // ** Next Imports
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 // ** MUI Components
@@ -11,21 +10,13 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Checkbox from '@mui/material/Checkbox'
 import CircularProgress from '@mui/material/CircularProgress'
-import FormControl from '@mui/material/FormControl'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
-import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
-import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { styled, useTheme } from '@mui/material/styles'
 
 // ** Icons Imports
-import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -40,18 +31,15 @@ import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 import logo from 'public/images/favicon.png'
 
 // ** Utils
-import { checkRoles, decodeJWT, getLastTimeLogged, saveToken } from '@/helpers/jwtUtils'
-import { showToastError, showToastInfo, showToastSuccess, showToastWarning } from '@/helpers/toastHelper'
+import { showToastError, showToastSuccess } from '@/helpers/toastHelper'
 
 // ** Stores
-import useProfileStore from '@/stores/profile.store'
 
 // ** Custom Hooks
-import useRememberCredentials from '@/hooks/useRememberCredentials'
 
 // ** Others
-import { withoutAuthAxiosInstance } from 'src/constants/axiosInstance'
 import { validateEmail } from '@/helpers/validations'
+import { withoutAuthAxiosInstance } from 'src/constants/axiosInstance'
 
 interface State {
   password: string
@@ -101,25 +89,29 @@ const ForgotPassword = () => {
     setEmail(value)
   }
 
-  console.log('error', error)
-
   const handleSubmit = async () => {
     const isValidEmail = validateEmail(email)
-    console.log('email', email)
     if (isValidEmail) {
       try {
         const response = await withoutAuthAxiosInstance.post('/forgot-password', {
           emailOrUsername: email
         })
-        if (response.status === 200) {
+        const { status } = response
+        const { message, token } = response.data
+        localStorage.setItem('recover-password-token', token)
+        if (status === 200) {
           showToastSuccess('Email sent successfully')
+          setTimeout(() => {
+            router.push('/reset-password')
+          }, 3000)
           return
         } else {
           throw new Error('User not found')
         }
       } catch (error) {
-        console.log('error on forgot-password', error)
+        console.log('Error on forgot-password', error)
         showToastError('User not found')
+        router.push('/login')
         return
       }
     } else {
