@@ -36,6 +36,10 @@ type ExtendedAppProps = AppProps & {
   emotionCache: EmotionCache
 }
 
+// ** Utils
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader
@@ -71,6 +75,18 @@ const App = (props: ExtendedAppProps) => {
       </Head>
 
       <SettingsProvider>
+        <ToastContainer
+          position='top-right'
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={themeConfig.mode}
+        />
         <SettingsConsumer>
           {({ settings }) => {
             return <ThemeComponent settings={settings}>{getLayout(<Component {...pageProps} />)}</ThemeComponent>
