@@ -98,7 +98,7 @@ const ForgotPassword = () => {
         })
         const { status } = response
         const { message, token } = response.data
-        localStorage.setItem('recover-password-token', token)
+        sessionStorage.setItem('recover-password-token', token)
         if (status === 200) {
           showToastSuccess('Email sent successfully')
           setTimeout(() => {
