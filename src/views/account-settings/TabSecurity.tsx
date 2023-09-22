@@ -24,6 +24,9 @@ import LockOpenOutline from 'mdi-material-ui/LockOpenOutline'
 // ** Utils
 import { passwordSchema, getPasswordRequirements } from '@/schemas/passwordSchema.schema'
 import { showToastError, showToastInfo, showToastSuccess, showToastWarning } from '@/helpers/toastHelper'
+import { withAuthAxiosInstance } from '@/constants/axiosInstance'
+
+import { useRouter } from 'next/router'
 
 interface State {
   newPassword: string
@@ -35,6 +38,7 @@ interface State {
 }
 
 const TabSecurity = () => {
+  const router = useRouter()
   // ** States
   const [values, setValues] = useState<State>({
     newPassword: '',
@@ -45,7 +49,7 @@ const TabSecurity = () => {
     showConfirmNewPassword: false
   })
 
-  const handleSavePassword = () => {
+  const handleSavePassword = async () => {
     // Destructure values from the state
     const { currentPassword, newPassword, confirmNewPassword } = values
     // Check if all fields are complete
@@ -70,7 +74,21 @@ const TabSecurity = () => {
       return
     }
     // If all checks pass, show a success message
-    showToastSuccess('Password changed successfully.')
+    const response = await withAuthAxiosInstance.post('/update-password', {
+      oldPassword: currentPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmNewPassword
+    })
+
+    const { success } = response.data
+
+    if (success) {
+      showToastSuccess('Password changed successfully.')
+      router.push('/')
+      return
+    } else {
+      showToastError('An error has ocurred')
+    }
   }
 
   // Handle Current Password
