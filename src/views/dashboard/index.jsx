@@ -14,8 +14,8 @@ import CardStatisticsVerticalComponent from 'src/@core/components/card-statistic
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 // ** Components Imports
-import WelcomeCard from '@/views/dashboard/WelcomeCard'
 import ContactMuralCard from '@/views/dashboard/ContactMuralCard'
+import WelcomeCard from '@/views/dashboard/WelcomeCard'
 
 // ** Demo Components Imports
 import CustomCard from '@/views/dashboard/CustomCard'
@@ -49,8 +49,13 @@ const Dashboard = () => {
           <WelcomeCard />
         </Grid>
         <Grid item xs={12}>
-          <StatisticsCard />
+          {<StatisticsCard />}
         </Grid>
+        {isAdmin && (
+          <Grid item xs={12}>
+            <WeeklyOverview />
+          </Grid>
+        )}
         <Grid item xs={12} md={4}>
           <CustomCard
             title={`SIGENU`}
@@ -61,16 +66,9 @@ const Dashboard = () => {
             image={logo}
           />
         </Grid>
-        {isAdmin && (
-          <Grid item xs={12} md={8}>
-            <WeeklyOverview />
-          </Grid>
-        )}
-        {!isAdmin && (
-          <Grid item xs={12} md={4}>
-            <ContactMuralCard contacts={principalContacts} />
-          </Grid>
-        )}
+        <Grid item xs={12} md={8}>
+          <ContactMuralCard contacts={principalContacts} />
+        </Grid>
 
         <Grid item xs={12} md={6} lg={4}>
           <TotalEarning />

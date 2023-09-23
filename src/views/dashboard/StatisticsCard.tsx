@@ -112,7 +112,7 @@ const StatisticsCard = (isAdmin: boolean = false) => {
   return (
     <Card>
       <CardHeader
-        title={isAdmin ? 'Estadísticas de usuarios' : 'Mis estadísticas'}
+        title={'Estadísticas de usuario'}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
             <DotsVertical />
