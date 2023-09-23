@@ -40,7 +40,8 @@ import principalContacts from '@/data/contacts'
 
 const Dashboard = () => {
   useAvatarSelector()
-  const { isAdmin } = useProfileStore()
+  const profile = useProfileStore()
+  console.log(profile)
 
   return (
     <ApexChartWrapper>
@@ -51,7 +52,7 @@ const Dashboard = () => {
         <Grid item xs={12}>
           {<StatisticsCard />}
         </Grid>
-        {isAdmin && (
+        {profile.isAdmin && (
           <Grid item xs={12}>
             <WeeklyOverview />
           </Grid>
