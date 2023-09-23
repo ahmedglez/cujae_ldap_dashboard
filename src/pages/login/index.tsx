@@ -79,6 +79,7 @@ interface DecodedToken {
   groups: string[]
   base: string
   localBase: string
+  roles: string[]
   // Add other properties here if necessary
 }
 
@@ -139,12 +140,12 @@ const LoginPage = () => {
         const decodedToken = decodeJWT() as DecodedToken
         login(
           user,
-          isAdmin,
           last_time_logged,
           decodedToken.uid,
           decodedToken.groups,
           decodedToken.base,
-          decodedToken.localBase
+          decodedToken.localBase,
+          decodedToken.roles
         )
         saveRememberedCredentials(username, password)
         router.push('/')
