@@ -34,7 +34,6 @@ const UsersPage: React.FC<UsersPageProps> = () => {
     textAlign: 'center',
     height: '100%',
     padding: '20px',
-    backgroundColor: '#f0f0f0',
     border: '1px solid #ccc',
     borderRadius: '5px'
   }
