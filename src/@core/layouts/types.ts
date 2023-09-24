@@ -24,7 +24,12 @@ export type NavSectionTitle = {
   subject?: string
 }
 
-export type VerticalNavItemsType = (NavLink | NavSectionTitle)[]
+export type NavGroupLink = {
+  menuTitle: string
+  childrens: VerticalNavItemsType
+}
+
+export type VerticalNavItemsType = (NavLink | NavSectionTitle | NavGroupLink)[]
 
 export type LayoutProps = {
   hidden: boolean
