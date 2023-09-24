@@ -3,7 +3,7 @@ import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
 import AccountGroup from 'mdi-material-ui/AccountGroup'
-import School from 'mdi-material-ui/School'
+import Account from 'mdi-material-ui/Account'
 import { user_types_query } from '@/constants/userTypes'
 
 // ** Type import
@@ -22,23 +22,21 @@ const navigation = (): VerticalNavItemsType => {
       path: '/account-settings'
     },
     {
-      sectionTitle: 'Administrar usuarios'
+      sectionTitle: 'Facultades'
     },
     {
-      title: 'Estudiantes',
-      icon: School,
-      path: `/admin/users?userType=${user_types_query[0]}`
+      menuTitle: 'Informática',
+      childrens: [
+        {
+          title: 'Usuarios',
+          icon: Account,
+          path: `/admin/users?userType=${user_types_query[0]}`
+        },
+        { title: 'Grupos', icon: AccountGroup, path: `/admin/users?userType=${user_types_query[0]}` },
+        { title: 'Roles', icon: AccountCogOutline, path: `/admin/users?userType=${user_types_query[0]}` }
+      ]
     },
-    {
-      title: 'Trabajadores',
-      icon: AccountGroup,
-      path: `/admin/users?userType=${user_types_query[1]}`
-    },
-    {
-      title: 'Trabajadores Docentes',
-      icon: AccountGroup,
-      path: `/admin/users?userType=${user_types_query[2]}`
-    },
+
     {
       sectionTitle: 'Pages'
     },
@@ -48,47 +46,6 @@ const navigation = (): VerticalNavItemsType => {
       path: '/login',
       openInNewTab: true
     }
-
-    /* {
-      title: 'Register',
-      icon: AccountPlusOutline,
-      path: '/register',
-      openInNewTab: true
-    } */
-    /*  {
-      title: 'Error',
-      icon: AlertCircleOutline,
-      path: '/error',
-      openInNewTab: true
-    } */
-    /*  {
-      sectionTitle: 'User Interface'
-    }, */
-    /* {
-      title: 'Typography',
-      icon: null,
-      path: '/typography'
-    }, */
-    /*   {
-      title: 'Icons',
-      path: '/icons',
-      icon: null
-    }, */
-    /*  {
-      title: 'Cards',
-      icon: null,
-      path: '/cards'
-    }, */
-    /* {
-      title: 'Tables',
-      icon: null,
-      path: '/tables'
-    }, */
-    /*  {
-      icon: null,
-      title: 'Form Layouts',
-      path: '/form-layouts'
-    } */
   ]
 }
 
