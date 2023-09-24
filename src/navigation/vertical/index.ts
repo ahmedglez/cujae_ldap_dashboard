@@ -1,15 +1,78 @@
 // ** Icon imports
+import React, { useState, useEffect } from 'react'
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
 import AccountGroup from 'mdi-material-ui/AccountGroup'
 import Account from 'mdi-material-ui/Account'
 import { user_types_query } from '@/constants/userTypes'
+import useProfileStore from '@/stores/profile.store'
+import { withAuthAxiosInstance } from '@/constants/axiosInstance'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
 
+type OrganizationalGroup = {
+  objectClass: string[]
+  ou: string
+  objectName: string
+  dn: string
+}
+
 const navigation = (): VerticalNavItemsType => {
+  const profile = useProfileStore()
+  const [groups, setGroups] = useState<OrganizationalGroup[] | null>([])
+  const [groupsJson, setGroupsJson] = useState([])
+
+  console.log(groups)
+
+  const scope = profile.roles.includes('superadmin') ? 'one' : 'base'
+  const baseDN = profile.roles.includes('superadmin')
+    ? 'dc=cujae,dc=edu,dc=cu'
+    : `ou=${profile.groups[1]},dc=cujae,dc=edu,dc=cu`
+
+  const getGroups = async () => {
+    try {
+      const response = await withAuthAxiosInstance.post(`/groups?scope=${scope}`, {
+        baseDN: baseDN
+      })
+      const groupsData = response.data.data // Assuming response contains data property with the groups
+      setGroups(groupsData)
+    } catch (error) {
+      // Handle error appropriately.
+    }
+  }
+
+  const parseGroup = (group: OrganizationalGroup) => ({
+    menuTitle: group.ou.charAt(0).toUpperCase() + group.ou.slice(1),
+    childrens: [
+      {
+        title: 'Usuarios',
+        icon: Account,
+        path: `/admin/users?ou=${group.ou}`
+      },
+      {
+        title: 'Grupos',
+        icon: AccountGroup,
+        path: `/admin/groups?ou=${group.ou}`
+      },
+      {
+        title: 'Roles',
+        icon: AccountCogOutline,
+        path: `/admin/roles?ou=${group.ou}`
+      }
+    ]
+  })
+
+  useEffect(() => {
+    getGroups()
+  }, [])
+
+  useEffect(() => {
+    const parsedGroups = groups?.map(group => parseGroup(group))
+    setGroupsJson(parsedGroups)
+  }, [groups])
+
   return [
     {
       title: 'Dashboard',
@@ -22,21 +85,9 @@ const navigation = (): VerticalNavItemsType => {
       path: '/account-settings'
     },
     {
-      sectionTitle: 'Facultades'
+      sectionTitle: `Áreas`
     },
-    {
-      menuTitle: 'Informática',
-      childrens: [
-        {
-          title: 'Usuarios',
-          icon: Account,
-          path: `/admin/users?userType=${user_types_query[0]}`
-        },
-        { title: 'Grupos', icon: AccountGroup, path: `/admin/users?userType=${user_types_query[0]}` },
-        { title: 'Roles', icon: AccountCogOutline, path: `/admin/users?userType=${user_types_query[0]}` }
-      ]
-    },
-
+    ...groupsJson,
     {
       sectionTitle: 'Pages'
     },
