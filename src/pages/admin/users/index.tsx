@@ -1,63 +1,39 @@
 import AdminRoute from '@/components/hocs/AdminRoute'
-import { user_types_query, userTypes } from '@/constants/userTypes'
-import useFetchUsers from '@/hooks/useFetchUsers'
-import useProfileStore from '@/stores/profile.store'
-import EmployeeType from '@/types/employee.type'
-import StudentType from '@/types/student.type'
-import EmployeesTable from '@/views/admin/users/EmployeesTable'
-import StudentsTable from '@/views/admin/users/StudentsTable'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import UserType from '@/types/user.type'
-import useUserStore from '@/stores/users.store'
-import usePaginateUsers from '@/hooks/usePaginateUsers'
 import PaginationTable from '@/components/PaginationTable'
+import useFetchUsers from '@/hooks/useFetchUsers'
+import usePaginateUsers from '@/hooks/usePaginateUsers'
+import useProfileStore from '@/stores/profile.store'
+import useUserStore from '@/stores/users.store'
+import UserType from '@/types/user.type'
 import UsersTable from '@/views/admin/users/UsersTable'
+import React, { useEffect } from 'react'
 
 type UsersPageProps = {
-  userType: string
+  ou: string
 }
 
 const LIMIT = 5000
-const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
-  const router = useRouter()
-  const baseDN = useProfileStore(state => state.baseDN)
-  const { setUsers } = useUserStore(state => state)
+const UsersPage: React.FC<UsersPageProps> = ({ ou }) => {
+  const base = useProfileStore(state => state.base)
+  const baseDN = `ou=usuarios,ou=${ou},${base}`
+  const { setUsers, users } = useUserStore(state => state)
 
-  const {
-    loading,
-    error,
-    users: responseUsers
-  } = useFetchUsers(`/users/baseDN?userType=${userType}&page=${1}&limit=${LIMIT}`, baseDN)
+  const { loading, error, users: responseUsers } = useFetchUsers(`/users/baseDN?page=${1}&limit=${LIMIT}`, baseDN)
 
   const paginatedUsers = usePaginateUsers()
-  const getLabel = () => {
-    if (userType === user_types_query[0]) return `Estudiantes`
-    else if (userType === user_types_query[1]) return `Trabajadores`
-    else if (userType === user_types_query[2]) return `Trabajadores Docentes`
-    else return 'Usuarios'
-  }
-
-  const students = paginatedUsers?.filter((user: UserType) => user.userType === userTypes[0]) as StudentType[]
-  const employees = paginatedUsers?.filter((user: UserType) => user.userType === userTypes[1]) as EmployeeType[]
-  const docent_employess = paginatedUsers?.filter((user: UserType) => user.userType === userTypes[2]) as EmployeeType[]
 
   useEffect(() => {
     if (!loading && responseUsers.length > 0) {
       const typedUsers = responseUsers as UserType[]
       setUsers(typedUsers)
     }
-  }, [responseUsers, userType, loading])
+  }, [responseUsers, ou, loading])
 
   return (
     <div>
-      <h1>{`Listado de ${getLabel()}`}</h1>
+      <h1>{`Listado de Usuarios`}</h1>
       <>
-        {userType === user_types_query[0] && <UsersTable users={students} loading={loading} userType={userType} />}
-        {userType === user_types_query[1] && <UsersTable users={employees} loading={loading} userType={userType} />}
-        {userType === user_types_query[2] && (
-          <UsersTable users={docent_employess} loading={loading} userType={userType} />
-        )}
+        <UsersTable users={paginatedUsers} loading={loading} />
       </>
       {!loading && UsersPage.length > 0 && <PaginationTable />}
     </div>
@@ -65,10 +41,10 @@ const UsersPage: React.FC<UsersPageProps> = ({ userType }) => {
 }
 
 export async function getServerSideProps(context: any) {
-  const { userType } = context.query // Extract userType from query parameter
+  const { ou } = context.query // Extract userType from query parameter
   return {
     props: {
-      userType
+      ou
     }
   }
 }
