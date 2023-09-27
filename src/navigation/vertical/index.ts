@@ -1,13 +1,13 @@
 // ** Icon imports
-import React, { useState, useEffect } from 'react'
+import { withAuthAxiosInstance } from '@/constants/axiosInstance'
+import useProfileStore from '@/stores/profile.store'
+import Account from 'mdi-material-ui/Account'
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
+import AccountGroup from 'mdi-material-ui/AccountGroup'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
-import AccountGroup from 'mdi-material-ui/AccountGroup'
-import Account from 'mdi-material-ui/Account'
-import { user_types_query } from '@/constants/userTypes'
-import useProfileStore from '@/stores/profile.store'
-import { withAuthAxiosInstance } from '@/constants/axiosInstance'
+import { useEffect, useState } from 'react'
+import { NavGroupLink } from 'src/@core/layouts/types'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -22,7 +22,7 @@ type OrganizationalGroup = {
 const navigation = (): VerticalNavItemsType => {
   const profile = useProfileStore()
   const [groups, setGroups] = useState<OrganizationalGroup[] | null>([])
-  const [groupsJson, setGroupsJson] = useState([])
+  const [groupsJson, setGroupsJson] = useState<any>([])
 
   console.log(groups)
 
@@ -84,9 +84,7 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountCogOutline,
       path: '/account-settings'
     },
-    {
-      sectionTitle: `Áreas`
-    },
+
     ...groupsJson,
     {
       sectionTitle: 'Pages'
