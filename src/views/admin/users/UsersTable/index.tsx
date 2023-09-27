@@ -2,25 +2,15 @@ import { userTypes } from '@/constants/userTypes'
 import EmployeeType from '@/types/employee.type'
 import StudentType from '@/types/student.type'
 import UserType from '@/types/user.type'
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Select,
-  MenuItem,
-  Box,
-  Typography
-} from '@mui/material'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
 import React, { useState } from 'react'
 import EmployeeRow from '../EmployeesRow'
 import StudentRow from '../StudentsRow'
 import columns from './data/columns'
 import useStyles from './styles'
+import useUserStore from '@/stores/users.store'
+import TableFilters from './components/Filters'
 
 interface UsersTableProps {
   users: UserType[]
@@ -52,37 +42,22 @@ const NoResultsMessage = () => {
   )
 }
 
-const filterOptions = ['All', 'Estudiante', 'Trabajador', 'Trabajador Docente' /* Add more options if needed */]
-
 const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
   const classes = useStyles()
-  const [filter, setFilter] = useState('All')
-
-  // Handle filter change
-  const handleFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setFilter(event.target.value as string)
-  }
+  const { filters } = useUserStore.getState()
+  const { userType: userTypeFilter } = filters
 
   // Filtering logic
   const filteredUsers = users.filter(user => {
-    if (filter === 'All') {
+    if (userTypeFilter === 'ALL') {
       return true // Show all users
     }
-    return user.userType === filter
+    return user.userType === userTypeFilter
   })
 
   return (
     <Paper>
-      <div style={classes.filter}>
-        <label>Filter by User Type:</label>
-        <Select value={filter} onChange={handleFilterChange}>
-          {filterOptions.map(option => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
+      <TableFilters />
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
