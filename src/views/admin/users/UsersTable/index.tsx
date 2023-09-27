@@ -4,7 +4,7 @@ import StudentType from '@/types/student.type'
 import UserType from '@/types/user.type'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EmployeeRow from '../EmployeesRow'
 import StudentRow from '../StudentsRow'
 import columns from './data/columns'
@@ -45,15 +45,34 @@ const NoResultsMessage = () => {
 const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
   const classes = useStyles()
   const { filters } = useUserStore.getState()
-  const { userType: userTypeFilter } = filters
+  const [filteredUsers, setFilteredUsers] = useState<UserType[]>([])
+  const { userType: userTypeFilter, area: areaFilter } = filters
+
+  useEffect(() => {
+    setFilteredUsers(users)
+  }, [])
+
+  useEffect(() => {
+    const newFilteredUsers = users.filter(user => {
+      if (userTypeFilter === 'ALL') {
+        return true // Show all users
+      }
+      return user.userType === userTypeFilter
+    })
+    setFilteredUsers(newFilteredUsers)
+  }, [userTypeFilter])
+
+  useEffect(() => {
+    const newFilteredUsers = users.filter(user => {
+      if (areaFilter === 'ALL') {
+        return true // Show all users
+      }
+      return user.area === areaFilter
+    })
+    setFilteredUsers(newFilteredUsers)
+  }, [areaFilter])
 
   // Filtering logic
-  const filteredUsers = users.filter(user => {
-    if (userTypeFilter === 'ALL') {
-      return true // Show all users
-    }
-    return user.userType === userTypeFilter
-  })
 
   return (
     <Paper>
@@ -73,7 +92,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
           <TableBody>
             {!loading &&
               filteredUsers.length > 0 &&
-              filteredUsers.map((user, index) => {
+              filteredUsers.map((user: StudentType | EmployeeType, index: number) => {
                 if (user.userType === userTypes[0])
                   return <StudentRow key={user.uid} student={user as StudentType} index={index} />
                 else if (user.userType === userTypes[1])

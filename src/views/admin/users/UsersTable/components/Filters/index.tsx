@@ -4,6 +4,7 @@ import useStyles from '../../styles'
 import useUserStore from '@/stores/users.store'
 import { filterOptions } from '../../data/filters'
 import UserTypeFilter from './UserType'
+import AreaFilter from './AreaFilter'
 
 const TableFilters = () => {
   const classes = useStyles()
@@ -12,8 +13,9 @@ const TableFilters = () => {
   const { userType } = filters
 
   return (
-    <Box sx={classes.filter}>
+    <Box sx={classes.filters}>
       <UserTypeFilter />
+      <AreaFilter />
     </Box>
   )
 }

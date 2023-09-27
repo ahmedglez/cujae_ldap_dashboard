@@ -1,20 +1,9 @@
-import React from 'react'
 import useUserStore from '@/stores/users.store'
-import { MenuItem, Select, Box, Typography, InputLabel, FormControl } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import React, { useEffect } from 'react'
 import { filterOptions } from '../../data/filters'
 
-const useStyles = () => ({
-  container: {
-    width: 'fit-content',
-    minWidth: 120,
-    heigth: '100%',
-    display: 'flex',
-    justifyContent: 'center'
-  }
-})
-
 const UserTypeFilter = () => {
-  const classes = useStyles()
   const { filters, setFilters } = useUserStore.getState()
   const { userType } = filters
 

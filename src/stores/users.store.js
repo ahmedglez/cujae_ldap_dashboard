@@ -9,7 +9,8 @@ const useUserStore = create(set => ({
     rowsPerPage: 25
   },
   filters: {
-    userType: 'ALL'
+    userType: 'ALL',
+    area: 'ALL'
   },
   // Update the users state
   setUsers: users => set({ users: users }),

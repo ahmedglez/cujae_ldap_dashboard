@@ -9,10 +9,12 @@ const useStyles = () => {
       textOverflow: 'ellipsis', // Agrega puntos suspensivos si el texto es demasiado largo
       textAlign: 'center'
     },
-    filter: {
+    filters: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-start',
+      flexWrap: 'wrap',
+      gap: '10px',
       padding: theme.spacing(2), // Adjust the padding as needed
       '& label': {
         marginRight: theme.spacing(1) // Adjust the spacing as needed

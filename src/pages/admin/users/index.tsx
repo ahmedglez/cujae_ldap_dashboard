@@ -92,7 +92,7 @@ const UsersPage: React.FC<UsersPageProps> = () => {
       <h1>{`Listado de Usuarios`}</h1>
       {(paginatedUsers.length > 0 || loading) && <UsersTable users={paginatedUsers} loading={loading} />}
       {paginatedUsers.length === 0 && !loading && <EmptyMessage />}
-      {!loading && UsersPage.length > 0 && <PaginationTable />}
+      {!loading && paginatedUsers.length > 0 && <PaginationTable />}
     </div>
   )
 }
