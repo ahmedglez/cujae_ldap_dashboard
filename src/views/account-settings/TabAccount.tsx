@@ -1,25 +1,16 @@
 // ** React Imports
-import { useState, ElementType, ChangeEvent, SyntheticEvent } from 'react'
+import { ChangeEvent, ElementType, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import Button, { ButtonProps } from '@mui/material/Button'
+import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
-import Alert from '@mui/material/Alert'
-import Select from '@mui/material/Select'
-import { styled } from '@mui/material/styles'
-import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
-import AlertTitle from '@mui/material/AlertTitle'
-import IconButton from '@mui/material/IconButton'
-import CardContent from '@mui/material/CardContent'
-import FormControl from '@mui/material/FormControl'
-import Button, { ButtonProps } from '@mui/material/Button'
+import { styled } from '@mui/material/styles'
 
 // ** Icons Imports
-import Close from 'mdi-material-ui/Close'
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
