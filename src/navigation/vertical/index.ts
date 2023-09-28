@@ -84,7 +84,9 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountCogOutline,
       path: '/account-settings'
     },
-
+    {
+      sectionTitle: `ÁREAS`
+    },
     ...groupsJson,
     {
       sectionTitle: 'Pages'
