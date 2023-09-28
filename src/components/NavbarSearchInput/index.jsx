@@ -6,17 +6,18 @@ import Magnify from 'mdi-material-ui/Magnify'
 import { useRouter } from 'next/router'
 
 const NavbarSearchInput = () => {
-  const { filters, setFilters } = useUserStore.getState()
   const [searchTerm, setSearchTerm] = useState('')
   const router = useRouter()
 
   const handleChangeUsername = e => {
     const { value } = e.target
-    setSearchTerm(value)
+    setSearchTerm(value.trim())
   }
 
   const handleSearch = async () => {
-    router.push(`/admin/users/${searchTerm}`)
+    if (searchTerm !== '' && !!searchTerm) {
+      router.push(`/admin/users/${searchTerm}`)
+    }
   }
 
   const handleKeyDown = e => {
