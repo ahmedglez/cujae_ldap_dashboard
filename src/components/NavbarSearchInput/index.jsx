@@ -31,13 +31,12 @@ const NavbarSearchInput = () => {
       value={searchTerm}
       onChange={handleChangeUsername}
       onKeyDown={handleKeyDown}
-      onClick={handleSearch}
       size='small'
       sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
       InputProps={{
         startAdornment: (
           <InputAdornment position='start'>
-            <Magnify fontSize='small' />
+            <Magnify onClick={handleSearch} fontSize='small' />
           </InputAdornment>
         )
       }}

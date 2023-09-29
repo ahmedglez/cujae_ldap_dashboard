@@ -7,7 +7,6 @@ import AccountGroup from 'mdi-material-ui/AccountGroup'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
 import { useEffect, useState } from 'react'
-import { NavGroupLink } from 'src/@core/layouts/types'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
