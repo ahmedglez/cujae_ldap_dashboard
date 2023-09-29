@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
-import { formFields, studentFields } from './data/fields'
+import { formFields, studentFields, employeeFields } from './data/fields'
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
