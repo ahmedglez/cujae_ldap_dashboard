@@ -51,7 +51,7 @@ const StudentForm: React.FC<StudentProps> = ({ student }) => {
 const EmployeeForm: React.FC<EmployeeProps> = ({ employee }) => {
   const fields = employeeFields(employee as EmployeeType)
   return (
-    <Grid mt={2} container spacing={7}>
+    <Grid container spacing={7}>
       <Grid item xs={12}>
         <Typography variant='h4' gutterBottom>
           {`Datos de trabajador`}
@@ -76,6 +76,10 @@ const UserForm: React.FC<Props> = ({ user }) => {
   const userFields = formFields(user as UserType)
   const personaFields = personalFields(user as UserType)
 
+  console.log('activeTab', activeTab)
+  console.log('type', user?.userType)
+  console.log(user)
+
   return (
     <CardContent>
       <Tabs
@@ -85,9 +89,13 @@ const UserForm: React.FC<Props> = ({ user }) => {
         value={activeTab}
         onChange={handleTabChange}
       >
-        <Tab label='Información de perfil' />
-        <Tab label='Datos personales' />
-        {user?.userType === 'Estudiante' ? <Tab label='Datos de estudiante' /> : <Tab label='Datos de trabajador' />}
+        <Tab value={0} label='Información de perfil' />
+        <Tab label='Datos personales' value={1} />
+        {user?.userType === 'Estudiante' ? (
+          <Tab label='Datos de estudiante' value={2} />
+        ) : (
+          <Tab label='Datos de trabajador' value={2} />
+        )}
       </Tabs>
       <form>
         {activeTab === 0 && (
@@ -110,10 +118,10 @@ const UserForm: React.FC<Props> = ({ user }) => {
             {renderFormFields(personaFields)}
           </Grid>
         )}
-
-        {activeTab === 2 && user?.userType === 'Estudiante' ? (
+        {activeTab === 2 && user?.userType === 'Estudiante' && user?.userType !== undefined && (
           <StudentForm student={user as StudentType} />
-        ) : (
+        )}
+        {activeTab === 2 && user?.userType !== 'Estudiante' && user?.userType !== undefined && (
           <EmployeeForm employee={user as EmployeeType} />
         )}
       </form>
