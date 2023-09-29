@@ -58,6 +58,33 @@ export const formFields = (user: UserType): FieldConfig[] => [
   }
 ]
 
+export const personalFields = (user: UserType): FieldConfig[] => [
+  {
+    label: 'Direccion',
+    value: user?.homeAddress
+  },
+  {
+    label: 'Municipio',
+    value: user?.sedeMunicipio
+  },
+  {
+    label: 'Sexo',
+    value: user?.sex
+  },
+  {
+    label: 'Color de piel',
+    value: user?.skinColor
+  },
+  {
+    label: 'Telefono fijo',
+    value: user?.telephoneNumber
+  },
+  {
+    label: 'CI',
+    value: user?.CI
+  }
+]
+
 export const studentFields = (student: StudentType): FieldConfig[] => [
   { label: 'Carrera', value: student.career },
   { label: 'Año', value: student.studentYear },

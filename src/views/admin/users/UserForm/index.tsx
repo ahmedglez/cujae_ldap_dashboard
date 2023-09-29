@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 
 // ** MUI Imports
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 import EmployeeType from '@/types/employee.type'
 import StudentType from '@/types/student.type'
 import UserType from '@/types/user.type'
@@ -11,15 +13,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
-import { formFields, studentFields, employeeFields } from './data/fields'
-
-const ImgStyled = styled('img')(({ theme }) => ({
-  width: 120,
-  height: 120,
-  marginRight: theme.spacing(6.25),
-  borderRadius: theme.shape.borderRadius
-}))
-
+import { formFields, studentFields, employeeFields, personalFields } from './data/fields'
 interface Props {
   user?: UserType | null
 }
@@ -75,10 +69,10 @@ const UserForm: React.FC<Props> = ({ user }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [student, setStudent] = useState<StudentType | null>(null)
   const [employee, setEmployee] = useState<EmployeeType | null>(null)
+  const [activeTab, setActiveTab] = useState<number>(0) // Track the active tab
 
   useEffect(() => {
     if (!!user) {
-      console.log(user.userType)
       // Assuming the user type is specified in the user object as 'type'
       if (user?.userType === 'Estudiante') {
         setStudent(user as StudentType)
@@ -88,51 +82,45 @@ const UserForm: React.FC<Props> = ({ user }) => {
     }
   }, [user])
 
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue)
+  }
+
   const userFields = formFields(user as UserType)
+  const personaFields = personalFields(user as UserType)
 
   return (
     <CardContent>
+      <Tabs value={activeTab} onChange={handleTabChange}>
+        <Tab label='Información de perfil' />
+        <Tab label='Datos personales' />
+        {student && <Tab label='Datos de estudiante' />}
+        {employee && <Tab label='Datos de trabajador' />}
+      </Tabs>
       <form>
-        <Grid container spacing={7}>
-          <Grid item xs={12}>
-            <Typography variant='h4' gutterBottom>
-              {`Información de perfil`}
-            </Typography>
+        {activeTab === 0 && (
+          <Grid container spacing={7}>
+            <Grid item xs={12}>
+              <Typography variant='h4' gutterBottom>
+                {`Información de perfil`}
+              </Typography>
+            </Grid>
+            {renderFormFields(userFields)}
           </Grid>
-          {renderFormFields(userFields)}
-        </Grid>
-        <Grid mt={2} container spacing={7}>
-          <Grid item xs={12}>
-            <Typography variant='h4' gutterBottom>
-              {`Datos personales`}
-            </Typography>
+        )}
+        {activeTab === 1 && (
+          <Grid container spacing={7}>
+            <Grid item xs={12}>
+              <Typography variant='h4' gutterBottom>
+                {`Datos Personales`}
+              </Typography>
+            </Grid>
+            {renderFormFields(personaFields)}
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Direccion' value={user?.homeAddress} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Municipio' value={user?.sedeMunicipio} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Sexo' value={user?.sex} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Color de piel' value={user?.skinColor} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label='Telefono fijo'
-              value={user?.telephoneNumber}
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Area' value={user?.area} InputLabelProps={{ shrink: true }} />
-          </Grid>
-        </Grid>
-        {!!student && <StudentForm student={student} />}
-        {!!employee && <EmployeeForm employee={employee} />}
+        )}
+
+        {activeTab === 2 && student && <StudentForm student={student} />}
+        {activeTab === 3 && employee && <EmployeeForm employee={employee} />}
       </form>
     </CardContent>
   )
