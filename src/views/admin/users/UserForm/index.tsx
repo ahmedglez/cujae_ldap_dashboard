@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
+import { formFields, studentFields } from './data/fields'
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -31,7 +32,16 @@ interface EmployeeProps {
   employee?: EmployeeType | null | undefined
 }
 
+const renderFormFields = (fields: Array<{ label: string; value: string | number }>) => {
+  return fields.map(field => (
+    <Grid item xs={12} sm={6} key={field.label}>
+      <TextField fullWidth label={field.label} value={field.value} InputLabelProps={{ shrink: true }} />
+    </Grid>
+  ))
+}
+
 const StudentForm: React.FC<StudentProps> = ({ student }) => {
+  const fields = studentFields(student as StudentType)
   return (
     <Grid mt={2} container spacing={7}>
       <Grid item xs={12}>
@@ -39,29 +49,13 @@ const StudentForm: React.FC<StudentProps> = ({ student }) => {
           {`Datos de estudiante`}
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Carrera' value={student?.career} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label={`Año`} value={student?.studentYear} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Grupo' value={student?.studentClassGroup} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Curso' value={student?.userInformation} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Condicion' value={student?.userCondition} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='UJC' value={student?.UJC} InputLabelProps={{ shrink: true }} />
-      </Grid>
+      {renderFormFields(fields)}
     </Grid>
   )
 }
 
 const EmployeeForm: React.FC<EmployeeProps> = ({ employee }) => {
+  const fields = employeeFields(employee as EmployeeType)
   return (
     <Grid mt={2} container spacing={7}>
       <Grid item xs={12}>
@@ -69,69 +63,7 @@ const EmployeeForm: React.FC<EmployeeProps> = ({ employee }) => {
           {`Datos de trabajador`}
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          label='Fecha de Contrato'
-          value={employee?.dateContract.toLocaleDateString()}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          label={`Fin de Contrato`}
-          value={employee?.dateContract.toLocaleDateString()}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          label='Categoria Educacional'
-          value={employee?.educationalCategory}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Rol Organizacional' value={employee?.orgRole} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          label='Nivel de Escolaridad'
-          value={employee?.schoolLevel}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          label='Categoria Cientifica'
-          value={employee?.scientificCategory}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Años laborales' value={employee?.userYears} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          label='Contrato de trabajo'
-          value={employee?.workArea}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Area de Trabajo' value={employee?.workArea} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='Id de trabajador' value={employee?.workerID} InputLabelProps={{ shrink: true }} />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField fullWidth label='UJC' value={employee?.UJC} InputLabelProps={{ shrink: true }} />
-      </Grid>
+      {renderFormFields(fields)}
     </Grid>
   )
 }
@@ -143,7 +75,7 @@ const UserForm: React.FC<Props> = ({ user }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [student, setStudent] = useState<StudentType | null>(null)
   const [employee, setEmployee] = useState<EmployeeType | null>(null)
-  console.log(employee)
+
   useEffect(() => {
     if (!!user) {
       console.log(user.userType)
@@ -156,6 +88,8 @@ const UserForm: React.FC<Props> = ({ user }) => {
     }
   }, [user])
 
+  const userFields = formFields(user as UserType)
+
   return (
     <CardContent>
       <form>
@@ -165,47 +99,7 @@ const UserForm: React.FC<Props> = ({ user }) => {
               {`Información de perfil`}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Username' value={user?.uid} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Dn' value={user?.dn} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Nombre' value={user?.cn} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Apellidos' value={user?.sn} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Email' value={user?.maildrop} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='CI' value={user?.CI} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Tipo de usuario' value={user?.userType} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Estado actual' value={user?.userStatus} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Area' value={user?.area} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Pais' value={user?.country} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Creado' value={user?.dayRegister} InputLabelProps={{ shrink: true }} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label='Modificado'
-              value={!!user?.lastTimeChange ? new Date(user?.lastTimeChange).toLocaleDateString : ''}
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
+          {renderFormFields(userFields)}
         </Grid>
         <Grid mt={2} container spacing={7}>
           <Grid item xs={12}>
