@@ -37,7 +37,7 @@ const renderFormFields = (fields: Array<{ label: string; value: string | number 
 const StudentForm: React.FC<StudentProps> = ({ student }) => {
   const fields = studentFields(student as StudentType)
   return (
-    <Grid mt={2} container spacing={7}>
+    <Grid container spacing={7}>
       <Grid item xs={12}>
         <Typography variant='h4' gutterBottom>
           {`Datos de estudiante`}
@@ -67,20 +67,7 @@ const UserForm: React.FC<Props> = ({ user }) => {
   const router = useRouter()
   const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
-  const [student, setStudent] = useState<StudentType | null>(null)
-  const [employee, setEmployee] = useState<EmployeeType | null>(null)
   const [activeTab, setActiveTab] = useState<number>(0) // Track the active tab
-
-  useEffect(() => {
-    if (!!user) {
-      // Assuming the user type is specified in the user object as 'type'
-      if (user?.userType === 'Estudiante') {
-        setStudent(user as StudentType)
-      } else if (user?.userType === 'Trabajador' || user?.userType === 'Trabajador Docente') {
-        setEmployee(user as EmployeeType)
-      }
-    }
-  }, [user])
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue)
@@ -91,11 +78,16 @@ const UserForm: React.FC<Props> = ({ user }) => {
 
   return (
     <CardContent>
-      <Tabs value={activeTab} onChange={handleTabChange}>
+      <Tabs
+        sx={{
+          marginBottom: 5
+        }}
+        value={activeTab}
+        onChange={handleTabChange}
+      >
         <Tab label='Información de perfil' />
         <Tab label='Datos personales' />
-        {student && <Tab label='Datos de estudiante' />}
-        {employee && <Tab label='Datos de trabajador' />}
+        {user?.userType === 'Estudiante' ? <Tab label='Datos de estudiante' /> : <Tab label='Datos de trabajador' />}
       </Tabs>
       <form>
         {activeTab === 0 && (
@@ -119,8 +111,11 @@ const UserForm: React.FC<Props> = ({ user }) => {
           </Grid>
         )}
 
-        {activeTab === 2 && student && <StudentForm student={student} />}
-        {activeTab === 3 && employee && <EmployeeForm employee={employee} />}
+        {activeTab === 2 && user?.userType === 'Estudiante' ? (
+          <StudentForm student={user as StudentType} />
+        ) : (
+          <EmployeeForm employee={user as EmployeeType} />
+        )}
       </form>
     </CardContent>
   )

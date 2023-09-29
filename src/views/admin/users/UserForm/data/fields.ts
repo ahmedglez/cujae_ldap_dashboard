@@ -95,8 +95,8 @@ export const studentFields = (student: StudentType): FieldConfig[] => [
 ]
 
 export const employeeFields = (employee: EmployeeType): FieldConfig[] => [
-  { label: 'Fecha de Contrato', value: employee.dateContract.toLocaleDateString() },
-  { label: 'Fin de Contrato', value: employee.dateEndContract.toLocaleDateString() },
+  { label: 'Fecha de Contrato', value: new Date(employee.dateContract).toLocaleDateString() },
+  { label: 'Fin de Contrato', value: new Date(employee.dateEndContract).toLocaleDateString() },
   { label: 'Categoria Educacional', value: employee.educationalCategory },
   { label: 'Rol Organizacional', value: employee.orgRole },
   { label: 'Nivel de Escolaridad', value: employee.schoolLevel },
