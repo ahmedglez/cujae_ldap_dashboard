@@ -19,8 +19,8 @@ import StudentForm from './components/StudentForm'
 import EmployeeForm from './components/EmployeeForm'
 
 interface Props {
-  user?: UserType | null
-  student?: StudentType | null | undefined
+  user?: UserType
+  student?: StudentType
 }
 
 const UserForm: React.FC<Props> = ({ user }) => {
@@ -29,19 +29,34 @@ const UserForm: React.FC<Props> = ({ user }) => {
   const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
   const [activeTab, setActiveTab] = useState<number>(0) // Track the active tab
-  const [updatedUser, setUpdatedUser] = useState<UserType | null>()
+  const [updatedUser, setUpdatedUser] = useState<{ [key: string]: string | number | null }>({})
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue)
   }
   const userFields = formFields(user as UserType)
   const personaFields = personalFields(user as UserType)
 
-  useEffect(() => {
-    setUpdatedUser(user)
-  }, [user])
+  console.log('updatedUser', updatedUser)
 
-  const renderFormFields = (fields: Array<{ label: string | null; value: string | number | null; att: string }>) => {
-    return fields.map(field => <InputComponent field={field} />)
+  const handleUpdateField = (key: string, value: string) => {
+    setUpdatedUser(prevUpdatedUser => ({
+      ...prevUpdatedUser,
+      [key]: value
+    }))
+  }
+
+  const handleUnsave = (key: string) => {
+    setUpdatedUser(prevUpdatedUser => {
+      const updatedUserCopy = { ...prevUpdatedUser }
+      delete updatedUserCopy[key] // Remove the key from the updatedUser
+      return updatedUserCopy
+    })
+  }
+
+  const renderFormFields = (fields: Array<{ label: string; value: string; att: string }>) => {
+    return fields.map(field => (
+      <InputComponent field={field} saveCallback={handleUpdateField} resetCallback={handleUnsave} />
+    ))
   }
 
   return (
