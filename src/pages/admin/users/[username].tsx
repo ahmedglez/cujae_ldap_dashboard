@@ -16,6 +16,7 @@ import EmployeeType from '@/types/employee.type'
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
 import AdminRoute from '@/components/hocs/AdminRoute'
 import { showToastError, showToastSuccess, showToastInfo, showToastWarning } from '@/helpers/toastHelper'
+import UserForm from '@/views/admin/users/UserForm'
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
@@ -145,60 +146,7 @@ const UserPage = () => {
   return (
     <CardContent>
       {!loading && (user === null || user === undefined) && <NoResultsMessage />}
-      {!loading && !!user && (
-        <form>
-          <Grid container spacing={7}>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='CI' value={user?.CI} aria-readonly InputLabelProps={{ shrink: true }} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label='Direccion'
-                value={user?.homeAddress}
-                aria-readonly
-                InputLabelProps={{ shrink: true }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label='Municipio'
-                value={user?.sedeMunicipio}
-                aria-readonly
-                InputLabelProps={{ shrink: true }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label='Pais'
-                value={user?.country}
-                aria-readonly
-                InputLabelProps={{ shrink: true }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label='Telefono'
-                value={user?.telephoneNumber}
-                aria-readonly
-                InputLabelProps={{ shrink: true }}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label='Genero'
-                value={user?.sex === 'M' ? 'Masculino' : user?.sex === 'F' ? 'Femenino' : null}
-                aria-readonly
-              />
-            </Grid>
-          </Grid>
-        </form>
-      )}
+      {!loading && !!user && <UserForm user={user} />}
       {loading && (
         <form>
           <Grid container spacing={7}>

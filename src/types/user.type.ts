@@ -16,6 +16,7 @@ interface UserType {
   right: string
   dayRegister: string
   userStatus: string
+  lastTimeChange: string
 }
 
 export default UserType
