@@ -10,60 +10,77 @@ import Grid from '@mui/material/Grid'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
+import { Button, Box } from '@mui/material'
 import { useRouter } from 'next/router'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // ** Custom Components
 import InputComponent from './components/InputField'
-import { employeeFields, formFields, personalFields, studentFields } from './data/fields'
+import { employeeFields, userFields, personalFields, studentFields } from './data/fields'
 import StudentForm from './components/StudentForm'
 import EmployeeForm from './components/EmployeeForm'
 
+// ** Others
+import { withAuthAxiosInstance } from '@/constants/axiosInstance'
+import { showToastError, showToastInfo, showToastSuccess, showToastWarning } from '@/helpers/toastHelper'
+import useUserFormStore from '@/stores/from.store'
+
 interface Props {
   user?: UserType
-  student?: StudentType
 }
 
-const UserForm: React.FC<Props> = ({ user }) => {
+const UserForm: React.FC<Props> = () => {
   // ** State
-  const router = useRouter()
-  const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
-  const [activeTab, setActiveTab] = useState<number>(0) // Track the active tab
-  const [updatedUser, setUpdatedUser] = useState<{ [key: string]: string | number | null }>({})
+  const { user, setUser, formFields } = useUserFormStore.getState()
+  const [activeTab, setActiveTab] = useState<number>(0)
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue)
+    setActiveTab(newValue as number)
   }
-  const userFields = formFields(user as UserType)
+  const renderedUserFields = userFields(user as UserType)
   const personaFields = personalFields(user as UserType)
 
-  console.log('updatedUser', updatedUser)
-
-  const handleUpdateField = (key: string, value: string) => {
-    setUpdatedUser(prevUpdatedUser => ({
-      ...prevUpdatedUser,
-      [key]: value
-    }))
+  const handleSave = async () => {
+    setLoading(true)
+    try {
+      const payload = {
+        dn: user?.dn,
+        attributes: formFields
+      }
+      const res = await withAuthAxiosInstance.post(`/users/modify-ldap`, payload)
+      console.log(res)
+      showToastSuccess('Usuario actualizado')
+      setActiveTab(100)
+      setTimeout(() => {
+        setActiveTab(0)
+      }, 50)
+    } catch (error) {
+      showToastError('Error al actualizar el usuario')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleUnsave = (key: string) => {
-    setUpdatedUser(prevUpdatedUser => {
-      const updatedUserCopy = { ...prevUpdatedUser }
-      delete updatedUserCopy[key] // Remove the key from the updatedUser
-      return updatedUserCopy
-    })
+  const handleReset = () => {
+    setUser(user)
+    setActiveTab(100)
+    setTimeout(() => {
+      setActiveTab(0)
+    }, 50)
+    showToastWarning(`Se han restaurados todos los campos`)
   }
 
   const renderFormFields = (fields: Array<{ label: string; value: string; att: string }>) => {
-    return fields.map(field => (
-      <InputComponent field={field} saveCallback={handleUpdateField} resetCallback={handleUnsave} />
-    ))
+    return fields.map(field => <InputComponent field={field} />)
   }
 
   return (
     <CardContent>
       <Tabs
         sx={{
-          marginBottom: 5
+          marginBottom: 5,
+          maxWidth: '100%', // Limit the maximum width of the Tabs
+          overflowX: 'auto' // Enable horizontal scrolling
         }}
         value={activeTab}
         onChange={handleTabChange}
@@ -84,7 +101,7 @@ const UserForm: React.FC<Props> = ({ user }) => {
                 {`Información de perfil`}
               </Typography>
             </Grid>
-            {renderFormFields(userFields)}
+            {renderFormFields(renderedUserFields)}
           </Grid>
         )}
         {activeTab === 1 && (
@@ -104,6 +121,22 @@ const UserForm: React.FC<Props> = ({ user }) => {
           <EmployeeForm employee={user as EmployeeType} />
         )}
       </form>
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '50px'
+        }}
+      >
+        <Button variant='contained' sx={{ marginRight: 3.5 }} onClick={handleSave}>
+          {loading ? <CircularProgress sx={{ color: 'white' }} /> : 'Save'}
+        </Button>
+        <Button type='reset' variant='outlined' color='secondary' onClick={handleReset}>
+          Reset
+        </Button>
+      </Box>
     </CardContent>
   )
 }

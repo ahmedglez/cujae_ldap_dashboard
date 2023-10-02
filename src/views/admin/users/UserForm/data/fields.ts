@@ -3,12 +3,12 @@ import StudentType from '@/types/student.type'
 import EmployeeType from '@/types/employee.type'
 
 interface FieldConfig {
-  label: string | null
-  value: string | number | null
+  label: string
+  value: string
   att: string
 }
 
-export const formFields = (user: UserType): FieldConfig[] => [
+export const userFields = (user: UserType): FieldConfig[] => [
   {
     label: 'Username',
     value: user?.uid,

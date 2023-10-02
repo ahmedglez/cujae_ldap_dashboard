@@ -1,25 +1,19 @@
 // ** React Imports
-import { ChangeEvent, useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
+import AdminRoute from '@/components/hocs/AdminRoute'
+import { withAuthAxiosInstance } from '@/constants/axiosInstance'
+import { showToastError, showToastInfo, showToastWarning } from '@/helpers/toastHelper'
+import UserType from '@/types/user.type'
+import UserForm from '@/views/admin/users/UserForm'
+import { Skeleton } from '@mui/material'
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
-import { Skeleton } from '@mui/material'
-import UserType from '@/types/user.type'
-import StudentType from '@/types/student.type'
-import EmployeeType from '@/types/employee.type'
-import { withAuthAxiosInstance } from '@/constants/axiosInstance'
-import AdminRoute from '@/components/hocs/AdminRoute'
-import { showToastError, showToastSuccess, showToastInfo, showToastWarning } from '@/helpers/toastHelper'
-import UserForm from '@/views/admin/users/UserForm'
-
-// ** Stores
-import useProfileStore from '@/stores/profile.store'
+import useUserFormStore from '@/stores/from.store'
 
 const NoResultsMessage = () => {
   const styles = {
@@ -50,23 +44,12 @@ const NoResultsMessage = () => {
   )
 }
 
-const ImgStyled = styled('img')(({ theme }) => ({
-  width: 120,
-  height: 120,
-  marginRight: theme.spacing(6.25),
-  borderRadius: theme.shape.borderRadius
-}))
-
 const UserPage = () => {
   // ** State
-  const [openAlert, setOpenAlert] = useState<boolean>(true)
-  const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
   const router = useRouter()
   const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
-  const [user, setUser] = useState<UserType | null>(null)
-  const [student, setStudent] = useState<StudentType | null>(null)
-  const [employee, setEmployee] = useState<EmployeeType | null>(null)
+  const { user, setUser } = useUserFormStore.getState()
 
   const getByUsername = async () => {
     const response = await withAuthAxiosInstance.get(`/users?uid=${username}`)
@@ -146,7 +129,7 @@ const UserPage = () => {
   return (
     <CardContent>
       {!loading && (user === null || user === undefined) && <NoResultsMessage />}
-      {!loading && !!user && <UserForm user={user} />}
+      {!loading && !!user && <UserForm />}
       {loading && (
         <form>
           <Grid container spacing={7}>
