@@ -23,8 +23,6 @@ const navigation = (): VerticalNavItemsType => {
   const [groups, setGroups] = useState<OrganizationalGroup[] | null>([])
   const [groupsJson, setGroupsJson] = useState<any>([])
 
-  console.log(groups)
-
   const scope = profile.roles.includes('superadmin') ? 'one' : 'base'
   const baseDN = profile.roles.includes('superadmin')
     ? 'dc=cujae,dc=edu,dc=cu'

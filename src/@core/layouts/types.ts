@@ -27,6 +27,7 @@ export type NavSectionTitle = {
 export type NavGroupLink = {
   menuTitle: string
   childrens: VerticalNavItemsType
+  icon?: string | string[] | ReactNode
 }
 
 export type VerticalNavItemsType = (NavLink | NavSectionTitle | NavGroupLink)[]

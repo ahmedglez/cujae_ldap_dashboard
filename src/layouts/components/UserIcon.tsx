@@ -3,16 +3,15 @@ import { ReactNode } from 'react'
 
 // ** MUI Imports
 import { SvgIconProps } from '@mui/material'
-
+import AccountGroup from 'mdi-material-ui/AccountGroup'
 interface UserIconProps {
   iconProps?: SvgIconProps
-  icon: string | ReactNode
+  icon?: string | ReactNode
 }
 
 const UserIcon = (props: UserIconProps) => {
   // ** Props
-  const { icon, iconProps } = props
-
+  const { icon = AccountGroup, iconProps } = props
   const IconTag = icon
 
   let styles

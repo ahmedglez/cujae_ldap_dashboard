@@ -55,15 +55,6 @@ const MenuNavLink = styled(ListItemButton)<
   }
 }))
 
-const MenuItemTextMetaWrapper = styled(Box)<BoxProps>({
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  transition: 'opacity .25s ease-in-out',
-  ...(themeConfig.menuTextTruncate && { overflow: 'hidden' })
-})
-
 const VerticalNavGroupLink = ({ item, navVisible, toggleNavVisibility }: Props) => {
   // ** Hooks
   const router = useRouter()
@@ -78,8 +69,7 @@ const VerticalNavGroupLink = ({ item, navVisible, toggleNavVisibility }: Props) 
   const resolveNavItemComponent = (item: NavLink | NavSectionTitle | NavGroupLink) => {
     if ((item as NavSectionTitle).sectionTitle) return VerticalNavSectionTitle
     if ((item as NavGroupLink).menuTitle) return VerticalNavGroupLink
-
-    return VerticalNavLink
+    if ((item as NavLink).title) return VerticalNavLink
   }
 
   const renderMenuItems = item.childrens?.map((item: NavLink | NavSectionTitle | NavGroupLink, index: number) => {

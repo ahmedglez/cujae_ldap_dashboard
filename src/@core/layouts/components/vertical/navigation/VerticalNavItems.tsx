@@ -20,9 +20,8 @@ interface Props {
 
 const resolveNavItemComponent = (item: NavLink | NavSectionTitle | NavGroupLink) => {
   if ((item as NavSectionTitle).sectionTitle) return VerticalNavSectionTitle
-  if ((item as NavGroupLink).menuTitle) return VerticalNavGroupLink
-
-  return VerticalNavLink
+  else if ((item as NavGroupLink).menuTitle) return VerticalNavGroupLink
+  else if ((item as NavLink).title) return VerticalNavLink
 }
 
 const VerticalNavItems = (props: Props) => {
