@@ -1,10 +1,9 @@
-import { MenuItem, Select, Box, Typography } from '@mui/material'
-import React from 'react'
-import useStyles from '../../styles'
 import useUserStore from '@/stores/users.store'
-import { filterOptions } from '../../data/filters'
-import UserTypeFilter from './UserType'
+import { Box } from '@mui/material'
+import useStyles from '../../styles'
 import AreaFilter from './AreaFilter'
+import UserTypeFilter from './UserType'
+import SexFilter from './SexFilter'
 
 const TableFilters = () => {
   const classes = useStyles()
@@ -16,6 +15,7 @@ const TableFilters = () => {
     <Box sx={classes.filters}>
       <UserTypeFilter />
       <AreaFilter />
+      <SexFilter />
     </Box>
   )
 }
