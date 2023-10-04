@@ -6,10 +6,9 @@ const filterOptions = ['ALL', 'M', 'F']
 
 const SexFilter = () => {
   const { filters, setFilters } = useUserStore.getState()
-  const { userType } = filters
-
+  const { sex: sexFilter } = filters
   // Handle filter change
-  const handleUserTypeFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSexFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setFilters({
       ...filters,
       sex: event.target.value as string
@@ -23,8 +22,8 @@ const SexFilter = () => {
         labelId='demo-simple-select-label'
         id='demo-simple-select'
         label='Sexo'
-        value={userType}
-        onChange={handleUserTypeFilterChange}
+        value={sexFilter}
+        onChange={handleSexFilterChange}
       >
         {filterOptions.map(option => (
           <MenuItem key={option} value={option}>

@@ -44,35 +44,9 @@ const NoResultsMessage = () => {
 
 const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
   const classes = useStyles()
-  const { filters } = useUserStore.getState()
-  const [filteredUsers, setFilteredUsers] = useState<UserType[]>([])
-  const { userType: userTypeFilter, area: areaFilter } = filters
 
-  useEffect(() => {
-    setFilteredUsers(users)
-  }, [])
-
-  useEffect(() => {
-    const newFilteredUsers = users.filter(user => {
-      if (userTypeFilter === 'ALL') {
-        return true // Show all users
-      }
-      return user.userType === userTypeFilter
-    })
-    setFilteredUsers(newFilteredUsers)
-  }, [userTypeFilter])
-
-  useEffect(() => {
-    const newFilteredUsers = users.filter(user => {
-      if (areaFilter === 'ALL') {
-        return true // Show all users
-      }
-      return user.area === areaFilter
-    })
-    setFilteredUsers(newFilteredUsers)
-  }, [areaFilter])
-
-  // Filtering logic
+  console.log('users', users)
+  console.log('loading', loading)
 
   return (
     <Paper>
@@ -91,8 +65,8 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
           </TableHead>
           <TableBody>
             {!loading &&
-              filteredUsers.length > 0 &&
-              filteredUsers.map((user: StudentType | EmployeeType, index: number) => {
+              users.length > 0 &&
+              users.map((user: StudentType | EmployeeType | UserType, index: number) => {
                 if (user.userType === userTypes[0])
                   return <StudentRow key={user.uid} student={user as StudentType} index={index} />
                 else if (user.userType === userTypes[1])
@@ -122,7 +96,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
               </>
             )}
 
-            {filteredUsers.length === 0 && <NoResultsMessage />}
+            {users.length === 0 && !loading && <NoResultsMessage />}
           </TableBody>
         </Table>
       </TableContainer>

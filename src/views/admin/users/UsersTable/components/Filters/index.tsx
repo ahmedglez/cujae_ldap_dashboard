@@ -14,8 +14,8 @@ const TableFilters = () => {
   return (
     <Box sx={classes.filters}>
       <UserTypeFilter />
-      <AreaFilter />
       <SexFilter />
+      <AreaFilter />
     </Box>
   )
 }

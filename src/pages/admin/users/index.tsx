@@ -10,6 +10,30 @@ import { Typography, Box, Button } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
+// Create a custom styled component for the empty message
+
+const emptyMessageStyle = {
+  textAlign: 'center',
+  height: '100%',
+  padding: '20px',
+  border: '1px solid #ccc',
+  borderRadius: '5px'
+}
+
+const headerStyle = {
+  fontSize: '24px',
+  fontWeight: 'bold',
+  margin: '0'
+}
+
+const messageStyle = {
+  fontSize: '18px',
+  margin: '10px 0'
+}
+const buttonStyle = {
+  marginTop: '20px'
+}
+
 type UsersPageProps = {
   ou: string
 }
@@ -17,40 +41,37 @@ type UsersPageProps = {
 const LIMIT = 5000
 const UsersPage: React.FC<UsersPageProps> = () => {
   const router = useRouter()
-
-  const [loading, setLoading] = useState(true)
   const [responsedUsers, setResponsedUsers] = useState<any>([])
   const [error, setError] = useState<any>(null)
   const base = useProfileStore(state => state.base)
   const ou = router.query.ou
   const baseDN = `ou=usuarios,ou=${ou},${base}`
-  const { setUsers, users } = useUserStore(state => state)
-
+  const { setUsers, users, filters, setFilteredUsers, filteredUsers, loading, setLoading } = useUserStore(
+    state => state
+  )
+  const { userType: userTypeFilter, area: areaFilter, sex: sexFilter } = filters
   const paginatedUsers = usePaginateUsers()
 
-  // Create a custom styled component for the empty message
+  useEffect(() => {
+    const newTypeFilteredUsers = users.filter((user: UserType) => {
+      if (userTypeFilter === 'ALL') return true
+      else return user.userType === userTypeFilter
+    })
 
-  const emptyMessageStyle = {
-    textAlign: 'center',
-    height: '100%',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '5px'
-  }
+    const newAreaFilteredUsers = newTypeFilteredUsers.filter((user: UserType) => {
+      if (areaFilter === 'ALL') return true
+      else return user.area === areaFilter
+    })
 
-  const headerStyle = {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    margin: '0'
-  }
+    const newSexFilteredUsers = newAreaFilteredUsers.filter((user: UserType) => {
+      if (sexFilter === 'ALL') return true
+      else return user.sex === sexFilter
+    })
 
-  const messageStyle = {
-    fontSize: '18px',
-    margin: '10px 0'
-  }
-  const buttonStyle = {
-    marginTop: '20px'
-  }
+    const newFilteredUsers = newSexFilteredUsers
+
+    setFilteredUsers(newFilteredUsers)
+  }, [userTypeFilter, areaFilter, sexFilter])
 
   const EmptyMessage = () => (
     <Box sx={emptyMessageStyle}>
@@ -78,20 +99,20 @@ const UsersPage: React.FC<UsersPageProps> = () => {
     }
 
     fetchData()
-  }, [baseDN, ou])
+  }, [ou])
 
   useEffect(() => {
     if (!loading) {
       const typedUsers = responsedUsers as UserType[]
       setUsers(typedUsers)
+      setFilteredUsers(typedUsers)
     }
-  }, [ou, loading, responsedUsers])
+  }, [loading])
 
   return (
     <div>
       <h1>{`Listado de Usuarios`}</h1>
-      {(paginatedUsers.length > 0 || loading) && <UsersTable users={paginatedUsers} loading={loading} />}
-      {paginatedUsers.length === 0 && !loading && <EmptyMessage />}
+      {<UsersTable users={paginatedUsers} loading={loading} />}
       {!loading && paginatedUsers.length > 0 && <PaginationTable />}
     </div>
   )
