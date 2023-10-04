@@ -49,7 +49,7 @@ const UsersPage: React.FC<UsersPageProps> = () => {
   const { setUsers, users, filters, setFilteredUsers, filteredUsers, loading, setLoading } = useUserStore(
     state => state
   )
-  const { userType: userTypeFilter, area: areaFilter, sex: sexFilter } = filters
+  const { userType: userTypeFilter, area: areaFilter, sex: sexFilter, status: statusFilter } = filters
   const paginatedUsers = usePaginateUsers()
 
   useEffect(() => {
@@ -68,20 +68,15 @@ const UsersPage: React.FC<UsersPageProps> = () => {
       else return user.sex === sexFilter
     })
 
-    const newFilteredUsers = newSexFilteredUsers
+    const newStatusFilter = newSexFilteredUsers.filter((user: UserType) => {
+      if (statusFilter === 'ALL') return true
+      else return user.userStatus === statusFilter
+    })
+
+    const newFilteredUsers = newStatusFilter
 
     setFilteredUsers(newFilteredUsers)
-  }, [userTypeFilter, areaFilter, sexFilter])
-
-  const EmptyMessage = () => (
-    <Box sx={emptyMessageStyle}>
-      <Typography sx={messageStyle}>No se encontraron usuarios.</Typography>
-      <Typography sx={messageStyle}>Por favor, agregue usuarios para verlos aquí.</Typography>
-      <Button variant='contained' color='primary' sx={buttonStyle}>
-        Agregar Usuario
-      </Button>
-    </Box>
-  )
+  }, [userTypeFilter, areaFilter, sexFilter, statusFilter])
 
   useEffect(() => {
     const fetchData = async () => {

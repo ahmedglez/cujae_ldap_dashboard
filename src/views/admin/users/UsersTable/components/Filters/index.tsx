@@ -4,6 +4,7 @@ import useStyles from '../../styles'
 import AreaFilter from './AreaFilter'
 import UserTypeFilter from './UserType'
 import SexFilter from './SexFilter'
+import StatusFilter from './StatusFilter'
 
 const TableFilters = () => {
   const classes = useStyles()
@@ -15,6 +16,7 @@ const TableFilters = () => {
     <Box sx={classes.filters}>
       <UserTypeFilter />
       <SexFilter />
+      <StatusFilter />
       <AreaFilter />
     </Box>
   )

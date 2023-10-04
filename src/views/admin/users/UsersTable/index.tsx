@@ -45,9 +45,6 @@ const NoResultsMessage = () => {
 const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
   const classes = useStyles()
 
-  console.log('users', users)
-  console.log('loading', loading)
-
   return (
     <Paper>
       <TableFilters />

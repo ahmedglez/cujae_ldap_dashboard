@@ -13,7 +13,8 @@ const useUserStore = create(set => ({
   filters: {
     userType: 'ALL',
     area: 'ALL',
-    sex: 'ALL'
+    sex: 'ALL',
+    status: 'ALL'
   },
   // Update the users state
   setUsers: users => set({ users: users }),
@@ -29,8 +30,7 @@ const useUserStore = create(set => ({
 
   setFilteredUsers: filteredUsers => set({ filteredUsers }),
 
-  setLoading: loading => set({loading})
-
+  setLoading: loading => set({ loading })
 }))
 
 export default useUserStore
