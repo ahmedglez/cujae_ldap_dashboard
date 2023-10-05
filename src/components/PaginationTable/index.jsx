@@ -1,8 +1,6 @@
-import useUserStore from '@/stores/users.store'
 import TablePagination from '@mui/material/TablePagination'
 
-const PaginationTable = () => {
-  const { pagination, setPagination, filteredUsers } = useUserStore(state => state)
+const PaginationTable = ({pagination, setPagination, entries}) => {
   const { page, rowsPerPage } = pagination
 
   const handleChangePage = (event, newPage) => {
@@ -23,7 +21,7 @@ const PaginationTable = () => {
   return (
     <TablePagination
       component='div'
-      count={filteredUsers.length}
+      count={entries.length}
       page={page - 1}
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}

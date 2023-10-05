@@ -1,7 +1,7 @@
 import PaginationTable from '@/components/PaginationTable'
 import AdminRoute from '@/components/hocs/AdminRoute'
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
-import usePaginateUsers from '@/hooks/usePaginateUsers'
+import usePagination from '@/hooks/usePaginateUsers'
 import useProfileStore from '@/stores/profile.store'
 import useUserStore from '@/stores/users.store'
 import UserType from '@/types/user.type'
@@ -46,11 +46,10 @@ const UsersPage: React.FC<UsersPageProps> = () => {
   const base = useProfileStore(state => state.base)
   const ou = router.query.ou
   const baseDN = `ou=usuarios,ou=${ou},${base}`
-  const { setUsers, users, filters, setFilteredUsers, filteredUsers, loading, setLoading } = useUserStore(
-    state => state
-  )
+  const { setUsers, users, filters, setFilteredUsers, filteredUsers, loading, setLoading, pagination, setPagination } =
+    useUserStore(state => state)
   const { userType: userTypeFilter, area: areaFilter, sex: sexFilter, status: statusFilter } = filters
-  const paginatedUsers = usePaginateUsers()
+  const paginatedUsers = usePagination(filteredUsers, pagination)
 
   useEffect(() => {
     const newTypeFilteredUsers = users.filter((user: UserType) => {
@@ -108,7 +107,9 @@ const UsersPage: React.FC<UsersPageProps> = () => {
     <div>
       <h1>{`Listado de Usuarios`}</h1>
       {<UsersTable users={paginatedUsers} loading={loading} />}
-      {!loading && paginatedUsers.length > 0 && <PaginationTable />}
+      {!loading && paginatedUsers.length > 0 && (
+        <PaginationTable pagination={pagination} setPagination={setPagination} entries={filteredUsers} />
+      )}
     </div>
   )
 }
