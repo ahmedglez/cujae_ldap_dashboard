@@ -56,7 +56,7 @@ const navigation = (): VerticalNavItemsType => {
       {
         title: 'Roles',
         icon: AccountCogOutline,
-        path: `/admin/roles?ou=${group.ou}`
+        path: `/admin/groups?ou=${group.ou}`
       }
     ]
   })
@@ -67,7 +67,11 @@ const navigation = (): VerticalNavItemsType => {
 
   useEffect(() => {
     const parsedGroups = groups?.map(group => parseGroup(group))
-    setGroupsJson(parsedGroups)
+    const parsedGroupsWithHeader = parsedGroups as any[]
+    parsedGroupsWithHeader?.unshift({
+      sectionTitle: `ÁREAS`
+    }),
+      setGroupsJson(parsedGroupsWithHeader)
   }, [groups])
 
   return [
@@ -80,9 +84,6 @@ const navigation = (): VerticalNavItemsType => {
       title: 'Account Settings',
       icon: AccountCogOutline,
       path: '/account-settings'
-    },
-    {
-      sectionTitle: `ÁREAS`
     },
     ...groupsJson,
     {
