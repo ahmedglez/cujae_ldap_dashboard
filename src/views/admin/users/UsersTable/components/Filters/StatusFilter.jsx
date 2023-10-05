@@ -4,7 +4,7 @@ import { Autocomplete, FormControl, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const StatusFilter = () => {
-  const { filters, setFilters, users } = useUserStore.getState()
+  const { filters, setFilters, users, loading } = useUserStore.getState()
   const [options, setOptions] = useState([])
   const [value, setValue] = React.useState('ALL')
   const [inputValue, setInputValue] = React.useState('')
@@ -16,7 +16,7 @@ const StatusFilter = () => {
     })
     const uniqueStatusArray = Array.from(uniqueStatus)
     setOptions(uniqueStatusArray)
-  }, [])
+  }, [users])
 
   useEffect(() => {
     if (value === null || value === '') {
@@ -36,6 +36,7 @@ const StatusFilter = () => {
     <Autocomplete
       disablePortal
       id='combo-box-demo'
+     disabled={loading}
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue)

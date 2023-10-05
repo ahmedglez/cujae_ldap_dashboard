@@ -5,7 +5,7 @@ import React from 'react'
 const filterOptions = ['ALL', 'M', 'F']
 
 const SexFilter = () => {
-  const { filters, setFilters } = useUserStore.getState()
+  const { filters, setFilters, loading } = useUserStore.getState()
   const { sex: sexFilter } = filters
   // Handle filter change
   const handleSexFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -23,6 +23,7 @@ const SexFilter = () => {
         id='demo-simple-select'
         label='Sexo'
         value={sexFilter}
+        disabled={loading}
         onChange={handleSexFilterChange}
       >
         {filterOptions.map(option => (

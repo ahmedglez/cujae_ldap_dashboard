@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { filterOptions } from '../../data/filters'
 
 const UserTypeFilter = () => {
-  const { filters, setFilters } = useUserStore.getState()
+  const { filters, setFilters, loading } = useUserStore.getState()
   const { userType } = filters
 
   // Handle filter change
@@ -22,6 +22,7 @@ const UserTypeFilter = () => {
         labelId='demo-simple-select-label'
         id='demo-simple-select'
         label='Tipo de Usuario'
+        disabled={loading}
         value={userType}
         onChange={handleUserTypeFilterChange}
       >
