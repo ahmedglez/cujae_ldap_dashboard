@@ -56,7 +56,7 @@ const navigation = (): VerticalNavItemsType => {
       {
         title: 'Roles',
         icon: AccountCogOutline,
-        path: `/admin/groups?ou=${group.ou}`
+        path: `/admin/roles?ou=${group.ou}`
       }
     ]
   })

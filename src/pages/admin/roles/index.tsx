@@ -44,7 +44,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
   const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 25 })
   const base = useProfileStore(state => state.base)
   const ou = router.query.ou
-  const baseDN = `ou=grupos,ou=${ou},${base}`
+  const baseDN = `ou=roles,ou=${ou},${base}`
   const paginatedGroups = usePagination(groups, pagination)
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
 
   return (
     <div>
-      <h1>{`Listado de Grupos`}</h1>
+      <h1>{`Listado de Roles`}</h1>
       {<GroupsTable groups={paginatedGroups} loading={loading} />}
       {!loading && paginatedGroups.length > 0 && (
         <PaginationTable pagination={pagination} setPagination={setPagination} entries={groups} />
