@@ -23,7 +23,7 @@ interface InputProps {
 
 const InputComponent: React.FC<InputProps> = ({ field }) => {
   const [allowEdit, setAllowEdit] = useState<boolean>(false)
-  const { user, unsaveField, formFields, updateField } = useUserFormStore.getState()
+  const { user, formFields, setFormFields } = useUserFormStore.getState()
   const [value, setValue] = useState<string | null | any>(!!formFields[field.att] ? formFields[field.att] : field.value)
   const [isSaved, setIsSaved] = useState<boolean>(false)
 
@@ -46,7 +46,10 @@ const InputComponent: React.FC<InputProps> = ({ field }) => {
   }
 
   const handleSave = () => {
-    updateField(field.att, value)
+    setFormFields({
+      ...formFields,
+      [field.att]: value
+    })
     setAllowEdit(false)
     setIsSaved(true)
   }

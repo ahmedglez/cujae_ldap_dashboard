@@ -8,6 +8,7 @@ interface UserFormStore {
   setUser: (user: UserType | null) => void
   updateField: (key: string, value: string | number | null) => void
   unsaveField: (key: string) => void
+  setFormFields: (formFields: any) => void
 }
 
 // Create the Zustand store
@@ -15,6 +16,7 @@ const useUserFormStore = create<UserFormStore>(set => ({
   user: null,
   formFields: {},
   setUser: user => set({ user }),
+  setFormFields: formFields => set({ formFields }),
   updateField: (key, value) => set(state => ({ formFields: { ...state.formFields, [key]: value } })),
   unsaveField: key =>
     set(state => {

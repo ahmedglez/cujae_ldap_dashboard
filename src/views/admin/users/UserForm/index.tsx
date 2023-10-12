@@ -32,7 +32,8 @@ interface Props {
 const UserForm: React.FC<Props> = () => {
   // ** State
   const [loading, setLoading] = useState<boolean>(false)
-  const { user, setUser, formFields } = useUserFormStore.getState()
+  const store = useUserFormStore()
+  const { user, setUser, unsaveField, formFields, updateField, setFormFields } = store
   const [activeTab, setActiveTab] = useState<number>(0)
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue as number)
@@ -45,10 +46,11 @@ const UserForm: React.FC<Props> = () => {
     try {
       const payload = {
         dn: user?.dn,
-        attributes: formFields
+        attributes: {
+          ...formFields
+        }
       }
       const res = await withAuthAxiosInstance.post(`/users/modify-ldap`, payload)
-      console.log(res)
       showToastSuccess('Usuario actualizado')
       setActiveTab(100)
       setTimeout(() => {
