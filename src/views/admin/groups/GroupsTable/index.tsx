@@ -1,14 +1,10 @@
-import { userTypes } from '@/constants/userTypes'
-import EmployeeType from '@/types/employee.type'
-import StudentType from '@/types/student.type'
-import UserType from '@/types/user.type'
+import LDAPGroup from '@/types/ldapGroup'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import GroupRow from './components/GroupRow'
 import columns from './data/columns'
 import useStyles from './styles'
-import LDAPGroup from '@/types/ldapGroup'
-import GroupRow from './components/GroupRow'
 
 interface UsersTableProps {
   groups: LDAPGroup[]
