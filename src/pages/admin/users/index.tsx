@@ -6,7 +6,6 @@ import useProfileStore from '@/stores/profile.store'
 import useUserStore from '@/stores/users.store'
 import UserType from '@/types/user.type'
 import UsersTable from '@/views/admin/users/UsersTable'
-import { Typography, Box, Button } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
@@ -72,7 +71,7 @@ const UsersPage: React.FC<UsersPageProps> = () => {
       else return user.userStatus === statusFilter
     })
 
-    const newFilteredUsers = newStatusFilter
+    const newFilteredUsers = newStatusFilter.sort((user: UserType, nextUser: UserType) => user.uid >= nextUser.uid)
 
     setFilteredUsers(newFilteredUsers)
   }, [userTypeFilter, areaFilter, sexFilter, statusFilter])
@@ -84,7 +83,9 @@ const UsersPage: React.FC<UsersPageProps> = () => {
         const response = await withAuthAxiosInstance.post(`/users/baseDN?limit=50000`, {
           baseDN
         })
-        setResponsedUsers(response.data.data)
+        const sortedResponsedUsers = response.data.data
+        sortedResponsedUsers.sort((user: UserType, nextUser: UserType) => user.uid <= nextUser.uid)
+        setResponsedUsers(sortedResponsedUsers)
         setLoading(false)
       } catch (err) {
         setLoading(false)
