@@ -2,15 +2,26 @@ import { userTypes } from '@/constants/userTypes'
 import EmployeeType from '@/types/employee.type'
 import StudentType from '@/types/student.type'
 import UserType from '@/types/user.type'
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Button,
+  Link
+} from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import EmployeeRow from '../EmployeesRow'
 import StudentRow from '../StudentsRow'
+import TableFilters from './components/Filters'
 import columns from './data/columns'
 import useStyles from './styles'
-import useUserStore from '@/stores/users.store'
-import TableFilters from './components/Filters'
+import { useRouter } from 'next/router'
 
 interface UsersTableProps {
   users: UserType[]
@@ -44,10 +55,14 @@ const NoResultsMessage = () => {
 
 const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
   const classes = useStyles()
+  const router = useRouter()
 
   return (
     <Paper>
       <TableFilters />
+      <Button sx={{ marginLeft: '10px' }} variant='contained' color='primary' onClick={() => router.push('/newUser')}>
+        Añadir Nuevo Usuario
+      </Button>
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
