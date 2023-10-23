@@ -110,7 +110,8 @@ const ResetPassword = () => {
         '/reset-password',
         {
           recoveryCode: recoveryCode,
-          newPassword: newPassword
+          newPassword: newPassword,
+          confirmPassword: confirmNewPassword
         },
         {
           headers: {
