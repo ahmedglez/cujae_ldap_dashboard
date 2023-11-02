@@ -100,7 +100,7 @@ const ForgotPassword = () => {
         const { message, token } = response.data
         sessionStorage.setItem('recover-password-token', token)
         if (status === 200) {
-          showToastSuccess('Email sent successfully')
+          showToastSuccess('Correo electrónico enviado correctamente')
           setTimeout(() => {
             router.push('/reset-password')
           }, 3000)
