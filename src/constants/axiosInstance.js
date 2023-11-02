@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Router from 'next/router' // Importa la biblioteca de enrutamiento de Next.js
 require('dotenv').config()
 import { getToken } from '@/helpers/jwtUtils'
 
@@ -29,6 +30,22 @@ withAuthAxiosInstance.interceptors.request.use(
     return config
   },
   error => {
+    return Promise.reject(error)
+  }
+)
+
+// Agrega un interceptor de respuesta para manejar códigos de respuesta no autorizados (401)
+withAuthAxiosInstance.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if (error.response && error.response.status === 401) {
+      // Redirige a la página de login en caso de no autorización
+      localStorage.removeItem('jwtToken')
+      localStorage.removeItem('profileStoreState')
+      Router.push('/login')
+    }
     return Promise.reject(error)
   }
 )
