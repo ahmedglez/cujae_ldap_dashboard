@@ -21,7 +21,7 @@ import { Settings } from 'src/@core/context/settingsContext'
 import { NavLink } from 'src/@core/layouts/types'
 
 // ** Custom Components Imports
-import UserIcon from 'src/layouts/components/UserIcon'
+import UserIcon from '@/layouts/UserLayout/components/UserIcon'
 
 // ** Utils
 import { handleURLQueries } from 'src/@core/layouts/utils'
