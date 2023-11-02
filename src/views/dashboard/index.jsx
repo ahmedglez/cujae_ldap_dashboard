@@ -2,13 +2,8 @@
 import Grid from '@mui/material/Grid'
 
 // ** Icons Imports
-import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
-import Poll from 'mdi-material-ui/Poll'
 
 // ** Custom Components Imports
-import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
 
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
@@ -19,12 +14,7 @@ import WelcomeCard from '@/views/dashboard/WelcomeCard'
 
 // ** Demo Components Imports
 import CustomCard from '@/views/dashboard/CustomCard'
-import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
-import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import Table from 'src/views/dashboard/Table'
-import TotalEarning from 'src/views/dashboard/TotalEarning'
-import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 
 // ** Hooks
 import useAvatarSelector from '@/hooks/useAvatarSelector'
@@ -36,7 +26,6 @@ import logo from 'public/images/favicon.png'
 import useProfileStore from '@/stores/profile.store'
 
 // ** Others
-import principalContacts from '@/data/contacts'
 
 const Dashboard = () => {
   useAvatarSelector()
@@ -52,11 +41,11 @@ const Dashboard = () => {
         <Grid item xs={12}>
           {<StatisticsCard />}
         </Grid>
-        {profile.isAdmin && (
+        {/*  {profile.isAdmin && (
           <Grid item xs={12}>
             <WeeklyOverview />
           </Grid>
-        )}
+        )} */}
         <Grid item xs={12} md={4}>
           <CustomCard
             title={`SIGENU`}
@@ -68,7 +57,7 @@ const Dashboard = () => {
           />
         </Grid>
         <Grid item xs={12} md={8}>
-          <ContactMuralCard contacts={principalContacts} />
+          <ContactMuralCard />
         </Grid>
       </Grid>
     </ApexChartWrapper>

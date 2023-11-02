@@ -9,15 +9,21 @@ import ListItem from '@mui/material/ListItem'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@mui/material/Avatar'
 import ListItemText from '@mui/material/ListItemText'
-
+import { areas, contacts } from '@/data/contacts'
+import { Box } from '@mui/material'
 const itemsPerPage = 3
 
-const ContactMuralCard = ({ contacts }) => {
+const ContactMuralCard = () => {
   const [page, setPage] = useState(0)
+  const [contactsByArea, setContactsByArea] = useState(contacts[0])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
+    const newContactsByArea = contacts.find(contact => contact.area === newPage)
+    setContactsByArea(newContactsByArea)
   }
+
+  console.log('page', page)
 
   return (
     <Card>
@@ -32,17 +38,34 @@ const ContactMuralCard = ({ contacts }) => {
           textColor='primary'
           variant='scrollable'
         >
-          {Array.from({ length: Math.ceil(contacts.length / itemsPerPage) }).map((_, index) => (
-            <Tab key={index} label={`Página ${index + 1}`} />
+          {areas.map((area, index) => (
+            <Tab
+              key={index}
+              label={area}
+              value={area}
+              id={`vertical-tab-${index}`}
+              aria-controls={`vertical-tabpanel-${index}`}
+            />
           ))}
         </Tabs>
         <List>
-          {contacts.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((contact, index) => (
-            <ListItem key={index}>
+          {contactsByArea.contactos.map((contact, index) => (
+            <ListItem
+              key={index}
+              sx={{
+                '&:hover': {
+                  backgroundColor: '#f5f5f5'
+                },
+                display: 'flex',
+                cursor: 'pointer',
+                gap:'10px'
+              }}
+            >
               <ListItemAvatar>
                 <Avatar alt={contact.name} src={contact.imageUrl} />
               </ListItemAvatar>
-              <ListItemText primary={contact.name} secondary={`${contact.position} - ${contact.email}`} />
+              <ListItemText primary={contact.name} secondary={contact.position} />
+              <ListItemText primary={contact.email} secondary={contact.phones.join(', ')} />
             </ListItem>
           ))}
         </List>
