@@ -66,7 +66,6 @@ const UserDropdown = () => {
   }
 
   const handleLogoutClick = () => {
-    console.log('click')
     openDialog('Estas seguro que deseas cerrar sesion', '', 'warning', handleLogout, () => {})
   }
 
@@ -94,7 +93,9 @@ const UserDropdown = () => {
         badgeContent={<BadgeContentSpan />}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Avatar alt='Avatar' onClick={handleDropdownOpen} sx={{ width: 40, height: 40 }} src={avatar} />
+        <Avatar alt='Avatar' onClick={handleDropdownOpen} sx={{ width: 40, height: 40 }}>
+          {user?.cn[0]}
+        </Avatar>
       </Badge>
       <Menu
         anchorEl={anchorEl}
@@ -111,7 +112,9 @@ const UserDropdown = () => {
               badgeContent={<BadgeContentSpan />}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
-              <Avatar alt='Avatar' src={avatar} sx={{ width: '2.5rem', height: '2.5rem' }} />
+              <Avatar alt='Avatar' sx={{ width: '2.5rem', height: '2.5rem' }}>
+                {user?.cn[0]}
+              </Avatar>
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography sx={{ fontWeight: 600 }}>{user?.cn}</Typography>
