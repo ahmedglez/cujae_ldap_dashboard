@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/router'
 import useUserFormStore from '@/stores/from.store'
 import { AxiosError } from 'axios'
+import useProfileStore from '@/stores/profile.store'
 
 const NoResultsMessage = () => {
   const styles = {
@@ -51,6 +52,7 @@ const UserPage = () => {
   const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
   const { user, setUser } = useUserFormStore.getState()
+  const { roles } = useProfileStore()
 
   const getByUsername = async () => {
     try {
@@ -140,7 +142,15 @@ const UserPage = () => {
   }
 
   useEffect(() => {
-    handleGetUser()
+    if (!roles.includes('admin')) {
+      router.push('/')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!roles.includes('admin')) {
+      handleGetUser()
+    }
   }, [username])
 
   return (

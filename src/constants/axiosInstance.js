@@ -7,7 +7,7 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL
 
 export const withoutAuthAxiosInstance = axios.create({
   baseURL: baseURL,
-  timeout: 20000,
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -15,7 +15,7 @@ export const withoutAuthAxiosInstance = axios.create({
 
 export const withAuthAxiosInstance = axios.create({
   baseURL: baseURL,
-  timeout: 200000,
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
   }
