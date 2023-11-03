@@ -23,7 +23,6 @@ const ContactMuralCard = () => {
     setContactsByArea(newContactsByArea)
   }
 
-  console.log('page', page)
 
   return (
     <Card>
