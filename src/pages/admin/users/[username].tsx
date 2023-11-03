@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/router'
 import useUserFormStore from '@/stores/from.store'
+import { AxiosError } from 'axios'
 
 const NoResultsMessage = () => {
   const styles = {
@@ -52,21 +53,37 @@ const UserPage = () => {
   const { user, setUser } = useUserFormStore.getState()
 
   const getByUsername = async () => {
-    const response = await withAuthAxiosInstance.get(`/users?uid=${username}`)
-    const user = response.data.data[0]
-    return user
+    try {
+      const response = await withAuthAxiosInstance.get(`/users?uid=${username}`)
+      const user = response.data.data[0]
+      return user
+    } catch (error: any) {
+      // Manejo de error, por ejemplo, imprimir el error o lanzar una excepción personalizada
+      console.error('Error en getByUsername:', error)
+      throw error // O lanzar una excepción personalizada
+    }
   }
 
   const getByEmail = async () => {
-    const response = await withAuthAxiosInstance.get(`/users?email=${username}`)
-    const user = response.data.data[0]
-    return user
+    try {
+      const response = await withAuthAxiosInstance.get(`/users?email=${username}`)
+      const user = response.data.data[0]
+      return user
+    } catch (error: any) {
+      console.error('Error en getByEmail:', error)
+      throw error
+    }
   }
 
   const getByCI = async () => {
-    const response = await withAuthAxiosInstance.get(`/users?CI=${username}`)
-    const user = response.data.data[0]
-    return user
+    try {
+      const response = await withAuthAxiosInstance.get(`/users?CI=${username}`)
+      const user = response.data.data[0]
+      return user
+    } catch (error: any) {
+      console.error('Error en getByCI:', error)
+      throw error
+    }
   }
 
   const handleGetUser = async () => {
@@ -106,7 +123,7 @@ const UserPage = () => {
           } else {
             setLoading(false)
             setUser(null)
-            showToastInfo('No user found for the provided username.')
+            showToastInfo('No usxer found for the provided username.')
           }
         } else {
           setLoading(false)
@@ -115,10 +132,10 @@ const UserPage = () => {
         }
       }
       setLoading(false)
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false)
       console.log(err)
-      showToastError('Ups, something wrong happened')
+      showToastError(err.message)
     }
   }
 
