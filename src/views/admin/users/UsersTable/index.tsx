@@ -60,7 +60,12 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, loading }) => {
   return (
     <Paper>
       <TableFilters />
-      <Button sx={{ marginLeft: '10px' }} variant='contained' color='primary' onClick={() => router.push('/newUser')}>
+      <Button
+        sx={{ marginLeft: '10px' }}
+        variant='contained'
+        color='primary'
+        onClick={() => router.push(`/newUser?ou=${router.query.ou}`)}
+      >
         Añadir Nuevo Usuario
       </Button>
       <TableContainer component={Paper}>
