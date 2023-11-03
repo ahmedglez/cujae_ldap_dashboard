@@ -24,6 +24,8 @@ import ScrollToTop from 'src/@core/components/scroll-to-top'
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
+import ConfirmationDialog from '@/components/feedback/ConfirmationDialog'
+
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
   display: 'flex'
@@ -65,6 +67,8 @@ const VerticalLayout = (props: LayoutProps) => {
   return (
     <>
       <VerticalLayoutWrapper className='layout-wrapper'>
+        {/* Confirmation Dialog */}
+        <ConfirmationDialog />
         {/* Navigation Menu */}
         <Navigation
           navWidth={navWidth}

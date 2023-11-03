@@ -14,11 +14,17 @@ import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 
+// ** Custom Components
+import ConfirmDialog from '@/components/feedback/ConfirmationDialog'
+
 // ** Icons Imports
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import EmailOutline from 'mdi-material-ui/EmailOutline'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
+
+// ** Hooks
+import { useConfirmationDialogStore } from '@/stores/useConfirmationDialogStore'
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
@@ -37,6 +43,7 @@ const UserDropdown = () => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
   const avatar = useProfileStore(state => state.avatar)
   const { user, roles } = useProfileStore()
+  const { openDialog } = useConfirmationDialogStore()
 
   // ** Hooks
   const router = useRouter()
@@ -58,6 +65,11 @@ const UserDropdown = () => {
     router.push('/login')
   }
 
+  const handleLogoutClick = () => {
+    console.log('click')
+    openDialog('Estas seguro que deseas cerrar sesion', '', 'warning', handleLogout, () => {})
+  }
+
   const styles = {
     py: 2,
     px: 4,
@@ -74,6 +86,7 @@ const UserDropdown = () => {
 
   return (
     <Fragment>
+      <ConfirmDialog />
       <Badge
         overlap='circular'
         onClick={handleDropdownOpen}
@@ -101,7 +114,7 @@ const UserDropdown = () => {
               <Avatar alt='Avatar' src={avatar} sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>{user.cn}</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{user?.cn}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
                 {roles[roles.length - 1]}
               </Typography>
@@ -129,7 +142,7 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => handleLogout()}>
+        <MenuItem sx={{ py: 2 }} onClick={() => handleLogoutClick()}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem>
