@@ -86,10 +86,6 @@ const NewUserForm = () => {
         showToastError(error.details[0].message)
       } else {
         const dn = `uid=${uid},ou=usuarios,ou=${ou},dc=cujae,dc=edu,dc=cu`
-        console.log({
-          newUser: user,
-          userDN: dn
-        })
         const response = await withAuthAxiosInstance.post('/users/newUser', {
           newUser: user,
           userDN: dn

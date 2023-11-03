@@ -30,7 +30,6 @@ import useProfileStore from '@/stores/profile.store'
 const Dashboard = () => {
   useAvatarSelector()
   const profile = useProfileStore()
-  console.log(profile)
 
   return (
     <ApexChartWrapper>
