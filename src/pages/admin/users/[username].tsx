@@ -52,7 +52,10 @@ const UserPage = () => {
   const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
   const { user, setUser } = useUserFormStore.getState()
-  const { roles } = useProfileStore()
+  const store = useProfileStore()
+  const { roles } = store
+
+  console.log('roles', roles)
 
   const getByUsername = async () => {
     try {
@@ -148,9 +151,7 @@ const UserPage = () => {
   }, [])
 
   useEffect(() => {
-    if (!roles.includes('admin')) {
-      handleGetUser()
-    }
+    handleGetUser()
   }, [username])
 
   return (

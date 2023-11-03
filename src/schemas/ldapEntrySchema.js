@@ -23,8 +23,7 @@ const ldapEntrySchema = Joi.object({
   displayName: Joi.string().required(),
   userPassword: Joi.string().required(),
   mail: Joi.array().items(Joi.string()).required(),
-  maildrop: Joi.array().items(Joi.string()).required(),
-  objectClass: Joi.array().items(Joi.string()).required()
+  maildrop: Joi.array().items(Joi.string()).required()
 })
 
 const ldapStudentSchema = Joi.object({

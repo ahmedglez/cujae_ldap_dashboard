@@ -57,8 +57,10 @@ const NewUserForm = () => {
   }, [ou])
 
   useEffect(() => {
-    autoCompleteFields()
-  }, [user.cn, user.sn, user.mail])
+    if (!!user.cn && !!user.sn) {
+      autoCompleteFields()
+    }
+  }, [user.cn, user.sn])
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -83,19 +85,31 @@ const NewUserForm = () => {
         setErrors(newErrors)
         showToastError(error.details[0].message)
       } else {
-        const dn = `uid=${uid},ou=usuarios,ou=${ou},ou=cujae,ou=edu,ou=cu`
+        const dn = `uid=${uid},ou=usuarios,ou=${ou},dc=cujae,dc=edu,dc=cu`
+        console.log({
+          newUser: user,
+          userDN: dn
+        })
         const response = await withAuthAxiosInstance.post('/users/newUser', {
           newUser: user,
           userDN: dn
         })
-        console.log('response')
-        console.log('data', response.data)
-        console.log('status', response.status)
+        const { data, status } = response
+        if (status === 200) {
+          showToastSuccess('Usuario añadido correctamente')
+          setTimeout(() => {
+            router.push('/')
+          }, 1000)
+        }
       }
     } catch (error) {
       console.error(error)
       showToastError(error.message)
     }
+  }
+
+  const handleCancel = () => {
+    router.push('/')
   }
 
   return (
@@ -138,10 +152,10 @@ const NewUserForm = () => {
             name='CI'
             value={user.CI}
             onChange={e => {
-              const regex = /^[0-9]{10}$/
+              const regex = /^[0-9]{11}$/
               handleChange(e)
               const ci = user.CI
-              const isValid = regex.test(ci)
+              const isValid = regex.test(e.target.value)
               if (isValid) {
                 setErrors({})
               } else {
@@ -290,10 +304,9 @@ const NewUserForm = () => {
             name='telephoneNumber'
             value={user.telephoneNumber}
             onChange={e => {
-              const regex = /^[0-9]{7}$/
+              const regex = /^[0-9]{8}$/
               handleChange(e)
-              const telephoneNumber = user.telephoneNumber
-              const isValid = regex.test(telephoneNumber)
+              const isValid = regex.test(e.target.value)
               if (isValid) {
                 setErrors({})
               } else {
@@ -372,40 +385,6 @@ const NewUserForm = () => {
             </Select>
           </FormControl>
         </Grid>
-
-        <Grid item xs={12} mt={5} display={'flex'} justifyContent={'center'} gap={5}>
-          {/* ObjectClass */}
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <Typography
-                variant='h5'
-                sx={{
-                  width: '100%'
-                }}
-              >
-                Object Class
-              </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap'
-                }}
-              >
-                {user.objectClass.map((mail, index) => (
-                  <div
-                    style={{
-                      width: '50%'
-                    }}
-                    key={index}
-                  >
-                    <TextField disbaled={true} fullWidth name={`objectClass[${index}]`} value={mail} aria-readonly />
-                  </div>
-                ))}
-              </Box>
-            </FormControl>
-          </Grid>
-        </Grid>
       </Grid>
 
       {/* Submit Button */}
@@ -414,11 +393,18 @@ const NewUserForm = () => {
           display: 'flex',
           alignItems: 'center',
           marginTop: '50px',
-          width: '100%'
+          gap: '10px',
+          width: {
+            xs: '100%',
+            sm: '50%'
+          }
         }}
       >
-        <Button sx={{ width: { xs: '100%', sm: '50%' } }} variant='contained' color='primary' onClick={handleSubmit}>
-          Create User
+        <Button sx={{ width: { xs: '50%' } }} variant='outlined' color='primary' onClick={handleCancel}>
+          Cancelar
+        </Button>
+        <Button sx={{ width: { xs: '50%' } }} variant='contained' color='primary' onClick={handleSubmit}>
+          Crear
         </Button>
       </Box>
     </form>
