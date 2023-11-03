@@ -73,10 +73,7 @@ const navigation = (): VerticalNavItemsType => {
     if (parsedGroupsWithHeader.length > 0) {
       parsedGroupsWithHeader?.unshift({
         sectionTitle: `ÁREAS`
-      }),
-        parsedGroupsWithHeader?.push({
-          sectionTitle: 'Enlaces'
-        })
+      })
     }
     setGroupsJson(parsedGroupsWithHeader)
   }, [groups])

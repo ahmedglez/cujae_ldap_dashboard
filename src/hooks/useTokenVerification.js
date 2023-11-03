@@ -2,18 +2,18 @@ import jwt_decode from 'jwt-decode'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { showToastError, showToastWarning, showToastSuccess, showToastInfo } from '@/helpers/toastHelper'
-
-const useTokenVerification = token => {
+import { getToken } from '@/helpers/jwtUtils'
+const useTokenVerification = () => {
   const router = useRouter()
 
   // Establece el intervalo de verificación en milisegundos (por ejemplo, cada 10 minutos)
-  const verificationInterval = 10 * 60 * 1000
+  const verificationInterval = 5 * 60 * 1000
 
   useEffect(() => {
     function verifyToken() {
+      const token = getToken()
       if (token) {
         const tokenData = jwt_decode(token)
-        console.log('tokenData', tokenData)
 
         /* avisar de que la sesion va expirar en tantos minutos */
         const expDate = new Date(tokenData.exp * 1000)
@@ -40,7 +40,7 @@ const useTokenVerification = token => {
 
     // Limpia el intervalo cuando el componente se desmonta
     return () => clearInterval(intervalId)
-  }, [token, router])
+  }, [router])
 
   return null
 }
