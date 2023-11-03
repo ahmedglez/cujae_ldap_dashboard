@@ -34,6 +34,5 @@ export const initialState = {
   displayName: '',
   userPassword: '',
   mail: [''],
-  maildrop: [''],
-  objectClass: objectClasses
+  maildrop: ['']
 }
