@@ -31,7 +31,6 @@ interface Props {
 const UserLayout = ({ children }: Props) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
-  const token = getToken()
 
   /**
    *  The below variable will hide the current layout menu at given screen size.
@@ -43,7 +42,7 @@ const UserLayout = ({ children }: Props) => {
    */
   const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
-  useTokenVerification(token)
+  useTokenVerification()
 
   return (
     <VerticalLayout

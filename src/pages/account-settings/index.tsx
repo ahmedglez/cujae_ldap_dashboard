@@ -1,5 +1,5 @@
 // ** React Imports
-import { SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -32,6 +32,7 @@ import themeConfig from '@/configs/themeConfig'
 // ** Utils
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { showToastInfo } from '@/helpers/toastHelper'
 
 const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -59,6 +60,12 @@ const AccountSettings = () => {
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
+
+  useEffect(() => {
+    showToastInfo(
+      'Actualmente, la única acción permitida es la modificación de la contraseña; los demás atributos son de solo lectura en este momento.'
+    )
+  }, [])
 
   return (
     <Card>

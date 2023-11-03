@@ -87,7 +87,7 @@ const TabSecurity = () => {
       router.push('/')
       return
     } else {
-      showToastError('An error has ocurred')
+      showToastError('Ha ocurrido un error inesperado')
     }
   }
 
