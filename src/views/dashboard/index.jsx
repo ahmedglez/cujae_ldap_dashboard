@@ -9,12 +9,12 @@ import Grid from '@mui/material/Grid'
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 // ** Components Imports
-import ContactMuralCard from '@/views/dashboard/ContactMuralCard'
-import WelcomeCard from '@/views/dashboard/WelcomeCard'
+import ContactMuralCard from '@/views/dashboard/components/ContactMuralCard'
+import WelcomeCard from '@/views/dashboard/components/WelcomeCard'
 
 // ** Demo Components Imports
-import CustomCard from '@/views/dashboard/CustomCard'
-import StatisticsCard from 'src/views/dashboard/StatisticsCard'
+import CustomCard from '@/views/dashboard/components/CustomCard'
+import StatisticsCard from '@/views/dashboard/components/StatisticsCard'
 
 // ** Hooks
 import useAvatarSelector from '@/hooks/useAvatarSelector'
