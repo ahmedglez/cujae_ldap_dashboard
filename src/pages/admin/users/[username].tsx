@@ -55,7 +55,6 @@ const UserPage = () => {
   const store = useProfileStore()
   const { roles } = store
 
-  console.log('roles', roles)
 
   const getByUsername = async () => {
     try {

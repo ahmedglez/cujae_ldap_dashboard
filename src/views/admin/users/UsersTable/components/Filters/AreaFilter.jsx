@@ -34,7 +34,6 @@ const AreaFilter = () => {
 
   // Handle filter change
   const handleAreaFilterChange = e => {
-    console.log(e.target.value)
   }
 
   return (
