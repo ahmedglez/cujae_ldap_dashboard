@@ -58,7 +58,7 @@ const ResetPassword = () => {
   useEffect(() => {
     const jwt = sessionStorage.getItem('recover-password-token')
     if (jwt === null) {
-      showToastError('An error ocurred')
+      showToastError('Ha ocurrido un error inesperado')
       setTimeout(() => {
         router.push('/login')
       })
@@ -133,11 +133,11 @@ const ResetPassword = () => {
 
         return
       } else {
-        showToastError(message ? message : 'An error has ocurred')
+        showToastError(message ? message : ' Ha ocurrido un error inesperado')
       }
     } catch (err) {
       console.log(err)
-      showToastError('An error has ocurred')
+      showToastError('Ha ocurrido un error inesperado')
     }
   }
 

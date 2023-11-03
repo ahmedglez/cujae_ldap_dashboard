@@ -28,14 +28,17 @@ const navigation = (): VerticalNavItemsType => {
   const baseDN = profile.roles.includes('superadmin')
     ? 'dc=cujae,dc=edu,dc=cu'
     : `ou=${profile.groups[1]},dc=cujae,dc=edu,dc=cu`
+  console.log('roles', profile)
 
   const getGroups = async () => {
     try {
-      const response = await withAuthAxiosInstance.post(`/groups?scope=${scope}`, {
-        baseDN: baseDN
-      })
-      const groupsData = response.data.data // Assuming response contains data property with the groups
-      setGroups(groupsData)
+      if (profile.roles.includes('admin')) {
+        const response = await withAuthAxiosInstance.post(`/groups?scope=${scope}`, {
+          baseDN: baseDN
+        })
+        const groupsData = response.data.data // Assuming response contains data property with the groups
+        setGroups(groupsData)
+      }
     } catch (error) {
       // Handle error appropriately.
     }

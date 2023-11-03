@@ -62,7 +62,7 @@ const UserDropdown = () => {
   const handleLogout = () => {
     localStorage.removeItem('jwtToken')
     localStorage.removeItem('profileStoreState')
-    router.push('/login')
+    router.push('/logout')
   }
 
   const handleLogoutClick = () => {
@@ -144,7 +144,7 @@ const UserDropdown = () => {
         <Divider />
         <MenuItem sx={{ py: 2 }} onClick={() => handleLogoutClick()}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
-          Logout
+          Cerrar sesión
         </MenuItem>
       </Menu>
     </Fragment>

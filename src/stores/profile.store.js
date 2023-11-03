@@ -31,12 +31,15 @@ const useProfileStore = create(set => ({
       base: base,
       baseDN: baseDN
     })),
-  logout: () =>
+  logout: () => {
     set(state => ({
       ...state,
       user: null,
       isLoggedIn: false
     })),
+      localStorage.removeItem('jwtToken')
+    localStorage.removeItem('profileStoreState')
+  },
   setAvatar: (
     avatar // Add the setAvatar function to the store
   ) =>
