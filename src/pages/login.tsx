@@ -152,7 +152,6 @@ const LoginPage = () => {
         showToastSuccess('Usted se ha autenticado correctamente')
         router.push('/')
       } catch (err: any) {
-        console.log(err)
         const message =
           err?.response?.data?.message !== undefined
             ? err.response.data.message

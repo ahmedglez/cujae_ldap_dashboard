@@ -9,8 +9,6 @@ import { useConfirmationDialogStore } from '@/stores/useConfirmationDialogStore'
 const ConfirmDialog = () => {
   const { isOpen, message, title, type, confirmCB, cancelCB, closeDialog, handleConfirm } = useConfirmationDialogStore()
 
-  console.log(cancelCB)
-  console.log(confirmCB)
   const color = type === 'info' ? 'blue' : type === 'warning' ? 'yellow' : 'red'
 
   const dialogTitleStyle = {

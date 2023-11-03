@@ -28,7 +28,6 @@ const navigation = (): VerticalNavItemsType => {
   const baseDN = profile.roles.includes('superadmin')
     ? 'dc=cujae,dc=edu,dc=cu'
     : `ou=${profile.groups[1]},dc=cujae,dc=edu,dc=cu`
-  console.log('roles', profile)
 
   const getGroups = async () => {
     try {

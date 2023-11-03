@@ -109,7 +109,6 @@ const ForgotPassword = () => {
           throw new Error('User not found')
         }
       } catch (error) {
-        console.log('Error on forgot-password', error)
         showToastError('User not found')
         router.push('/login')
         return
