@@ -6,6 +6,7 @@ import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
 import AccountGroup from 'mdi-material-ui/AccountGroup'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Login from 'mdi-material-ui/Login'
+import Logout from 'mdi-material-ui/Logout'
 import { useEffect, useState } from 'react'
 
 // ** Type import
@@ -68,31 +69,43 @@ const navigation = (): VerticalNavItemsType => {
   useEffect(() => {
     const parsedGroups = groups?.map(group => parseGroup(group))
     const parsedGroupsWithHeader = parsedGroups as any[]
-    parsedGroupsWithHeader?.unshift({
-      sectionTitle: `ÁREAS`
-    }),
-      setGroupsJson(parsedGroupsWithHeader)
+
+    if (parsedGroupsWithHeader.length > 0) {
+      parsedGroupsWithHeader?.unshift({
+        sectionTitle: `ÁREAS`
+      }),
+        parsedGroupsWithHeader?.push({
+          sectionTitle: 'Enlaces'
+        })
+    }
+    setGroupsJson(parsedGroupsWithHeader)
   }, [groups])
 
   return [
     {
-      title: 'Dashboard',
+      title: 'Panel de control',
       icon: HomeOutline,
       path: '/'
     },
     {
-      title: 'Account Settings',
+      title: 'Perfil de Usuario',
       icon: AccountCogOutline,
       path: '/account-settings'
     },
     ...groupsJson,
     {
-      sectionTitle: 'Pages'
+      sectionTitle: 'Enlaces'
     },
     {
-      title: 'Login',
+      title: 'Iniciar sesión',
       icon: Login,
       path: '/login',
+      openInNewTab: true
+    },
+    {
+      title: 'Cerrar sesión',
+      icon: Logout,
+      path: '/logout',
       openInNewTab: true
     }
   ]
