@@ -14,6 +14,9 @@ import { Settings } from 'src/@core/context/settingsContext'
 import NavbarSearchInput from '@/components/NavbarSearchInput'
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
+
+import useProfileStore from '@/stores/profile.store'
+
 interface Props {
   hidden: boolean
   settings: Settings
@@ -24,6 +27,7 @@ interface Props {
 const AppBarContent = (props: Props) => {
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
+  const { roles } = useProfileStore()
 
   // ** Hook
   const hiddenSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
@@ -40,7 +44,7 @@ const AppBarContent = (props: Props) => {
             <Menu />
           </IconButton>
         ) : null}
-        <NavbarSearchInput />
+        {roles.includes('admin') && <NavbarSearchInput />}
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         {/*  {hiddenSm ? null : (

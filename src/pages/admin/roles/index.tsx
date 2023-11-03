@@ -42,11 +42,16 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [groups, setGroups] = useState<LDAPGroup[]>([])
   const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 25 })
-  const base = useProfileStore(state => state.base)
+  const { base, roles } = useProfileStore()
   const ou = router.query.ou
   const baseDN = `ou=roles,ou=${ou},${base}`
   const paginatedGroups = usePagination(groups, pagination)
 
+  useEffect(() => {
+    if (!roles.includes('admin')) {
+      router.push('/')
+    }
+  }, [])
   useEffect(() => {
     const fetchData = async () => {
       try {

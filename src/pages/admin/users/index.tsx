@@ -42,7 +42,7 @@ const UsersPage: React.FC<UsersPageProps> = () => {
   const router = useRouter()
   const [responsedUsers, setResponsedUsers] = useState<any>([])
   const [error, setError] = useState<any>(null)
-  const base = useProfileStore(state => state.base)
+  const { base, roles } = useProfileStore()
   const ou = router.query.ou
   const baseDN = `ou=usuarios,ou=${ou},${base}`
   const { setUsers, users, filters, setFilteredUsers, filteredUsers, loading, setLoading, pagination, setPagination } =
@@ -50,6 +50,11 @@ const UsersPage: React.FC<UsersPageProps> = () => {
   const { userType: userTypeFilter, area: areaFilter, sex: sexFilter, status: statusFilter } = filters
   const paginatedUsers = usePagination(filteredUsers, pagination)
 
+  useEffect(() => {
+    if (!roles.includes('admin')) {
+      router.push('/')
+    }
+  }, [])
   useEffect(() => {
     const newTypeFilteredUsers = users.filter((user: UserType) => {
       if (userTypeFilter === 'ALL') return true

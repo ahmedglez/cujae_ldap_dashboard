@@ -102,7 +102,7 @@ const NewUserForm = () => {
     <form>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant='h3' pb={4} fullWidth>
+          <Typography variant='h4' pb={4} fullWidth>
             Nuevo Usuario
           </Typography>
         </Grid>
