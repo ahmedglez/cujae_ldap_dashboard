@@ -1,4 +1,4 @@
-import PaginationTable from '@/components/PaginationTable'
+import PaginationTable from '@/components/pagination/PaginationTable'
 import AdminRoute from '@/components/hocs/AdminRoute'
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
 import usePagination from '@/hooks/usePaginateUsers'

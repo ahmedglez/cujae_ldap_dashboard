@@ -11,7 +11,7 @@ import Menu from 'mdi-material-ui/Menu'
 import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Components
-import NavbarSearchInput from '@/components/NavbarSearchInput'
+import NavbarSearchInput from '@/components/general/NavbarSearchInput'
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 interface Props {

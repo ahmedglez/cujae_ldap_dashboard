@@ -1,8 +1,9 @@
 // ** React Imports
-import { ChangeEvent, ElementType, useState } from 'react'
+import { ChangeEvent, ElementType, useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import Avatar from '@mui/material/Avatar'
 import Button, { ButtonProps } from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
@@ -50,7 +51,6 @@ const TabAccount = () => {
     const { files } = file.target as HTMLInputElement
     if (files && files.length !== 0) {
       reader.onload = () => setImgSrc(reader.result as string)
-
       reader.readAsDataURL(files[0])
     }
   }
@@ -59,9 +59,8 @@ const TabAccount = () => {
     <CardContent>
       <form>
         <Grid container spacing={7}>
-          <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
+          <Grid item xs={12} sx={{ marginBottom: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ImgStyled src={imgSrc} alt='Profile Pic' />
               {/*  <Box>
                 <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
                   Upload New Photo
