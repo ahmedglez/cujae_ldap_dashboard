@@ -23,7 +23,7 @@ const ConfirmDialog = () => {
         <Button variant='outlined' >
           Cancelar
         </Button>
-        <Button variant='contained' onClick={() => handleConfirm(confirmCB)}>
+        <Button variant='contained' >
           Confirmar
         </Button>
       </DialogActions>
