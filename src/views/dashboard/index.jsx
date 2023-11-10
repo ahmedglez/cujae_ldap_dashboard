@@ -20,7 +20,7 @@ import StatisticsCard from '@/views/dashboard/components/StatisticsCard'
 import useAvatarSelector from '@/hooks/useAvatarSelector'
 
 // ** Assets
-import logo from '../../assets/images/favicon.png'
+/* import logo from '../../assets/images/favicon.png' */
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
@@ -52,7 +52,7 @@ const Dashboard = () => {
           sencilla.`}
             link={`https://sigenu.cujae.edu.cu/josso/signon/login.do?josso_back_to=https://sigenu.cujae.edu.cu/sigenu-dss/josso_security_check&josso_partnerapp_id=sigenudss-partner`}
             cta={`Accede a SIGENU`}
-            image={logo}
+            image={'../assets/images/favicon.png'}
           />
         </Grid>
         <Grid item xs={12} md={8}>

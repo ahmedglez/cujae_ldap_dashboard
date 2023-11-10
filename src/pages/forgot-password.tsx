@@ -28,7 +28,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 
 // ** Logo
-import logo from '../assets/images/favicon.png'
+/* import logo from '../assets/images/favicon.png' */
 
 // ** Utils
 import { showToastError, showToastSuccess } from '@/helpers/toastHelper'
@@ -126,7 +126,7 @@ const ForgotPassword = () => {
         <CardContent sx={{ padding: theme => `${theme.spacing(12, 9, 7)} !important` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Box sx={{ width: 50, height: 50, borderRadius: '50%' }}>
-              <Image src={logo} width={'100%'} height={'100%'} alt='Logo CUJAE' objectFit='cover' />
+              <Image src={'../assets/images/favicon.png'} width={'100%'} height={'100%'} alt='Logo CUJAE' objectFit='cover' />
             </Box>
             <Typography
               variant='h6'
