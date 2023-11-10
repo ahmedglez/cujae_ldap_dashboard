@@ -85,7 +85,7 @@ const UserDropdown = () => {
 
   return (
     <Fragment>
-      <ConfirmDialog />
+      {/*  <ConfirmDialog /> */}
       <Badge
         overlap='circular'
         onClick={handleDropdownOpen}
