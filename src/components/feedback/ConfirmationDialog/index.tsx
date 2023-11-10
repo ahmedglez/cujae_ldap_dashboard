@@ -20,7 +20,7 @@ const ConfirmDialog = () => {
       {title && title !== '' && <DialogTitle sx={dialogTitleStyle}>{title}</DialogTitle>}
       <DialogContent>{message}</DialogContent>
       <DialogActions>
-        <Button variant='outlined' onClick={() => closeDialog(cancelCB)}>
+        <Button variant='outlined' >
           Cancelar
         </Button>
         <Button variant='contained' onClick={() => handleConfirm(confirmCB)}>
