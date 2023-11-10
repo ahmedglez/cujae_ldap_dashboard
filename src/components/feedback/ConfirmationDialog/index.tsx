@@ -20,10 +20,10 @@ const ConfirmDialog = () => {
       {title && title !== '' && <DialogTitle sx={dialogTitleStyle}>{title}</DialogTitle>}
       <DialogContent>{message}</DialogContent>
       <DialogActions>
-        <Button variant='outlined' >
+        <Button variant='outlined' onClick={()=> closeDialog(cancelCB)} >
           Cancelar
         </Button>
-        <Button variant='contained' >
+        <Button variant='contained' onClick={()=> handleConfirm(confirmCB)} >
           Confirmar
         </Button>
       </DialogActions>
