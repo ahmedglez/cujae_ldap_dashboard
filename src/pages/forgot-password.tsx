@@ -28,7 +28,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 
 // ** Logo
-import logo from 'public/images/favicon.png'
+import logo from '../assets/images/favicon.png'
 
 // ** Utils
 import { showToastError, showToastSuccess } from '@/helpers/toastHelper'

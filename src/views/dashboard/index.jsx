@@ -20,7 +20,7 @@ import StatisticsCard from '@/views/dashboard/components/StatisticsCard'
 import useAvatarSelector from '@/hooks/useAvatarSelector'
 
 // ** Assets
-import logo from 'public/images/favicon.png'
+import logo from '../../assets/images/favicon.png'
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
