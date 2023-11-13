@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react'
 import AdminRoute from '@/components/hocs/AdminRoute'
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
 import { showToastError, showToastInfo, showToastWarning } from '@/helpers/toastHelper'
-import UserType from '@/types/user.type'
+import useUserFormStore from '@/stores/from.store'
+import useProfileStore from '@/stores/profile.store'
 import UserForm from '@/views/admin/users/UserForm'
 import { Skeleton } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -13,9 +14,6 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/router'
-import useUserFormStore from '@/stores/from.store'
-import { AxiosError } from 'axios'
-import useProfileStore from '@/stores/profile.store'
 
 const NoResultsMessage = () => {
   const styles = {
@@ -51,10 +49,9 @@ const UserPage = () => {
   const router = useRouter()
   const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
-  const { user, setUser } = useUserFormStore.getState()
+  const { user, setUser } = useUserFormStore()
   const store = useProfileStore()
   const { roles } = store
-
 
   const getByUsername = async () => {
     try {
@@ -100,30 +97,30 @@ const UserPage = () => {
         const ciPattern = /^[0-9]{11}$/ // Customize the pattern as needed
 
         if (emailPattern.test(username)) {
-          const user = await getByEmail()
-          if (user) {
+          const newUser = await getByEmail()
+          if (newUser) {
             setLoading(false)
-            setUser(user)
+            setUser(newUser)
           } else {
             setLoading(false)
             setUser(null)
             showToastInfo('No user found for the provided email.')
           }
         } else if (ciPattern.test(username)) {
-          const user = await getByCI()
-          if (user) {
+          const newUser = await getByCI()
+          if (newUser) {
             setLoading(false)
-            setUser(user)
+            setUser(newUser)
           } else {
             setLoading(false)
             setUser(null)
             showToastInfo('No user found for the provided CI.')
           }
         } else if (usernamePattern.test(username)) {
-          const user = await getByUsername()
-          if (user) {
+          const newUser = await getByUsername()
+          if (newUser) {
             setLoading(false)
-            setUser(user)
+            setUser(newUser)
           } else {
             setLoading(false)
             setUser(null)
@@ -150,13 +147,14 @@ const UserPage = () => {
   }, [])
 
   useEffect(() => {
+    console.log('entro')
     handleGetUser()
   }, [username])
 
   return (
     <CardContent>
       {!loading && (user === null || user === undefined) && <NoResultsMessage />}
-      {!loading && !!user && <UserForm />}
+      {!loading && user !== null && user !== undefined && <UserForm user={user} username={username} />}
       {loading && (
         <form>
           <Grid container spacing={7}>

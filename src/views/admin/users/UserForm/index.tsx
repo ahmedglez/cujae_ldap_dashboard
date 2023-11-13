@@ -1,45 +1,51 @@
 // ** React Imports
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import EmployeeType from '@/types/employee.type'
 import StudentType from '@/types/student.type'
 import UserType from '@/types/user.type'
+import { Box, Button } from '@mui/material'
 import CardContent from '@mui/material/CardContent'
+import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
-import { Button, Box } from '@mui/material'
-import { useRouter } from 'next/router'
-import CircularProgress from '@mui/material/CircularProgress'
 
 // ** Custom Components
-import InputComponent from './components/InputField'
-import { employeeFields, userFields, personalFields, studentFields } from './data/fields'
-import StudentForm from './components/StudentForm'
 import EmployeeForm from './components/EmployeeForm'
+import InputComponent from './components/InputField'
+import StudentForm from './components/StudentForm'
+import { personalFields, userFields } from './data/fields'
 
 // ** Others
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
-import { showToastError, showToastInfo, showToastSuccess, showToastWarning } from '@/helpers/toastHelper'
+import { showToastError, showToastSuccess, showToastWarning } from '@/helpers/toastHelper'
 import useUserFormStore from '@/stores/from.store'
+import { useRouter } from 'next/router'
 
 interface Props {
   user?: UserType
+  username?: string
 }
 
-const UserForm: React.FC<Props> = () => {
+const UserForm: React.FC<Props> = ({ user, username }) => {
   // ** State
   const [loading, setLoading] = useState<boolean>(false)
-  const store = useUserFormStore()
-  const { user, setUser, unsaveField, formFields, updateField, setFormFields } = store
+  const { setUser, formFields } = useUserFormStore(store => store)
   const [activeTab, setActiveTab] = useState<number>(0)
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue as number)
   }
   const renderedUserFields = userFields(user as UserType)
   const personaFields = personalFields(user as UserType)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setActiveTab(0)
+    }, 50)
+  }, [user, username])
 
   const handleSave = async () => {
     setLoading(true)
@@ -64,7 +70,7 @@ const UserForm: React.FC<Props> = () => {
   }
 
   const handleReset = () => {
-    setUser(user)
+    setUser(user as UserType | null)
     setActiveTab(100)
     setTimeout(() => {
       setActiveTab(0)
