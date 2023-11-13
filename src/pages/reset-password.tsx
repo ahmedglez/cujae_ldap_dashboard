@@ -274,7 +274,7 @@ const ResetPassword = () => {
         <CardContent>
           <Box sx={{ mt: 11 }}>
             <Button disabled={!isValid} onClick={handleSavePassword} variant='contained' sx={{ marginRight: 3.5 }}>
-              Save Changes
+              Guardar cambios
             </Button>
             <Button
               type='reset'
@@ -285,7 +285,7 @@ const ResetPassword = () => {
                 setRecoveryCode(null)
               }}
             >
-              Reset
+            Cancelar
             </Button>
           </Box>
         </CardContent>

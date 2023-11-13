@@ -253,7 +253,7 @@ const TabSecurity = () => {
 
         <Box sx={{ mt: 11 }}>
           <Button onClick={handleSavePassword} variant='contained' sx={{ marginRight: 3.5 }}>
-            Save Changes
+            Guardar cambios
           </Button>
           <Button
             type='reset'

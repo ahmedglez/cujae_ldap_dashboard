@@ -226,7 +226,7 @@ const TabAccount = () => {
 
           {/* <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }}>
-              Save Changes
+              Guardar cambios
             </Button>
             <Button type='reset' variant='outlined' color='secondary'>
               Reset
