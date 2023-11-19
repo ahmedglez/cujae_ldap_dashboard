@@ -5,6 +5,7 @@ import Account from 'mdi-material-ui/Account'
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
 import AccountGroup from 'mdi-material-ui/AccountGroup'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
+import { Cog, FileEye } from 'mdi-material-ui'
 import Login from 'mdi-material-ui/Login'
 import Logout from 'mdi-material-ui/Logout'
 import { useEffect, useState } from 'react'
@@ -39,6 +40,7 @@ const navigation = (): VerticalNavItemsType => {
         setGroups(groupsData)
       }
     } catch (error) {
+      console.error(error)
       // Handle error appropriately.
     }
   }
@@ -91,6 +93,17 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountCogOutline,
       path: '/account-settings'
     },
+    profile.roles.includes('admin') && {
+      title: 'Ajustes del Servidor',
+      icon: Cog,
+      path: '/admin/ldap/config'
+    },
+    profile.roles.includes('superadmin') && {
+      title: 'Logs',
+      icon: FileEye,
+      path: '/admin/ldap/logs'
+    },
+
     ...groupsJson,
     {
       sectionTitle: 'Enlaces'
