@@ -1,11 +1,9 @@
 // ** Icon imports
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
 import useProfileStore from '@/stores/profile.store'
-import Account from 'mdi-material-ui/Account'
+import { AccountGroupOutline, AccountOutline, CogOutline, FileEyeOutline } from 'mdi-material-ui'
 import AccountCogOutline from 'mdi-material-ui/AccountCogOutline'
-import AccountGroup from 'mdi-material-ui/AccountGroup'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
-import { Cog, FileEye } from 'mdi-material-ui'
 import Login from 'mdi-material-ui/Login'
 import Logout from 'mdi-material-ui/Logout'
 import { useEffect, useState } from 'react'
@@ -50,12 +48,12 @@ const navigation = (): VerticalNavItemsType => {
     childrens: [
       {
         title: 'Usuarios',
-        icon: Account,
+        icon: AccountOutline,
         path: `/admin/users?ou=${group.ou}`
       },
       {
         title: 'Grupos',
-        icon: AccountGroup,
+        icon: AccountGroupOutline,
         path: `/admin/groups?ou=${group.ou}`
       },
       {
@@ -95,12 +93,12 @@ const navigation = (): VerticalNavItemsType => {
     },
     profile.roles.includes('admin') && {
       title: 'Ajustes del Sistema',
-      icon: Cog,
+      icon: CogOutline,
       path: '/admin/ldap/config'
     },
     profile.roles.includes('superadmin') && {
       title: 'Logs',
-      icon: FileEye,
+      icon: FileEyeOutline,
       path: '/admin/ldap/logs'
     },
 
