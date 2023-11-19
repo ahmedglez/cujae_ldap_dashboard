@@ -7,36 +7,13 @@ import LDAPGroup from '@/types/ldapGroup'
 import GroupsTable from '@/views/admin/groups/GroupsTable'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-
-// Create a custom styled component for the empty message
-
-const emptyMessageStyle = {
-  textAlign: 'center',
-  height: '100%',
-  padding: '20px',
-  border: '1px solid #ccc',
-  borderRadius: '5px'
-}
-
-const headerStyle = {
-  fontSize: '24px',
-  fontWeight: 'bold',
-  margin: '0'
-}
-
-const messageStyle = {
-  fontSize: '18px',
-  margin: '10px 0'
-}
-const buttonStyle = {
-  marginTop: '20px'
-}
+import { showToastError } from '@/helpers/toastHelper'
 
 type GroupsPageProps = {
   ou: string
 }
 
-const LIMIT = 5000
+const URL = `/groups/getChilds?limit=50000`
 const GroupsPage: React.FC<GroupsPageProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
@@ -56,13 +33,15 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
     const fetchData = async () => {
       try {
         setLoading(true)
-        const response = await withAuthAxiosInstance.post(`/groups/getChilds?limit=50000`, {
+        const response = await withAuthAxiosInstance.post(URL, {
           baseDN
         })
         setGroups(response.data.data)
         setLoading(false)
-      } catch (err) {
+      } catch (error: any) {
         setLoading(false)
+        const { data } = error.response
+        showToastError(data.message)
       }
     }
     fetchData()
