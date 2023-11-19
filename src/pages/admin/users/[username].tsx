@@ -14,6 +14,7 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/router'
+import UserType from '@/types/user.type'
 
 const NoResultsMessage = () => {
   const styles = {
@@ -49,9 +50,11 @@ const UserPage = () => {
   const router = useRouter()
   const username = router.query.username as string
   const [loading, setLoading] = useState<boolean>(false)
-  const { user, setUser } = useUserFormStore()
+  const [user, setUser] = useState<UserType | null>(null)
   const store = useProfileStore()
   const { roles } = store
+
+  console.log('user', user)
 
   const getByUsername = async () => {
     try {
@@ -99,38 +102,32 @@ const UserPage = () => {
         if (emailPattern.test(username)) {
           const newUser = await getByEmail()
           if (newUser) {
-            setLoading(false)
             setUser(newUser)
           } else {
-            setLoading(false)
             setUser(null)
             showToastInfo('No user found for the provided email.')
           }
         } else if (ciPattern.test(username)) {
           const newUser = await getByCI()
           if (newUser) {
-            setLoading(false)
             setUser(newUser)
           } else {
-            setLoading(false)
             setUser(null)
             showToastInfo('No user found for the provided CI.')
           }
         } else if (usernamePattern.test(username)) {
           const newUser = await getByUsername()
           if (newUser) {
-            setLoading(false)
             setUser(newUser)
           } else {
-            setLoading(false)
             setUser(null)
             showToastInfo('No usxer found for the provided username.')
           }
         } else {
-          setLoading(false)
           setUser(null)
           showToastWarning('Invalid input. Please enter a valid username, email, or CI.')
         }
+        setLoading(false)
       }
       setLoading(false)
     } catch (err: any) {
@@ -149,33 +146,21 @@ const UserPage = () => {
   useEffect(() => {
     console.log('entro')
     handleGetUser()
+    setLoading(true)
   }, [username])
 
   return (
     <CardContent>
       {!loading && (user === null || user === undefined) && <NoResultsMessage />}
-      {!loading && user !== null && user !== undefined && <UserForm user={user} username={username} />}
+      {!loading && user !== null && <UserForm user={user} username={username} />}
       {loading && (
         <form>
           <Grid container spacing={7}>
-            <Grid item xs={12} sm={6}>
-              <Skeleton variant='rectangular' width={'100%'} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Skeleton variant='rectangular' width={'100%'} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Skeleton variant='rectangular' width={'100%'} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Skeleton variant='rectangular' width={'100%'} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Skeleton variant='rectangular' width={'100%'} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Skeleton variant='rectangular' width={'100%'} />
-            </Grid>
+            {new Array(16).fill(null).map((item, index) => (
+              <Grid key={index} item xs={12} sm={6}>
+                <Skeleton variant='rectangular' width={'100%'} height={'35px'} />
+              </Grid>
+            ))}
           </Grid>
         </form>
       )}
