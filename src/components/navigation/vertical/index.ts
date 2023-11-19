@@ -94,7 +94,7 @@ const navigation = (): VerticalNavItemsType => {
       path: '/account-settings'
     },
     profile.roles.includes('admin') && {
-      title: 'Ajustes del Servidor',
+      title: 'Ajustes del Sistema',
       icon: Cog,
       path: '/admin/ldap/config'
     },
