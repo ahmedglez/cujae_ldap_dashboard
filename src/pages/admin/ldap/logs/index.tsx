@@ -1,31 +1,28 @@
+import Loader from '@/components/feedback/Loader'
 import AdminRoute from '@/components/hocs/AdminRoute'
 import PaginationTable from '@/components/pagination/PaginationTable'
 import { withAuthAxiosInstance } from '@/constants/axiosInstance'
 import { showToastError } from '@/helpers/toastHelper'
 import usePagination from '@/hooks/usePaginateUsers'
 import useProfileStore from '@/stores/profile.store'
-import LDAPGroup from '@/types/ldapGroup'
-import GroupsTable from '@/views/admin/groups/GroupsTable'
+import LogType from '@/types/log.type'
+import LogsTable from '@/views/admin/ldap/LogsTable'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-type GroupsPageProps = {
-  ou: string
-}
-
-const URL = `/groups/getChilds?limit=50000`
-const GroupsPage: React.FC<GroupsPageProps> = () => {
+const URL = `/logs`
+const LogsPage = () => {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
-  const [groups, setGroups] = useState<LDAPGroup[]>([])
+  const [logs, setLogs] = useState<LogType[]>([])
+
   const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 25 })
-  const { base, roles } = useProfileStore()
+  const { roles } = useProfileStore()
   const ou = router.query.ou
-  const baseDN = `ou=grupos,ou=${ou},${base}`
-  const paginatedGroups = usePagination(groups, pagination)
+  const paginatedLogs = usePagination(logs, pagination)
 
   useEffect(() => {
-    if (!roles.includes('admin')) {
+    if (!roles.includes('superadmin')) {
       router.push('/')
     }
   }, [])
@@ -33,10 +30,9 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
     const fetchData = async () => {
       try {
         setLoading(true)
-        const response = await withAuthAxiosInstance.post(URL, {
-          baseDN
-        })
-        setGroups(response.data.data)
+        const response = await withAuthAxiosInstance.get(URL)
+        const { data } = response
+        setLogs(data.logs)
         setLoading(false)
       } catch (error: any) {
         setLoading(false)
@@ -49,13 +45,14 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
 
   return (
     <div>
-      <h1>{`Listado de Grupos`}</h1>
-      {<GroupsTable groups={paginatedGroups} loading={loading} />}
-      {!loading && paginatedGroups.length > 0 && (
-        <PaginationTable pagination={pagination} setPagination={setPagination} entries={groups} />
+      <h1>{`Registro de Logs`}</h1>
+      {loading && <Loader message={`Cargando Registro de Logs`} />}
+      {logs.length > 0 && !loading && <LogsTable logs={paginatedLogs} loading={loading} />}
+      {!loading && paginatedLogs.length > 0 && (
+        <PaginationTable pagination={pagination} setPagination={setPagination} entries={logs} />
       )}
     </div>
   )
 }
 
-export default AdminRoute(GroupsPage)
+export default AdminRoute(LogsPage)

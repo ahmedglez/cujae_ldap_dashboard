@@ -97,7 +97,7 @@ const navigation = (): VerticalNavItemsType => {
       path: '/admin/ldap/config'
     },
     profile.roles.includes('superadmin') && {
-      title: 'Logs',
+      title: 'Registro de Logs',
       icon: FileEyeOutline,
       path: '/admin/ldap/logs'
     },
