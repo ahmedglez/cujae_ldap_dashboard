@@ -29,11 +29,29 @@ const LogsRow = ({ log }) => {
     }
   }
 
+  const getRowColor = level => {
+    switch (level) {
+      case 'info':
+        return '#e6f7ff' // Change this to the color you want for info level
+      case 'error':
+        return '#ffd6cc' // Change this to the color you want for error level
+      case 'warning':
+        return '#fff2cc' // Change this to the color you want for warning level
+      default:
+        return '#ffffff' // Change this to the default color
+    }
+  }
+
   const { method, url, status, user, dn, branch, content_length, response_time } = parsedMessage
 
   const transformedDate = new Date(log.timestamp).toUTCString()
+  const rowColor = getRowColor(log.level)
   return (
-    <TableRow>
+    <TableRow
+      sx={{
+        backgroundColor: rowColor
+      }}
+    >
       <TableCell align='center'>{/* Render any specific content for this cell */}</TableCell>
       <TableCell sx={classes.tableCell}>{transformedDate}</TableCell>
       <TableCell sx={classes.tableCell}>{log.level}</TableCell>
