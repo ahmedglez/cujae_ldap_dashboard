@@ -50,7 +50,7 @@ const LogsPage = () => {
     <div>
       <h1>{`Registro de Logs`}</h1>
       {loading && <Loader message={`Cargando Logs`} />}
-      {logs.length > 0 && !loading && <LogsTable logs={paginatedLogs.slice(0, 4)} loading={loading} />}
+      {logs.length > 0 && !loading && <LogsTable logs={paginatedLogs} loading={loading} />}
       {!loading && paginatedLogs.length > 0 && (
         <PaginationTable pagination={pagination} setPagination={setPagination} entries={logs} />
       )}

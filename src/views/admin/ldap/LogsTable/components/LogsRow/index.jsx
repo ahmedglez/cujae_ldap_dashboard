@@ -8,7 +8,6 @@ const LogsRow = ({ log }) => {
   function parseLog(log) {
     try {
       const jsonString = log.message.replace(/'/g, '"')
-
       const validJsonString = jsonString
         .replace(/(\w+)\s*:/g, '"$1":')
         .replace(/undefined/g, 'null')
@@ -30,7 +29,7 @@ const LogsRow = ({ log }) => {
     }
   }
 
-  const { method } = parsedMessage
+  const { method, url, status, user, dn, branch, content_length, response_time } = parsedMessage
 
   const transformedDate = new Date(log.timestamp).toUTCString()
   return (
@@ -39,8 +38,15 @@ const LogsRow = ({ log }) => {
       <TableCell sx={classes.tableCell}>{transformedDate}</TableCell>
       <TableCell sx={classes.tableCell}>{log.level}</TableCell>
       <TableCell sx={classes.tableCell}>{method}</TableCell>
+      <TableCell sx={classes.tableCell}>{url}</TableCell>
+      <TableCell sx={classes.tableCell}>{status}</TableCell>
+      <TableCell sx={classes.tableCell}>{user}</TableCell>
+      <TableCell sx={classes.tableCell}>{dn}</TableCell>
+      <TableCell sx={classes.tableCell}>{branch}</TableCell>
+      <TableCell sx={classes.tableCell}>{content_length}</TableCell>
+      <TableCell sx={classes.tableCell}>{response_time}</TableCell>
 
-      <TableCell>{log.message}</TableCell>
+      <TableCell sx={classes.tableCell}>{log.message}</TableCell>
       {/* Add more cells for additional columns */}
     </TableRow>
   )
