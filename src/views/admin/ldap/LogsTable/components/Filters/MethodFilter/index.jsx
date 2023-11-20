@@ -24,6 +24,9 @@ const MethodFilter = () => {
     <FormControl>
       <InputLabel id='demo-simple-select-label'>Method</InputLabel>
       <Select
+        sx={{
+          height: '40px'
+        }}
         value={method.toUpperCase()}
         labelId='demo-simple-select-label'
         id='demo-simple-select'

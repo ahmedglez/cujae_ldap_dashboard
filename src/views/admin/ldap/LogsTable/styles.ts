@@ -12,7 +12,9 @@ const useStyles = () => {
     filters: {
       display: 'flex',
       alignItems: 'center',
+      maxHeight: '80px',
       justifyContent: 'flex-start',
+      backgroundColor: 'transparent',
       flexWrap: 'wrap',
       gap: '10px',
       padding: theme.spacing(2), // Adjust the padding as needed
