@@ -10,12 +10,15 @@ import LogsTable from '@/views/admin/ldap/LogsTable'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+const LIMIT = 10000
+const PAGE = 1
+
 const LogsPage = () => {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [logs, setLogs] = useState<LogType[]>([])
-  const url = router.asPath.replace('/admin/ldap', '').replace('/?', '?')
-  console.log('url', url)
+  console.log('logs', logs)
+  const url = router.asPath.replace('/admin/ldap', '').replace('/?', '?') + `?page=${PAGE}&limit=${LIMIT}`
 
   const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 25 })
   const { roles } = useProfileStore()
