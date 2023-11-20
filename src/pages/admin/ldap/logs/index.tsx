@@ -18,7 +18,6 @@ const LogsPage = () => {
 
   const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 25 })
   const { roles } = useProfileStore()
-  const ou = router.query.ou
   const paginatedLogs = usePagination(logs, pagination)
 
   useEffect(() => {
@@ -36,18 +35,22 @@ const LogsPage = () => {
         setLoading(false)
       } catch (error: any) {
         setLoading(false)
-        const { data } = error.response
-        showToastError(data.message)
+        if (error.response !== undefined) {
+          const { data } = error.response
+          showToastError(data.message)
+        } else {
+          showToastError(error.message)
+        }
       }
     }
     fetchData()
-  }, [ou])
+  }, [])
 
   return (
     <div>
       <h1>{`Registro de Logs`}</h1>
-      {loading && <Loader message={`Cargando Registro de Logs`} />}
-      {logs.length > 0 && !loading && <LogsTable logs={paginatedLogs} loading={loading} />}
+      {loading && <Loader message={`Cargando Logs`} />}
+      {logs.length > 0 && !loading && <LogsTable logs={paginatedLogs.slice(0, 4)} loading={loading} />}
       {!loading && paginatedLogs.length > 0 && (
         <PaginationTable pagination={pagination} setPagination={setPagination} entries={logs} />
       )}

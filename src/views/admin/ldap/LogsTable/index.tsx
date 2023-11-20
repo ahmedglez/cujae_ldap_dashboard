@@ -2,6 +2,8 @@ import React from 'react'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
 import LogType from '@/types/log.type'
+import LogsRow from './components/LogsRow'
+import columns from './data/columns'
 
 interface LogsTableProps {
   logs: LogType[]
@@ -25,29 +27,15 @@ const LogsTable: React.FC<LogsTableProps> = ({ logs, loading }) => (
         <TableHead>
           <TableRow>
             <TableCell align='center' width={'auto'}></TableCell>
-            <TableCell align='center' width={'auto'}>
-              Timestamp
-            </TableCell>
-            <TableCell align='center' width={'auto'}>
-              Level
-            </TableCell>
-            <TableCell align='center' width={'auto'}>
-              Message
-            </TableCell>
+            {columns.map(column => (
+              <TableCell key={column} align='center' width={'auto'}>
+                {column}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {!loading &&
-            logs.length > 0 &&
-            logs.map((log, index) => (
-              <TableRow key={index}>
-                <TableCell align='center'>{/* Render any specific content for this cell */}</TableCell>
-                <TableCell align='center'>{log.timestamp}</TableCell>
-                <TableCell align='center'>{log.level}</TableCell>
-                <TableCell align='center'>{log.message}</TableCell>
-                {/* Add more cells for additional columns */}
-              </TableRow>
-            ))}
+          {!loading && logs.length > 0 && logs.map((log, index) => <LogsRow key={index} log={log} />)}
           {loading && (
             <>
               {Array(10)
