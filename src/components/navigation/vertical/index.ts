@@ -99,7 +99,7 @@ const navigation = (): VerticalNavItemsType => {
     profile.roles.includes('superadmin') && {
       title: 'Registro de Logs',
       icon: FileEyeOutline,
-      path: '/admin/ldap/logs'
+      path: '/admin/ldap/logs?method=all&user=all&url=all&status=all&timeframe=all'
     },
 
     ...groupsJson,

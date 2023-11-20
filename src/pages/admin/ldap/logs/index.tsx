@@ -10,47 +10,48 @@ import LogsTable from '@/views/admin/ldap/LogsTable'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-const URL = `/logs`
 const LogsPage = () => {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [logs, setLogs] = useState<LogType[]>([])
+  const url = router.asPath.replace('/admin/ldap', '').replace('/?', '?')
+  console.log('url', url)
 
   const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 25 })
   const { roles } = useProfileStore()
   const paginatedLogs = usePagination(logs, pagination)
 
+  const fetchData = async () => {
+    try {
+      setLoading(true)
+      const response = await withAuthAxiosInstance.get(url)
+      const { data } = response
+      setLogs(data.logs)
+      setLoading(false)
+    } catch (error: any) {
+      setLoading(false)
+      if (error.response !== undefined) {
+        const { data } = error.response
+        showToastError(data.message)
+      } else {
+        showToastError(error.message)
+      }
+    }
+  }
+
   useEffect(() => {
     if (!roles.includes('superadmin')) {
       router.push('/')
+    } else {
+      fetchData()
     }
-  }, [])
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        const response = await withAuthAxiosInstance.get(URL)
-        const { data } = response
-        setLogs(data.logs)
-        setLoading(false)
-      } catch (error: any) {
-        setLoading(false)
-        if (error.response !== undefined) {
-          const { data } = error.response
-          showToastError(data.message)
-        } else {
-          showToastError(error.message)
-        }
-      }
-    }
-    fetchData()
-  }, [])
+  }, [router.query])
 
   return (
     <div>
       <h1>{`Registro de Logs`}</h1>
       {loading && <Loader message={`Cargando Logs`} />}
-      {logs.length > 0 && !loading && <LogsTable logs={paginatedLogs} loading={loading} />}
+      {!loading && <LogsTable logs={paginatedLogs} loading={loading} />}
       {!loading && paginatedLogs.length > 0 && (
         <PaginationTable pagination={pagination} setPagination={setPagination} entries={logs} />
       )}
