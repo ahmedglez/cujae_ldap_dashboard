@@ -2,6 +2,7 @@ import useUserStore from '@/stores/users.store'
 import { Box } from '@mui/material'
 import useStyles from '../../styles'
 import MethodFilter from './MethodFilter'
+import StatusFilter from './StatusFilter'
 import UserFilter from './UserFilter'
 
 const TableFilters = () => {
@@ -14,6 +15,7 @@ const TableFilters = () => {
     <Box sx={classes.filters}>
       <MethodFilter />
       <UserFilter />
+      <StatusFilter />
     </Box>
   )
 }
