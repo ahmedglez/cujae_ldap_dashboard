@@ -40,8 +40,12 @@ const GroupsPage: React.FC<GroupsPageProps> = () => {
         setLoading(false)
       } catch (error: any) {
         setLoading(false)
-        const { data } = error.response
-        showToastError(data.message)
+        if (!!error.response) {
+          const { data } = error.response
+          showToastError(data.message)
+        } else {
+          showToastError(error.message)
+        }
       }
     }
     fetchData()
