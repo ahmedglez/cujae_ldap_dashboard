@@ -11,7 +11,11 @@ import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 
 const CustomCard = ({ title, description, image, link, cta }) => {
   return (
-    <Card>
+    <Card
+      sx={{
+        height: '100%'
+      }}
+    >
       <CardContent
         sx={{
           display: 'flex',

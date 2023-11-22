@@ -21,6 +21,7 @@ import useAvatarSelector from '@/hooks/useAvatarSelector'
 
 // ** Assets
 import logo from '../../assets/images/favicon.png'
+import navegacionImg from '../../assets/images/internetLogo.jpg'
 
 // ** Stores
 import useProfileStore from '@/stores/profile.store'
@@ -45,6 +46,9 @@ const Dashboard = () => {
             <WeeklyOverview />
           </Grid>
         )} */}
+        <Grid item xs={12} md={10}>
+          <ContactMuralCard />
+        </Grid>
         <Grid item xs={12} md={4}>
           <CustomCard
             title={`SIGENU`}
@@ -55,8 +59,14 @@ const Dashboard = () => {
             image={logo}
           />
         </Grid>
-        <Grid item xs={12} md={8}>
-          <ContactMuralCard />
+        <Grid item xs={12} md={4}>
+          <CustomCard
+            title={`Navegación`}
+            description={`Accede al portal de navegación para tener acceso a internet a través de sus cuotas.`}
+            link={`https://navegacion.cujae.edu.cu/`}
+            cta={`Accede a Navegación`}
+            image={navegacionImg}
+          />
         </Grid>
       </Grid>
     </ApexChartWrapper>
