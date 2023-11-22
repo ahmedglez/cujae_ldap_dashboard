@@ -77,6 +77,26 @@ const navigation = (): VerticalNavItemsType => {
         sectionTitle: `ÁREAS`
       })
     }
+
+    const systemRoutes = profile.roles.includes('admin')
+      ? {
+          title: 'Ajustes del Sistema',
+          icon: CogOutline,
+          path: '/admin/ldap/config'
+        }
+      : null
+
+    const logsRoutes = profile.roles.includes('superadmin')
+      ? {
+          title: 'Registro de Logs',
+          icon: FileEyeOutline,
+          path: '/admin/ldap/logs?method=all&user=all&url=all&status=all&timeframe=all'
+        }
+      : null
+
+    if (systemRoutes !== null) parsedGroupsWithHeader?.unshift(systemRoutes)
+    if (logsRoutes !== null) parsedGroupsWithHeader?.unshift(logsRoutes)
+
     setGroupsJson(parsedGroupsWithHeader)
   }, [groups])
 
@@ -91,17 +111,6 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountCogOutline,
       path: '/account-settings'
     },
-    profile.roles.includes('admin') && {
-      title: 'Ajustes del Sistema',
-      icon: CogOutline,
-      path: '/admin/ldap/config'
-    },
-    profile.roles.includes('superadmin') && {
-      title: 'Registro de Logs',
-      icon: FileEyeOutline,
-      path: '/admin/ldap/logs?method=all&user=all&url=all&status=all&timeframe=all'
-    },
-
     ...groupsJson,
     {
       sectionTitle: 'Enlaces'
