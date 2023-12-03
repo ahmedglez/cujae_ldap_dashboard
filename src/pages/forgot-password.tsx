@@ -106,10 +106,10 @@ const ForgotPassword = () => {
           }, 3000)
           return
         } else {
-          throw new Error('User not found')
+          throw new Error(message)
         }
-      } catch (error) {
-        showToastError('User not found')
+      } catch (error: any) {
+        showToastError(error.message)
         router.push('/login')
         return
       }
