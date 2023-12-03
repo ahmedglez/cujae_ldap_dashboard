@@ -60,11 +60,6 @@ export const userFields = (user: UserType): FieldConfig[] => [
     att: 'country'
   },
   {
-    label: 'Creado',
-    value: user?.dayRegister,
-    att: 'dayRegister'
-  },
-  {
     label: 'Modificado',
     value: !!user?.lastTimeChange ? new Date(user?.lastTimeChange).toLocaleDateString() : '',
     att: 'lastTimeChange'
