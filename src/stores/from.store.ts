@@ -15,6 +15,7 @@ interface UserFormStore {
 const useUserFormStore = create<UserFormStore>(set => ({
   user: null,
   formFields: {},
+  mails: [],
   setUser: user => set({ user }),
   setFormFields: formFields => set({ formFields }),
   updateField: (key, value) => set(state => ({ formFields: { ...state.formFields, [key]: value } })),

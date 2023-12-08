@@ -39,7 +39,11 @@ const StudentRow: React.FC<StudentRowProps> = ({ student, index }) => {
         </TableCell>
         {attributeMapping.map(attribute => (
           <TableCell sx={classes.tableCell} key={attribute} size='small' align='center'>
-            {student[attribute as keyof StudentType]}
+            {Array.isArray(student[attribute as keyof StudentType])
+              ? (student[attribute as keyof StudentType] as Array<string>).map((item, index) => (
+                  <div key={index}>{item}</div>
+                ))
+              : student[attribute as keyof StudentType]}
           </TableCell>
         ))}
       </TableRow>

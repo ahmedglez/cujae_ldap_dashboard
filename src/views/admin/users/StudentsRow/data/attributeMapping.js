@@ -5,7 +5,7 @@ const attributeMapping = [
   'userType',
   'CI',
   'sex',
-  'maildrop',
+  'mail',
   'area',
   'country',
   'telephoneNumber',

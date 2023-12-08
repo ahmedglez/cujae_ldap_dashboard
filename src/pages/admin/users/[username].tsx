@@ -54,8 +54,6 @@ const UserPage = () => {
   const store = useProfileStore()
   const { roles } = store
 
-  console.log('user', user)
-
   const getByUsername = async () => {
     try {
       const response = await withAuthAxiosInstance.get(`/users?uid=${username}`)

@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography'
 // ** Custom Components
 import EmployeeForm from './components/EmployeeForm'
 import InputComponent from './components/InputField'
+import ArrayInput from './components/ArrayInput'
 import StudentForm from './components/StudentForm'
 import { personalFields, userFields } from './data/fields'
 
@@ -26,18 +27,19 @@ import useUserFormStore from '@/stores/from.store'
 import { useRouter } from 'next/router'
 
 interface Props {
-  user?: UserType
+  user: UserType
   username?: string
 }
 
 const UserForm: React.FC<Props> = ({ user, username }) => {
   // ** State
   const [loading, setLoading] = useState<boolean>(false)
-  const { setUser, formFields } = useUserFormStore(store => store)
+  const { setUser, formFields, setFormFields } = useUserFormStore(store => store)
   const [activeTab, setActiveTab] = useState<number>(0)
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue as number)
   }
+  console.log('formFields', formFields)
   const renderedUserFields = userFields(user as UserType)
   const personaFields = personalFields(user as UserType)
 
@@ -110,6 +112,16 @@ const UserForm: React.FC<Props> = ({ user, username }) => {
               </Typography>
             </Grid>
             {renderFormFields(renderedUserFields)}
+            <ArrayInput
+              label='Correo'
+              value={user.mail}
+              onSave={(values: string[]) => {
+                setFormFields({
+                  ...formFields,
+                  mail: values
+                })
+              }}
+            />
           </Grid>
         )}
         {activeTab === 1 && (

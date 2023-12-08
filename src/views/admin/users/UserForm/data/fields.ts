@@ -30,11 +30,6 @@ export const userFields = (user: UserType): FieldConfig[] => [
     att: 'sn'
   },
   {
-    label: 'Email',
-    value: user?.maildrop,
-    att: 'maildrop'
-  },
-  {
     label: 'CI',
     value: user?.CI,
     att: 'CI'

@@ -5,7 +5,8 @@ interface UserType {
   userType: string
   CI: string
   sex: string
-  maildrop: string
+  maildrop: string[]
+  mail: string[]
   area: string
   country: string
   telephoneNumber: string
